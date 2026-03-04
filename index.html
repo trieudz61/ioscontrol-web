@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IOSControl — Ultimate Jailbreak Automation Tool</title>
+    <meta name="description" content="The most powerful automation tool for jailbroken iPhones. Record, playback, automate with Python & Lua scripts. Native Cydia/Sileo tweak with Visual Flow Builder, Live Screen Mirror, Smart Color Picker, OCR." />
+    <meta name="keywords" content="IOSControl, iOS automation, jailbreak tweak, AutoTouch alternative, Cydia, Sileo, Lua scripting, Python automation" />
+    <meta name="author" content="IOSControl" />
+    <link rel="canonical" href="https://icontrol.dev" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IOSControl — iPhone Automation Unleashed" />
+    <meta property="og:description" content="The most powerful automation tweak for jailbroken iPhones." />
+    <meta property="og:image" content="/static/ide-screenshot.png" />
+    <meta property="og:url" content="https://icontrol.dev" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IOSControl — iPhone Automation Unleashed" />
+    <meta name="twitter:image" content="/static/ide-screenshot.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"IOSControl","operatingSystem":"iOS 14-18","applicationCategory":"Utility"}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <style>
+/* ═══════════════════════════════════════════
+   IOSControl Landing Page — Premium Dark Theme
+   ═══════════════════════════════════════════ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #050508;
+    --bg-card: #0c0e14;
+    --bg-card-hover: #11131c;
+    --bg-glass: rgba(12, 14, 20, 0.7);
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(99, 102, 241, 0.3);
+    --text: #e8eaf0;
+    --text-dim: #7a7e94;
+    --text-muted: #4a4e62;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --accent-glow: rgba(99, 102, 241, 0.15);
+    --green: #34d399;
+    --green-glow: rgba(52, 211, 153, 0.1);
+    --orange: #fb923c;
+    --pink: #f472b6;
+    --cyan: #22d3ee;
+    --radius: 16px;
+    --radius-sm: 10px;
+}
+
+[data-theme="light"] {
+    --bg: #f8f9fc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f1f5;
+    --bg-glass: rgba(248, 249, 252, 0.9);
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(99, 102, 241, 0.35);
+    --text: #1a1d2e;
+    --text-dim: #5a5e72;
+    --text-muted: #8a8e9e;
+    --accent: #6366f1;
+    --accent-light: #4f46e5;
+    --accent-glow: rgba(99, 102, 241, 0.08);
+    --green: #059669;
+    --green-glow: rgba(5, 150, 105, 0.08);
+    --orange: #ea580c;
+    --pink: #db2777;
+    --cyan: #0891b2;
+}
+
+[data-theme="light"] nav {
+    background: rgba(248, 249, 252, 0.9);
+}
+
+[data-theme="light"] .hero-mockup {
+    background: #f0f1f5;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+[data-theme="light"] .logo-dark { display: none; }
+[data-theme="light"] .logo-light { display: block; }
+[data-theme="dark"] .logo-dark { display: block; }
+[data-theme="dark"] .logo-light { display: none; }
+
+.toggle-btn-landing {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--accent-glow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text);
+    transition: all 0.2s;
+}
+.toggle-btn-landing:hover {
+    border-color: var(--accent);
+    background: rgba(99,102,241,0.2);
+}
+.toggle-btn-landing .toggle-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--accent-light);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #a5b4fc;
+}
+
+/* ─── Utility ─── */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-light);
+}
+
+/* ─── Navigation ─── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 5, 8, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+}
+
+nav .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text);
+}
+
+.nav-logo .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.nav-links a:hover {
+    color: var(--text);
+}
+
+.nav-cta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn-outline {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
+
+.btn-primary-lg {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+.btn-primary-lg:hover {
+    box-shadow: 0 4px 30px rgba(99, 102, 241, 0.5);
+    transform: translateY(-1px);
+}
+
+/* ─── Hero ─── */
+.hero {
+    padding: 160px 0 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -300px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(34,211,238,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    0% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+.hero-badge {
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+}
+
+.hero-actions .btn-primary-lg {
+    padding: 14px 32px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.hero-actions .btn-outline {
+    padding: 14px 32px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.hero-visual {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.5), 0 0 60px rgba(99,102,241,0.1);
+}
+
+.hero-visual img {
+    width: 100%;
+    display: block;
+}
+
+.hero-visual .mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #0c0e14;
+    border-bottom: 1px solid var(--border);
+}
+
+.mockup-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.mockup-dot.red { background: #ff5f57; }
+.mockup-dot.yellow { background: #febc2e; }
+.mockup-dot.green { background: #28c840; }
+
+.mockup-url {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    background: rgba(255,255,255,0.04);
+    padding: 4px 16px;
+    border-radius: 6px;
+    margin: 0 40px;
+}
+
+.hero-visual .mockup-body {
+    background: #0d0f14;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.mockup-body .ide-preview {
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 200px 1fr 280px;
+    gap: 12px;
+    height: 420px;
+}
+
+.ide-panel {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    overflow: hidden;
+}
+
+.ide-panel-header {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ide-code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text-dim);
+}
+
+.ide-code .kw { color: #c792ea; }
+.ide-code .fn { color: #82aaff; }
+.ide-code .str { color: #c3e88d; }
+.ide-code .num { color: #f78c6c; }
+.ide-code .cm { color: #546e7a; }
+.ide-code .op { color: #89ddff; }
+
+.ide-phone {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #1a1d2e, #0f1118);
+    border-radius: 24px;
+    border: 2px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    position: relative;
+}
+
+.ide-phone .notch {
+    width: 80px;
+    height: 20px;
+    background: #000;
+    border-radius: 0 0 12px 12px;
+    position: absolute;
+    top: 0;
+}
+
+.ide-phone .screen-mock {
+    width: 100%;
+    flex: 1;
+    background: linear-gradient(135deg, #1e40af, #7c3aed);
+    border-radius: 6px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+}
+
+.ide-side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ide-side-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    flex: 1;
+}
+
+.ide-side-card h4 {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+}
+
+.console-line {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--green);
+    margin: 4px 0;
+}
+
+.console-line.dim { color: var(--text-muted); }
+
+/* ─── Stats Bar ─── */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 80px auto;
+    max-width: 900px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 32px 20px;
+    background: var(--bg);
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* ─── Features Section ─── */
+.features {
+    padding: 100px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.section-header p {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.feature-card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+}
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+
+.feature-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ─── Comparison Section ─── */
+.comparison {
+    padding: 100px 0;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 16px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.comparison-table thead th {
+    background: var(--bg-card);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+}
+
+.comparison-table thead th:nth-child(3) {
+    color: var(--accent-light);
+    background: rgba(99,102,241,0.06);
+}
+
+.comparison-table tbody tr {
+    transition: background 0.15s;
+}
+
+.comparison-table tbody tr:hover {
+    background: rgba(99,102,241,0.03);
+}
+
+.comparison-table tbody td:nth-child(3) {
+    background: rgba(99,102,241,0.03);
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.check { color: var(--green); }
+.cross { color: #f87171; }
+.partial { color: var(--orange); }
+
+/* ─── How it Works ─── */
+.how-it-works {
+    padding: 100px 0;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-number {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 2px solid rgba(99,102,241,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-light);
+    margin: 0 auto 20px;
+}
+
+.step h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.step p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+
+/* ─── Code Examples ─── */
+.code-examples {
+    padding: 100px 0;
+}
+
+.code-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.code-tab {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.code-tab.active {
+    background: var(--accent-glow);
+    border-color: rgba(99,102,241,0.3);
+    color: var(--accent-light);
+}
+
+.code-block {
+    background: #0c0e14;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.code-block-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.code-block pre {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.code-block pre .kw { color: #c792ea; }
+.code-block pre .fn { color: #82aaff; }
+.code-block pre .str { color: #c3e88d; }
+.code-block pre .num { color: #f78c6c; }
+.code-block pre .cm { color: #546e7a; }
+.code-block pre .op { color: #89ddff; }
+.code-block pre .var { color: #ffcb6b; }
+
+.code-section-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.code-description h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+.code-description p {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+.code-feature-list {
+    list-style: none;
+}
+
+.code-feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--text-dim);
+}
+
+.code-feature-list li .icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* ─── Activator Section ─── */
+.activator {
+    padding: 100px 0;
+}
+
+.activator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.activator-phone {
+    width: 280px;
+    height: 560px;
+    background: linear-gradient(180deg, #111320, #0a0c14);
+    border-radius: 40px;
+    border: 3px solid rgba(255,255,255,0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+.activator-phone .phone-notch {
+    width: 100px;
+    height: 24px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    position: absolute;
+    top: 0;
+}
+
+.activator-phone .phone-screen {
+    width: 100%;
+    flex: 1;
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+    border-radius: 28px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.popup-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 28px;
+}
+
+.popup-card {
+    width: 85%;
+    background: rgba(30, 30, 50, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+}
+
+.popup-title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.popup-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.popup-action .pa-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.popup-action .pa-text strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+
+.popup-action .pa-text span {
+    font-size: 10px;
+    color: var(--text-dim);
+}
+
+.popup-hint {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 12px;
+}
+
+.activator-description h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+.activator-description p {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+/* ─── CTA Section ─── */
+.cta-section {
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.cta-section h2 {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.cta-section p {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+/* ─── Footer ─── */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-brand h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.footer-brand p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+}
+
+.footer-col h5 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+.footer-col a:hover {
+    color: var(--text);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ─── Animations ─── */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.2); }
+    50% { box-shadow: 0 0 40px rgba(99,102,241,0.4); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children */
+.fade-in:nth-child(2) { transition-delay: 0.08s; }
+.fade-in:nth-child(3) { transition-delay: 0.16s; }
+.fade-in:nth-child(4) { transition-delay: 0.24s; }
+.fade-in:nth-child(5) { transition-delay: 0.32s; }
+.fade-in:nth-child(6) { transition-delay: 0.40s; }
+.fade-in:nth-child(7) { transition-delay: 0.48s; }
+.fade-in:nth-child(8) { transition-delay: 0.56s; }
+.fade-in:nth-child(9) { transition-delay: 0.64s; }
+
+.hero-visual {
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.hero h1 { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0s both; }
+.hero p { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+.hero-actions { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+
+.stat-number {
+    animation: slideUp 0.6s ease both;
+}
+
+/* ─── Pricing ─── */
+.pricing { padding: 100px 0; }
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.pricing-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+}
+
+.pricing-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(99,102,241,0.06), var(--bg-card));
+    box-shadow: 0 20px 60px rgba(99,102,241,0.15);
+    transform: scale(1.04);
+}
+
+.pricing-card.featured:hover {
+    transform: scale(1.04) translateY(-6px);
+}
+
+.pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 16px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pricing-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.pricing-price {
+    font-size: 42px;
+    font-weight: 800;
+    margin: 16px 0 4px;
+    letter-spacing: -0.02em;
+}
+
+.pricing-price span {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-dim);
+}
+
+.pricing-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+.pricing-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 28px;
+}
+
+.pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+}
+
+.pricing-features li:last-child { border-bottom: none; }
+
+.pricing-features .pf-check { color: var(--green); flex-shrink: 0; }
+.pricing-features .pf-cross { color: var(--text-muted); flex-shrink: 0; }
+
+.pricing-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.pricing-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
+
+.pricing-btn.primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+}
+
+.pricing-btn.primary:hover {
+    box-shadow: 0 4px 30px rgba(99,102,241,0.5);
+    color: #fff;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .code-section-layout { grid-template-columns: 1fr; }
+    .activator-layout { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .pricing-card.featured { transform: none; }
+    .pricing-card.featured:hover { transform: translateY(-6px); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .comparison-table { font-size: 12px; }
+    .comparison-table th, .comparison-table td { padding: 10px 12px; }
+    .nav-links { display: none; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ═══ Navigation ═══ -->
+<nav>
+    <div class="container nav-inner">
+        <a href="#" class="nav-logo">
+            <img src="/assets/logo-dark.svg" alt="IOSControl" width="32" height="32" class="logo-dark" />
+            <img src="/assets/logo-light.svg" alt="IOSControl" width="32" height="32" class="logo-light" />
+            IOSControl
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features" data-i18n="navFeatures">Features</a></li>
+            <li><a href="#comparison" data-i18n="navCompare">Compare</a></li>
+            <li><a href="#how" data-i18n="navHow">How it Works</a></li>
+            <li><a href="#pricing" data-i18n="navPricing">Pricing</a></li>
+        </ul>
+        <div class="nav-cta" style="display:flex;align-items:center;gap:8px;">
+            <button class="toggle-btn-landing" id="landingLangToggle" title="Switch language">
+                <span class="toggle-label" id="landingLangLabel">EN</span>
+            </button>
+            <button class="toggle-btn-landing" id="landingThemeToggle" title="Toggle theme">
+                <span id="landingThemeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
+            </button>
+            <a href="/docs.html" class="btn-outline">Docs</a>
+            <a href="https://t.me/IOSControl_Recap1s" target="_blank" class="btn-outline" style="border-color:rgba(52,211,153,0.4);color:#34d399;" data-i18n="navPurchase"><i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Buy Key</a>
+            <a href="/connect.html" class="btn-primary-lg" data-i18n="navLaunch">Launch IDE →</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <span class="badge" data-i18n="heroBadge"><i data-lucide="zap" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Powered by Jailbreak — Native Cydia &amp; Sileo Tweak</span>
+        </div>
+        <h1>
+            <span data-i18n="heroTitle1">iPhone Automation</span><br />
+            <span class="gradient-text" data-i18n="heroTitle2">Unleashed</span>
+        </h1>
+        <p data-i18n="heroDesc">
+            The ultimate automation tweak for jailbroken iPhones. Full native access — touch injection, color detection, OCR, 
+            app control — powered by Python & Lua scripts with a professional Web IDE.
+        </p>
+        <div class="hero-actions">
+            <a href="/connect.html" class="btn-primary-lg" data-i18n="heroCTA1">Open Web IDE →</a>
+            <a href="#how" class="btn-outline" data-i18n="heroCTA2">Install via Cydia ↓</a>
+        </div>
+
+        <!-- IDE Tab Showcase -->
+        <div class="hero-visual">
+            <div class="mockup-bar" style="justify-content:flex-start;gap:0;">
+                <span class="mockup-dot red"></span>
+                <span class="mockup-dot yellow"></span>
+                <span class="mockup-dot green"></span>
+                <div style="display:flex;gap:4px;margin-left:24px;" id="heroTabs">
+                    <button class="code-tab active" onclick="showHeroTab('editor')" style="padding:4px 12px;font-size:11px;border-radius:6px;"><i data-lucide="code" style="width:11px;height:11px;vertical-align:-1px;margin-right:3px;"></i>Editor</button>
+                    <button class="code-tab" onclick="showHeroTab('console')" style="padding:4px 12px;font-size:11px;border-radius:6px;"><i data-lucide="terminal" style="width:11px;height:11px;vertical-align:-1px;margin-right:3px;"></i>Console</button>
+                    <button class="code-tab" onclick="showHeroTab('files')" style="padding:4px 12px;font-size:11px;border-radius:6px;"><i data-lucide="folder" style="width:11px;height:11px;vertical-align:-1px;margin-right:3px;"></i>Files</button>
+                    <button class="code-tab" onclick="showHeroTab('converter')" style="padding:4px 12px;font-size:11px;border-radius:6px;"><i data-lucide="repeat-2" style="width:11px;height:11px;vertical-align:-1px;margin-right:3px;"></i>Py→Lua</button>
+                    <button class="code-tab" onclick="showHeroTab('flowbuilder')" style="padding:4px 12px;font-size:11px;border-radius:6px;"><i data-lucide="workflow" style="width:11px;height:11px;vertical-align:-1px;margin-right:3px;"></i>Flow Builder</button>
+                </div>
+            </div>
+            <img id="heroTab-editor" src="/assets/tab-editor.png" alt="Script Editor with autocomplete" style="width:100%;display:block;" loading="lazy" />
+            <img id="heroTab-console" src="/assets/tab-console.png" alt="Console output" style="width:100%;display:none;" loading="lazy" />
+            <img id="heroTab-files" src="/assets/tab-files.png" alt="File manager" style="width:100%;display:none;" loading="lazy" />
+            <img id="heroTab-converter" src="/assets/tab-converter.png" alt="Python to Lua converter" style="width:100%;display:none;" loading="lazy" />
+            <img id="heroTab-flowbuilder" src="/assets/tab-flowbuilder.png" alt="Visual Flow Builder" style="width:100%;display:none;" loading="lazy" />
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Stats ═══ -->
+<div class="container">
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number gradient-text">60+</div>
+            <div class="stat-label" data-i18n="stat1Label">API Functions</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number gradient-text">2</div>
+            <div class="stat-label" data-i18n="stat2Label">Languages (Python & Lua)</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number gradient-text">14-18</div>
+            <div class="stat-label" data-i18n="stat3Label">iOS Versions Supported</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number gradient-text">∞</div>
+            <div class="stat-label" data-i18n="stat4Label">Automations Possible</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ Features ═══ -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge"><i data-lucide="sparkles" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Features</span>
+            <h2 data-i18n="featTitle">Everything You Need to Automate</h2>
+            <p data-i18n="featDesc">From simple taps to complex workflows — IOSControl has you covered</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;"><i data-lucide="hand" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc1Title">Touch Simulation</h3>
+                <p data-i18n="fc1Desc">Tap, swipe, long press, pinch, rotate — simulate any gesture with precise coordinates.</p>
+                <span class="feature-tag" style="background:var(--accent-glow);color:var(--accent-light);">Multi-touch</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(52,211,153,0.1);color:#34d399;"><i data-lucide="palette" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc2Title">Smart Color Detection</h3>
+                <p data-i18n="fc2Desc">Get pixel colors, find patterns, wait for specific colors. Visual Helper tool for easy picking.</p>
+                <span class="feature-tag" style="background:var(--green-glow);color:var(--green);">Helper Tool</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(251,191,36,0.1);color:#fbbf24;"><i data-lucide="image" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc3Title">Image Recognition</h3>
+                <p data-i18n="fc3Desc">Find images on screen with template matching. OCR text recognition. Wait for visual elements.</p>
+                <span class="feature-tag" style="background:rgba(251,191,36,0.1);color:#fbbf24;">OpenCV</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(244,114,182,0.1);color:#f472b6;"><i data-lucide="monitor" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc4Title">Live Screen Mirror</h3>
+                <p data-i18n="fc4Desc">MJPEG live stream at 10+ FPS. Click anywhere on the mirrored screen to tap on device.</p>
+                <span class="feature-tag" style="background:rgba(244,114,182,0.1);color:#f472b6;">Real-time</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(34,211,238,0.1);color:#22d3ee;"><i data-lucide="workflow" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc5Title">Visual Flow Builder</h3>
+                <p data-i18n="fc5Desc">Drag & drop blocks to build automations visually. No coding required. Export to Python/Lua.</p>
+                <span class="feature-tag" style="background:rgba(34,211,238,0.1);color:#22d3ee;">No-code</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(251,146,60,0.1);color:#fb923c;"><i data-lucide="repeat-2" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc6Title">Python ↔ Lua Converter</h3>
+                <p data-i18n="fc6Desc">Write in Python, convert to Lua instantly. Smart API mapping and syntax transformation.</p>
+                <span class="feature-tag" style="background:rgba(251,146,60,0.1);color:#fb923c;">Smart</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;"><i data-lucide="video" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc7Title">Record & Playback</h3>
+                <p data-i18n="fc7Desc">Record your touch actions and replay them. Save recordings as reusable Lua scripts.</p>
+                <span class="feature-tag" style="background:var(--accent-glow);color:var(--accent-light);">1-Click</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(52,211,153,0.1);color:#34d399;"><i data-lucide="zap" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc8Title">Volume Button Activator</h3>
+                <p data-i18n="fc8Desc">Double-press Volume Down anywhere to trigger quick actions: record, run scripts, screenshot.</p>
+                <span class="feature-tag" style="background:var(--green-glow);color:var(--green);">Global</span>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon" style="background:rgba(251,191,36,0.1);color:#fbbf24;"><i data-lucide="calendar" style="width:24px;height:24px;"></i></div>
+                <h3 data-i18n="fc9Title">Scheduler</h3>
+                <p data-i18n="fc9Desc">Schedule scripts at specific times. Trigger on notification events. Cron-like repeating.</p>
+                <span class="feature-tag" style="background:rgba(251,191,36,0.1);color:#fbbf24;">Timer</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Comparison ═══ -->
+<section class="comparison" id="comparison">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge"><i data-lucide="swords" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Compare</span>
+            <h2 data-i18n="compTitle">IOSControl vs AutoTouch</h2>
+            <p data-i18n="compDesc">See why IOSControl is the next-generation automation tool</p>
+        </div>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th data-i18n="tblFeature">Feature</th>
+                    <th>AutoTouch</th>
+                    <th>IOSControl <i data-lucide="sparkles" style="width:14px;height:14px;vertical-align:-2px;"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td data-i18n="tblRow1">Native Tweak (Cydia/Sileo)</td><td class="check">✓ Cydia</td><td class="check">✓ Cydia + Sileo</td></tr>
+                <tr><td data-i18n="tblRow2">Touch Simulation</td><td class="check">✓</td><td class="check">✓ + Pinch, Rotate</td></tr>
+                <tr><td data-i18n="tblRow3">Color Detection</td><td class="check">✓</td><td class="check">✓ + Visual Helper</td></tr>
+                <tr><td data-i18n="tblRow4">Image Recognition</td><td class="check">✓</td><td class="check">✓ + OCR Text</td></tr>
+                <tr><td data-i18n="tblRow5">Web IDE</td><td class="cross">✗ Basic editor</td><td class="check">✓ Monaco Editor</td></tr>
+                <tr><td data-i18n="tblRow6">Live Screen Mirror</td><td class="cross">✗</td><td class="check">✓ MJPEG 10+ FPS</td></tr>
+                <tr><td data-i18n="tblRow7">Visual Flow Builder</td><td class="cross">✗ Code only</td><td class="check">✓ Drag & Drop</td></tr>
+                <tr><td data-i18n="tblRow8">Python Support</td><td class="cross">✗ Lua/JS only</td><td class="check">✓ Full Python</td></tr>
+                <tr><td data-i18n="tblRow9">Python → Lua Converter</td><td class="cross">✗</td><td class="check">✓ Smart Convert</td></tr>
+                <tr><td data-i18n="tblRow10">HTTP Requests</td><td class="partial">⚠ Limited</td><td class="check">✓ Full Client</td></tr>
+                <tr><td data-i18n="tblRow11">Scheduler/Timer</td><td class="cross">✗</td><td class="check">✓ Built-in</td></tr>
+                <tr><td data-i18n="tblRow12">Multi-device Control</td><td class="cross">✗</td><td class="check">✓ Sync & Manage</td></tr>
+                <tr><td data-i18n="tblRow13">AI Code Assist</td><td class="cross">✗</td><td class="check">✓ Smart Suggestions</td></tr>
+                <tr><td data-i18n="tblRow14">Notification Triggers</td><td class="cross">✗</td><td class="check">✓ Hook Events</td></tr>
+                <tr><td data-i18n="tblRow15">Clipboard Access</td><td class="cross">✗</td><td class="check">✓ Read/Write</td></tr>
+                <tr><td data-i18n="tblRow16">Price</td><td class="partial">$4.99 - $9.99</td><td class="check" data-i18n="tblFreeOS">Free & Open Source</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══ How it Works ═══ -->
+<section class="how-it-works" id="how">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge"><i data-lucide="wrench" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Setup</span>
+            <h2 data-i18n="howTitle">Up and Running in 3 Steps</h2>
+            <p data-i18n="howDesc">Install from Cydia/Sileo, open the Web IDE, and start automating.</p>
+        </div>
+        <div class="steps">
+            <div class="step fade-in">
+                <div class="step-number">1</div>
+                <h3 data-i18n="how1Title">Install via Cydia</h3>
+                <p data-i18n="how1Desc">Add our repo <code>https://repo.icontrol.dev</code> to Cydia or Sileo. Install the IOSControl tweak — it runs as a native daemon.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-number">2</div>
+                <h3 data-i18n="how2Title">Open Web IDE</h3>
+                <p data-i18n="how2Desc">Open <code>http://iphone-ip:8888</code> in your browser — or access from any device on the same WiFi network.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-number">3</div>
+                <h3 data-i18n="how3Title">Automate!</h3>
+                <p data-i18n="how3Desc">Write Python/Lua scripts or build visual flows. Record touch actions. Schedule tasks. Run on multiple devices.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Code Examples ═══ -->
+<section class="code-examples" id="code">
+    <div class="container">
+        <div class="code-section-layout">
+            <div class="code-description">
+                <span class="badge" style="margin-bottom:20px;"><i data-lucide="code" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Code</span>
+                <h3 data-i18n="codeTitle">Write Scripts in Python<br />or Convert to Lua</h3>
+                <p data-i18n="codeDesc">
+                    Full Python support with 60+ automation functions.
+                    Smart autocomplete, syntax highlighting, and instant API documentation right in the editor.
+                </p>
+                <ul class="code-feature-list">
+                    <li><span class="icon"><i data-lucide="crosshair" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat1">Precise touch simulation with sub-pixel accuracy</span></li>
+                    <li><span class="icon"><i data-lucide="palette" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat2">Click-to-pick color helper generates code for you</span></li>
+                    <li><span class="icon"><i data-lucide="search" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat3">Image recognition with OpenCV template matching</span></li>
+                    <li><span class="icon"><i data-lucide="file-text" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat4">OCR text recognition — read any text on screen</span></li>
+                    <li><span class="icon"><i data-lucide="globe" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat5">HTTP client for API calls and web scraping</span></li>
+                    <li><span class="icon"><i data-lucide="timer" style="width:14px;height:14px;"></i></span> <span data-i18n="codeFeat6">Smart waits — wait for colors, images, or text</span></li>
+                </ul>
+            </div>
+            <div>
+                <div class="code-tabs">
+                    <button class="code-tab active" onclick="showCodeTab('python')"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:3px;"></i>Python</button>
+                    <button class="code-tab" onclick="showCodeTab('lua')"><i data-lucide="moon" style="width:13px;height:13px;vertical-align:-2px;margin-right:3px;"></i>Lua</button>
+                </div>
+                <div class="code-block" id="pythonCode">
+                    <div class="code-block-header"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.py</div>
+                    <pre><span class="cm"># Auto-farm game coins</span>
+<span class="kw">import</span> random
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">100</span>):
+    <span class="fn">tap</span>(<span class="num">195</span>, <span class="num">400</span>)
+    <span class="fn">sleep</span>(<span class="fn">random.uniform</span>(<span class="num">0.2</span>, <span class="num">0.5</span>))
+
+    <span class="var">color</span> <span class="op">=</span> <span class="fn">get_color</span>(<span class="num">195</span>, <span class="num">400</span>)
+    <span class="kw">if</span> <span class="var">color</span> <span class="op">==</span> <span class="num">0xFF0000</span>:
+        <span class="fn">tap</span>(<span class="num">195</span>, <span class="num">600</span>)    <span class="cm"># Collect reward</span>
+        <span class="fn">sleep</span>(<span class="num">1</span>)
+
+    <span class="kw">if</span> i <span class="op">%</span> <span class="num">10</span> <span class="op">==</span> <span class="num">0</span>:
+        <span class="fn">screenshot</span>(<span class="str">f"progress_{i}.png"</span>)
+
+<span class="fn">log</span>(<span class="str">"✅ Farming complete!"</span>)</pre>
+                </div>
+                <div class="code-block" id="luaCode" style="display:none;">
+                    <div class="code-block-header"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.lua</div>
+                    <pre><span class="cm">-- Auto-farm game coins</span>
+
+<span class="kw">for</span> i <span class="op">=</span> <span class="num">0</span>, <span class="num">99</span> <span class="kw">do</span>
+    <span class="fn">tap</span>(<span class="num">195</span>, <span class="num">400</span>)
+    <span class="fn">sleep</span>(<span class="num">0.2</span> <span class="op">+</span> <span class="fn">math.random</span>() <span class="op">*</span> <span class="num">0.3</span>)
+
+    <span class="kw">local</span> <span class="var">color</span> <span class="op">=</span> <span class="fn">getColor</span>(<span class="num">195</span>, <span class="num">400</span>)
+    <span class="kw">if</span> <span class="var">color</span> <span class="op">==</span> <span class="num">0xFF0000</span> <span class="kw">then</span>
+        <span class="fn">tap</span>(<span class="num">195</span>, <span class="num">600</span>)    <span class="cm">-- Collect reward</span>
+        <span class="fn">sleep</span>(<span class="num">1</span>)
+    <span class="kw">end</span>
+
+    <span class="kw">if</span> i <span class="op">%</span> <span class="num">10</span> <span class="op">==</span> <span class="num">0</span> <span class="kw">then</span>
+        <span class="fn">screenshot</span>(<span class="str">"progress_"</span> <span class="op">..</span> i <span class="op">..</span> <span class="str">".png"</span>)
+    <span class="kw">end</span>
+<span class="kw">end</span>
+
+<span class="fn">log</span>(<span class="str">"✅ Farming complete!"</span>)</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Helper Tools ═══ -->
+<section class="code-examples" id="helper" style="padding:80px 0;">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge"><i data-lucide="wand-2" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Helper</span>
+            <h2 data-i18n="helperTitle">Built-in Helper Tools</h2>
+            <p data-i18n="helperDesc">Visual tools that generate code for you — click on screen to pick colors, manage apps, crop images.</p>
+        </div>
+        <div class="code-tabs" style="justify-content:center;margin-bottom:24px;">
+            <button class="code-tab active" onclick="showHelper('color')"><i data-lucide="palette" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i><span data-i18n="helpColor">Color Picker</span></button>
+            <button class="code-tab" onclick="showHelper('apps')"><i data-lucide="layout-grid" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i><span data-i18n="helpApps">App Manager</span></button>
+            <button class="code-tab" onclick="showHelper('image')"><i data-lucide="scissors" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i><span data-i18n="helpImage">Image Crop</span></button>
+        </div>
+        <div style="max-width:960px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <img id="helperImg-color" src="/assets/helper-color.png" alt="Color Picker Helper" style="width:100%;display:block;" loading="lazy" />
+            <img id="helperImg-apps" src="/assets/helper-apps.png" alt="App Manager Helper" style="width:100%;display:none;" loading="lazy" />
+            <img id="helperImg-image" src="/assets/helper-image.png" alt="Image Crop Helper" style="width:100%;display:none;" loading="lazy" />
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Activator ═══ -->
+<section class="activator" id="activator">
+    <div class="container">
+        <div class="activator-layout">
+            <div style="display:flex;gap:24px;align-items:center;justify-content:center;">
+                <div style="width:240px;border-radius:32px;overflow:hidden;border:3px solid rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(0,0,0,0.4);">
+                    <img src="/assets/app-screenshot.jpg" alt="IOSControl Native App" style="width:100%;display:block;" loading="lazy" />
+                </div>
+                <div style="width:240px;border-radius:32px;overflow:hidden;border:3px solid rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(0,0,0,0.4);">
+                    <img src="/assets/quickapp-screenshot.jpg" alt="IOSControl QuickApp Popup" style="width:100%;display:block;" loading="lazy" />
+                </div>
+            </div>
+            <div class="activator-description">
+                <span class="badge" style="margin-bottom:20px;"><i data-lucide="smartphone" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Native App</span>
+                <h3 data-i18n="actTitle">Trigger Anywhere with<br /><span class="gradient-text">Volume Button</span></h3>
+                <p data-i18n="actDesc">
+                    Double-press the Volume Down button from any screen — Safari, games, settings — 
+                    the IOSControl popup appears instantly with quick actions.
+                </p>
+                <ul class="code-feature-list">
+                    <li><span class="icon"><i data-lucide="circle" style="width:14px;height:14px;color:#f87171;"></i></span> <span data-i18n="actF1">Start/stop touch recording with one tap</span></li>
+                    <li><span class="icon"><i data-lucide="play" style="width:14px;height:14px;color:#34d399;"></i></span> <span data-i18n="actF2">Run any saved script from the popup</span></li>
+                    <li><span class="icon"><i data-lucide="camera" style="width:14px;height:14px;"></i></span> <span data-i18n="actF3">Quick screenshot capture</span></li>
+                    <li><span class="icon"><i data-lucide="repeat-2" style="width:14px;height:14px;"></i></span> <span data-i18n="actF4">Replay the last recording instantly</span></li>
+                    <li><span class="icon"><i data-lucide="crosshair" style="width:14px;height:14px;"></i></span> <span data-i18n="actF5">Works in any app, no need to switch</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Pricing ═══ -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge"><i data-lucide="credit-card" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Pricing</span>
+            <h2 data-i18n="priceTitle">Simple, Fair Pricing</h2>
+            <p data-i18n="priceDesc">Try everything for free. Upgrade when you're ready.</p>
+        </div>
+        <div class="pricing-grid" style="max-width:760px;margin:0 auto;grid-template-columns:1fr 1fr;">
+            <!-- Free -->
+            <div class="pricing-card fade-in">
+                <h3 data-i18n="price1Name">Free</h3>
+                <div class="pricing-price">$0</div>
+                <div class="pricing-desc" data-i18n="price1Desc">Full features, time-limited scripts</div>
+                <ul class="pricing-features">
+                    <li><span class="pf-check">✓</span> <span data-i18n="pf1">Touch simulation (tap, swipe, long press)</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pf2">Color detection & pixel reading</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pf3">Record & playback</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pf4">Web IDE with all tabs</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pfImg">Image recognition + OCR</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pfFlow">Visual Flow Builder</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pfHelper">Helper Tools (Color, Image, Apps)</span></li>
+                    <li><span class="pf-check">✓</span> <span data-i18n="pfPy2Lua">Python → Lua converter</span></li>
+                    <li style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+                        <span class="pf-cross" style="color:#f59e0b;">⚠</span> 
+                        <span data-i18n="pfLimit" style="color:#f59e0b;font-weight:500;">Max 2 minutes per script run</span>
+                    </li>
+                </ul>
+                <a href="#how" class="pricing-btn" data-i18n="priceBtn1">Get Started Free</a>
+            </div>
+            <!-- Premium -->
+            <div class="pricing-card featured fade-in">
+                <div class="pricing-badge" data-i18n="priceBadge">Recommended</div>
+                <h3 data-i18n="price2Name">Premium</h3>
+                <div class="pricing-price gradient-text" data-i18n="priceAmount">999₫<span style="font-size:16px;opacity:0.7;">/day</span></div>
+                <div class="pricing-desc" data-i18n="price2Desc">Unlimited. No restrictions.</div>
+                <ul class="pricing-features">
+                    <li><span class="pf-check">✓</span> <span data-i18n="pfAllFree">Everything in Free</span></li>
+                    <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfUnlimited" style="font-weight:600;">Unlimited script runtime</span></li>
+                    <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfNoAlert">No interruptions or alerts</span></li>
+                    <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfPriority">Priority support</span></li>
+                    <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfEarly">Early access to new features</span></li>
+                    <li style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+                        <span class="pf-check" style="color:#34d399;">✓</span> 
+                        <span data-i18n="pfDayCost" style="color:#34d399;font-weight:500;">~$0.03/day — cheaper than a coffee ☕</span>
+                    </li>
+                </ul>
+                <a href="https://t.me/IOSControl_Recap1s" target="_blank" class="pricing-btn primary" data-i18n="priceBtn2">Activate License →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+    <div class="container">
+        <h2><span data-i18n="ctaTitle">Ready to</span> <span class="gradient-text" data-i18n="ctaTitleHL">Automate?</span></h2>
+        <p data-i18n="ctaDesc">The most powerful automation tweak for jailbroken iPhones. Free, open source, install from Cydia/Sileo.</p>
+        <div class="cta-actions">
+            <a href="/connect.html" class="btn-primary-lg" style="padding:16px 40px;font-size:16px;" data-i18n="ctaCTA1">
+                Launch Web IDE →
+            </a>
+            <a href="#how" class="btn-outline" style="padding:16px 40px;font-size:16px;" data-i18n="ctaCTA2">
+                <i data-lucide="package" style="width:16px;height:16px;vertical-align:-2px;margin-right:4px;"></i>Install via Cydia
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4><i data-lucide="smartphone" style="width:16px;height:16px;vertical-align:-2px;margin-right:4px;"></i>IOSControl</h4>
+                <p data-i18n="footerDesc">
+                    The most powerful jailbreak automation tweak. 
+                    Record, script, and automate with full native access. 
+                    Built with <i data-lucide="heart" style="width:12px;height:12px;vertical-align:-2px;color:#f87171;"></i> for iOS developers and power users.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h5 data-i18n="ftProduct">Product</h5>
+                <ul>
+                    <li><a href="/connect.html" data-i18n="ftLaunchIDE">Launch IDE</a></li>
+                    <li><a href="#features" data-i18n="ftFeatures">Features</a></li>
+                    <li><a href="#pricing" data-i18n="ftPricing">Pricing</a></li>
+                    <li><a href="/docs.html" data-i18n="ftDocs">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5 data-i18n="ftSupport">Support</h5>
+                <ul>
+                    <li><a href="https://t.me/IOSControl_Comunity" target="_blank"><i data-lucide="message-circle" style="width:12px;height:12px;vertical-align:-2px;margin-right:4px;"></i><span data-i18n="ftTgCommunity">Community</span></a></li>
+                    <li><a href="https://t.me/IOSControl_Recap1s" target="_blank"><i data-lucide="headphones" style="width:12px;height:12px;vertical-align:-2px;margin-right:4px;"></i><span data-i18n="ftTgSupport">Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span data-i18n="ftCopyright">© 2026 IOSControl.</span>
+            <span>Made with 🇻🇳</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Code tab switch
+function showCodeTab(lang) {
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    event.target.closest('.code-tab').classList.add('active');
+    document.getElementById('pythonCode').style.display = lang === 'python' ? 'block' : 'none';
+    document.getElementById('luaCode').style.display = lang === 'lua' ? 'block' : 'none';
+}
+
+function showHelper(tab) {
+    const section = document.getElementById('helper');
+    section.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    event.target.closest('.code-tab').classList.add('active');
+    ['color','apps','image'].forEach(id => {
+        const img = document.getElementById('helperImg-' + id);
+        if (img) img.style.display = id === tab ? 'block' : 'none';
+    });
+}
+
+const heroTabIds = ['editor','console','files','converter','flowbuilder'];
+let heroTabIdx = 0;
+function showHeroTab(tab) {
+    const tabs = document.getElementById('heroTabs');
+    tabs.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    if (event && event.target) event.target.closest('.code-tab').classList.add('active');
+    else tabs.querySelectorAll('.code-tab')[heroTabIds.indexOf(tab)].classList.add('active');
+    heroTabIds.forEach(id => {
+        const img = document.getElementById('heroTab-' + id);
+        if (img) img.style.display = id === tab ? 'block' : 'none';
+    });
+    heroTabIdx = heroTabIds.indexOf(tab);
+}
+// Auto-rotate hero tabs every 4 seconds
+setInterval(() => {
+    heroTabIdx = (heroTabIdx + 1) % heroTabIds.length;
+    const tabs = document.getElementById('heroTabs');
+    tabs.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    tabs.querySelectorAll('.code-tab')[heroTabIdx].classList.add('active');
+    heroTabIds.forEach(id => {
+        const img = document.getElementById('heroTab-' + id);
+        if (img) img.style.display = id === heroTabIds[heroTabIdx] ? 'block' : 'none';
+    });
+}, 4000);
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ═══ Theme Toggle ═══
+let landingTheme = localStorage.getItem('icontrol-theme') || 'dark';
+let landingLang = localStorage.getItem('icontrol-lang') || 'en';
+
+function applyLandingTheme() {
+    document.documentElement.setAttribute('data-theme', landingTheme);
+    document.getElementById('landingThemeIcon').innerHTML = `<i data-lucide="${landingTheme === 'dark' ? 'moon' : 'sun'}" style="width:16px;height:16px;"></i>`;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    localStorage.setItem('icontrol-theme', landingTheme);
+}
+
+document.getElementById('landingThemeToggle').addEventListener('click', () => {
+    landingTheme = landingTheme === 'dark' ? 'light' : 'dark';
+    applyLandingTheme();
+});
+applyLandingTheme();
+
+// ═══ i18n ═══
+const LANDING_I18N = {
+  en: {
+    navFeatures: 'Features', navCompare: 'Compare', navHow: 'How it Works', navIDE: 'Open IDE', navLaunch: 'Launch IDE →',
+    heroBadge: '<i data-lucide="zap" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Powered by Jailbreak — Native Cydia & Sileo Tweak',
+    heroTitle1: 'iPhone Automation', heroTitle2: 'Unleashed',
+    heroDesc: 'The ultimate automation tweak for jailbroken iPhones. Full native access — touch injection, color detection, OCR, app control — powered by Python & Lua scripts with a professional Web IDE.',
+    heroCTA1: 'Open Web IDE →', heroCTA2: 'Install via Cydia ↓',
+    stat1: '50+', stat1Label: 'API Functions', stat2: '2', stat2Label: 'Languages (Python & Lua)', stat3: '14-18', stat3Label: 'iOS Versions Supported', stat4: '∞', stat4Label: 'Automations',
+    featTitle: 'Everything You Need to Automate', featDesc: 'From simple taps to complex workflows — IOSControl has you covered.',
+    fc1Title: 'Touch Simulation', fc1Desc: 'Tap, swipe, long press, pinch, rotate — simulate any gesture with precise coordinates.',
+    fc2Title: 'Smart Color Detection', fc2Desc: 'Get pixel colors, find patterns, wait for specific colors. Visual Helper tool for easy picking.',
+    fc3Title: 'Image Recognition', fc3Desc: 'Find images on screen with template matching. OCR text recognition. Wait for visual elements.',
+    fc4Title: 'Live Screen Mirror', fc4Desc: 'MJPEG live stream at 10+ FPS. Click anywhere on the mirrored screen to tap on device.',
+    fc5Title: 'Visual Flow Builder', fc5Desc: 'Drag & drop blocks to build automations visually. No coding required. Export to Python/Lua.',
+    fc6Title: 'Python ↔ Lua Converter', fc6Desc: 'Write in Python, convert to Lua instantly. Smart API mapping and syntax transformation.',
+    fc7Title: 'Record & Playback', fc7Desc: 'Record your touch actions and replay them. Save recordings as reusable Lua scripts.',
+    fc8Title: 'Volume Button Activator', fc8Desc: 'Double-press Volume Down anywhere to trigger quick actions: record, run scripts, screenshot.',
+    fc9Title: 'Scheduler', fc9Desc: 'Schedule scripts at specific times. Trigger on notification events. Cron-like repeating.',
+    compTitle: 'IOSControl vs AutoTouch', compDesc: 'See why IOSControl is the next-generation automation tool.',
+    howTitle: 'Up and Running in 3 Steps', howDesc: 'Install from Cydia/Sileo, open the Web IDE, and start automating.',
+    how1Title: 'Install via Cydia', how1Desc: 'Add our repo <code>https://repo.icontrol.dev</code> to Cydia or Sileo. Install the IOSControl tweak — it runs as a native daemon.',
+    how2Title: 'Open Web IDE', how2Desc: 'Open <code>http://iphone-ip:8888</code> in your browser — or access from any device on the same WiFi network.',
+    how3Title: 'Automate!', how3Desc: 'Write Python/Lua scripts or build visual flows. Record touch actions. Schedule tasks. Run on multiple devices.',
+    codeTitle: 'Write Scripts in Python or Convert to Lua',
+    codeDesc: 'Full Python support with 50+ automation functions. Smart auto-converter handles the Lua translation.',
+    codeFeat1: 'Precise touch simulation with sub-pixel accuracy',
+    codeFeat2: 'Click-to-pick color helper generates code for you',
+    codeFeat3: 'Image recognition with OpenCV template matching',
+    codeFeat4: 'OCR text recognition — read any text on screen',
+    codeFeat5: 'HTTP client for API calls and web scraping',
+    codeFeat6: 'Smart waits — wait for colors, images, or text',
+    tblFeature: 'Feature',
+    tblRow1: 'Native Tweak (Cydia/Sileo)', tblRow2: 'Touch Simulation', tblRow3: 'Color Detection', tblRow4: 'Image Recognition',
+    tblRow5: 'Web IDE', tblRow6: 'Live Screen Mirror', tblRow7: 'Visual Flow Builder', tblRow8: 'Python Support',
+    tblRow9: 'Python → Lua Converter', tblRow10: 'HTTP Requests', tblRow11: 'Scheduler/Timer', tblRow12: 'Multi-device Control',
+    tblRow13: 'AI Code Assist', tblRow14: 'Notification Triggers', tblRow15: 'Clipboard Access', tblRow16: 'Price',
+    tblFreeOS: 'Free & Open Source',
+    ftProduct: 'Product', ftFeatures: 'Features', ftAPI: 'API Reference', ftVsAT: 'vs AutoTouch',
+    ftResources: 'Resources', ftDocs: 'Documentation', ftExamples: 'Script Examples', ftVideos: 'Video Tutorials',
+    ftCommunity: 'Community', ftCopyright: '© 2026 IOSControl. Open Source Software.',
+    actRec: 'Start Recording', actRecSub: 'Record touches to script',
+    actRun: 'Run Script', actRunSub: '5 scripts available',
+    actReplay: 'Replay Recording', actReplaySub: 'Last: 42 events',
+    actScreenshot: 'Screenshot', actScreenshotSub: 'Save to device',
+    actHint: '<i data-lucide="volume-1" style="width:12px;height:12px;vertical-align:-2px;margin-right:3px;"></i>Double-press Volume Down to toggle',
+    actTitle: 'Trigger Anywhere with<br /><span class="gradient-text">Volume Button</span>',
+    actDesc: 'Double-press the Volume Down button from any screen — Safari, games, settings — the IOSControl popup appears instantly with quick actions.',
+    actF1: 'Start/stop touch recording with one tap', actF2: 'Run any saved script from the popup',
+    actF3: 'Quick screenshot capture', actF4: 'Replay the last recording instantly', actF5: 'Works in any app, no need to switch',
+    ctaTitle: 'Ready to', ctaTitleHL: 'Automate?',
+    ctaDesc: 'The most powerful automation tweak for jailbroken iPhones. Free, open source, install from Cydia/Sileo.',
+    ctaCTA1: 'Launch Web IDE →', ctaCTA2: '<i data-lucide="package" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Install via Cydia',
+    footerDesc: 'The most powerful jailbreak automation tweak. Record, script, and automate with full native access. Built with <i data-lucide="heart" style="width:12px;height:12px;vertical-align:-2px;color:#f87171;"></i> for iOS developers and power users.',
+    ftProduct: 'Product', ftLaunchIDE: 'Launch IDE', ftFeatures: 'Features', ftPricing: 'Pricing', ftDocs: 'Documentation',
+    ftSupport: 'Support', ftTgCommunity: 'Telegram Community', ftTgSupport: 'Telegram Support', ftCopyright: '© 2026 IOSControl.',
+    navPricing: 'Pricing',
+    priceTitle: 'Simple, Fair Pricing', priceDesc: 'Try everything for free. Upgrade when you\'re ready.',
+    price1Name: 'Free', price1Desc: 'Full features, time-limited scripts',
+    price2Name: 'Premium', price2Desc: 'Unlimited. No restrictions.',
+    priceBadge: 'Recommended', priceAmount: '999₫<span style="font-size:16px;opacity:0.7;">/day</span>',
+    pf1: 'Touch simulation (tap, swipe, long press)', pf2: 'Color detection & pixel reading', pf3: 'Record & playback', pf4: 'Web IDE with all tabs',
+    pfImg: 'Image recognition + OCR', pfFlow: 'Visual Flow Builder',
+    pfHelper: 'Helper Tools (Color, Image, Apps)', pfPy2Lua: 'Python → Lua converter',
+    pfLimit: 'Max 2 minutes per script run',
+    pfAllFree: 'Everything in Free', pfUnlimited: 'Unlimited script runtime',
+    pfNoAlert: 'No interruptions or alerts', pfPriority: 'Priority support', pfEarly: 'Early access to new features',
+    pfDayCost: '~$0.04/day — cheaper than a coffee ☕',
+    priceBtn1: 'Get Started Free', priceBtn2: 'Activate License →',
+    navPurchase: '<i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Buy Key',
+    helperTitle: 'Built-in Helper Tools', helperDesc: 'Visual tools that generate code for you — click on screen to pick colors, manage apps, crop images.',
+    helpColor: 'Color Picker', helpApps: 'App Manager', helpImage: 'Image Crop'
+  },
+  vi: {
+    navFeatures: 'Tính năng', navCompare: 'So sánh', navHow: 'Cách dùng', navIDE: 'Mở IDE', navLaunch: 'Khởi chạy IDE →',
+    heroBadge: '<i data-lucide="zap" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Hỗ trợ Jailbreak — Tweak native Cydia & Sileo',
+    heroTitle1: 'Tự động hoá iPhone', heroTitle2: 'Vượt giới hạn',
+    heroDesc: 'Công cụ tự động hoá mạnh nhất cho iPhone jailbreak. Truy cập native — chạm, phát hiện màu, OCR, điều khiển app — bằng script Python & Lua với Web IDE chuyên nghiệp.',
+    heroCTA1: 'Mở Web IDE →', heroCTA2: 'Cài qua Cydia ↓',
+    stat1: '50+', stat1Label: 'Hàm API', stat2: '2', stat2Label: 'Ngôn ngữ (Python & Lua)', stat3: '14-18', stat3Label: 'Phiên bản iOS', stat4: '∞', stat4Label: 'Tự động hoá',
+    featTitle: 'Đầy đủ mọi thứ bạn cần', featDesc: 'Từ thao tác chạm đơn giản đến quy trình phức tạp — IOSControl lo tất cả.',
+    fc1Title: 'Mô phỏng cảm ứng', fc1Desc: 'Chạm, vuốt, nhấn giữ, phóng to, xoay — mô phỏng mọi thảo tác với toạ độ chính xác.',
+    fc2Title: 'Phát hiện màu thông minh', fc2Desc: 'Lấy màu pixel, tìm mẫu, chờ màu cụ thể. Công cụ Helper trực quan.',
+    fc3Title: 'Nhận dạng hình ảnh', fc3Desc: 'Tìm hình trên màn hình bằng template matching. Nhận dạng chữ OCR. Chờ phần tử xuất hiện.',
+    fc4Title: 'Phản chiếu màn hình', fc4Desc: 'Stream MJPEG trực tiếp 10+ FPS. Click bất kỳ đâu trên màn hình để chạm trên thiết bị.',
+    fc5Title: 'Flow Builder trực quan', fc5Desc: 'Kéo thả khối để tạo tự động hoá trực quan. Không cần code. Xuất ra Python/Lua.',
+    fc6Title: 'Chuyển đổi Python ↔ Lua', fc6Desc: 'Viết bằng Python, chuyển sang Lua tức thì. Ánh xạ API thông minh.',
+    fc7Title: 'Ghi & Phát lại', fc7Desc: 'Ghi lại thao tác chạm và phát lại. Lưu bản ghi thành script Lua.',
+    fc8Title: 'Kích hoạt bằng nút âm lượng', fc8Desc: 'Nhấn đúp Volume Down bất kỳ đâu để kích hoạt nhanh: ghi, chạy script, chụp màn hình.',
+    fc9Title: 'Lập lịch', fc9Desc: 'Lên lịch chạy script vào thời điểm cụ thể. Kích hoạt theo sự kiện thông báo. Lặp lại dạng cron.',
+    compTitle: 'IOSControl vs AutoTouch', compDesc: 'Tại sao IOSControl là công cụ tự động hoá thế hệ mới.',
+    howTitle: 'Chạy trong 3 bước', howDesc: 'Cài từ Cydia/Sileo, mở Web IDE, và bắt đầu tự động hoá.',
+    how1Title: 'Cài qua Cydia', how1Desc: 'Thêm repo <code>https://repo.icontrol.dev</code> vào Cydia hoặc Sileo. Cài tweak IOSControl — chạy như daemon native.',
+    how2Title: 'Mở Web IDE', how2Desc: 'Mở <code>http://iphone-ip:8888</code> trên trình duyệt — hoặc truy cập từ thiết bị bất kỳ cùng mạng WiFi.',
+    how3Title: 'Tự động hoá!', how3Desc: 'Viết script Python/Lua hoặc tạo flow kéo thả. Ghi thao tác chạm. Lập lịch. Chạy trên nhiều thiết bị.',
+    codeTitle: 'Viết Script Python hoặc Chuyển đổi sang Lua',
+    codeDesc: 'Hỗ trợ Python đầy đủ với 50+ hàm tự động hoá. Bộ chuyển đổi thông minh sang Lua.',
+    codeFeat1: 'Mô phỏng chạm chính xác đến từng sub-pixel',
+    codeFeat2: 'Click chọn màu — tự sinh code cho bạn',
+    codeFeat3: 'Nhận dạng hình ảnh với OpenCV template matching',
+    codeFeat4: 'Nhận dạng chữ OCR — đọc mọi văn bản trên màn hình',
+    codeFeat5: 'HTTP client cho gọi API và thu thập dữ liệu web',
+    codeFeat6: 'Chờ thông minh — chờ màu, hình ảnh, hoặc văn bản',
+    tblFeature: 'Tính năng',
+    tblRow1: 'Tweak native (Cydia/Sileo)', tblRow2: 'Mô phỏng cảm ứng', tblRow3: 'Phát hiện màu', tblRow4: 'Nhận dạng hình ảnh',
+    tblRow5: 'Web IDE', tblRow6: 'Phản chiếu màn hình', tblRow7: 'Flow Builder trực quan', tblRow8: 'Hỗ trợ Python',
+    tblRow9: 'Chuyển đổi Python → Lua', tblRow10: 'HTTP Requests', tblRow11: 'Lập lịch/Timer', tblRow12: 'Điều khiển nhiều thiết bị',
+    tblRow13: 'AI hỗ trợ code', tblRow14: 'Kích hoạt bằng thông báo', tblRow15: 'Truy cập Clipboard', tblRow16: 'Giá',
+    tblFreeOS: 'Miễn phí & Mã nguồn mở',
+    ftProduct: 'Sản phẩm', ftFeatures: 'Tính năng', ftAPI: 'Tài liệu API', ftVsAT: 'vs AutoTouch',
+    ftResources: 'Tài nguyên', ftDocs: 'Tài liệu', ftExamples: 'Ví dụ Script', ftVideos: 'Video hướng dẫn',
+    ftCommunity: 'Cộng đồng', ftCopyright: '© 2026 IOSControl. Phần mềm mã nguồn mở.',
+    actRec: 'Bắt đầu ghi', actRecSub: 'Ghi thao tác chạm thành script',
+    actRun: 'Chạy Script', actRunSub: '5 script có sẵn',
+    actReplay: 'Phát lại', actReplaySub: 'Lần cuối: 42 sự kiện',
+    actScreenshot: 'Chụp màn hình', actScreenshotSub: 'Lưu vào thiết bị',
+    actHint: '<i data-lucide="volume-1" style="width:12px;height:12px;vertical-align:-2px;margin-right:3px;"></i>Nhấn đúp Volume Down để bật/tắt',
+    actTitle: 'Kích hoạt mọi nơi bằng<br /><span class="gradient-text">Nút Âm lượng</span>',
+    actDesc: 'Nhấn đúp nút Volume Down từ bất kỳ màn hình nào — Safari, game, cài đặt — popup IOSControl xuất hiện ngay với các hành động nhanh.',
+    actF1: 'Bắt đầu/dừng ghi chạm bằng một nhấn', actF2: 'Chạy bất kỳ script đã lưu từ popup',
+    actF3: 'Chụp màn hình nhanh', actF4: 'Phát lại bản ghi gần nhất ngay', actF5: 'Hoạt động trong mọi app, không cần chuyển',
+    ctaTitle: 'Sẵn sàng', ctaTitleHL: 'Tự động hoá?',
+    ctaDesc: 'Tweak tự động hoá mạnh nhất cho iPhone jailbreak. Miễn phí, mã nguồn mở, cài từ Cydia/Sileo.',
+    ctaCTA1: 'Khởi chạy Web IDE →', ctaCTA2: '<i data-lucide="package" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Cài qua Cydia',
+    footerDesc: 'Tweak tự động hoá jailbreak mạnh nhất. Ghi, viết script, và tự động hoá với truy cập native. Xây dựng với <i data-lucide="heart" style="width:12px;height:12px;vertical-align:-2px;color:#f87171;"></i> cho iOS developers và power users.',
+    ftProduct: 'Sản phẩm', ftLaunchIDE: 'Mở IDE', ftFeatures: 'Tính năng', ftPricing: 'Bảng giá', ftDocs: 'Tài liệu',
+    ftSupport: 'Hỗ trợ', ftTgCommunity: 'Cộng đồng Telegram', ftTgSupport: 'Hỗ trợ Telegram', ftCopyright: '© 2026 IOSControl.',
+    navPricing: 'Bảng giá',
+    priceTitle: 'Giá đơn giản, hợp lý', priceDesc: 'Dùng thử miễn phí. Nâng cấp khi sẵn sàng.',
+    price1Name: 'Miễn phí', price1Desc: 'Đầy đủ tính năng, giới hạn thời gian script',
+    price2Name: 'Premium', price2Desc: 'Không giới hạn. Không hạn chế.',
+    priceBadge: 'Khuyên dùng', priceAmount: '999₫<span style="font-size:16px;opacity:0.7;">/ngày</span>',
+    pf1: 'Mô phỏng chạm (tap, swipe, nhấn giữ)', pf2: 'Phát hiện màu & đọc pixel', pf3: 'Ghi & phát lại', pf4: 'Web IDE với tất cả tab',
+    pfImg: 'Nhận dạng hình ảnh + OCR', pfFlow: 'Flow Builder trực quan',
+    pfHelper: 'Công cụ hỗ trợ (Màu, Ảnh, App)', pfPy2Lua: 'Chuyển đổi Python → Lua',
+    pfLimit: 'Tối đa 2 phút mỗi lần chạy script',
+    pfAllFree: 'Tất cả tính năng Miễn phí', pfUnlimited: 'Chạy script không giới hạn thời gian',
+    pfNoAlert: 'Không bị gián đoạn hay cảnh báo', pfPriority: 'Hỗ trợ ưu tiên', pfEarly: 'Trải nghiệm tính năng mới sớm',
+    pfDayCost: '~999₫/ngày — rẻ hơn một ly trà đá 🍵',
+    priceBtn1: 'Bắt đầu miễn phí', priceBtn2: 'Kích hoạt License →',
+    navPurchase: '<i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Mua Key',
+    helperTitle: 'Công cụ hỗ trợ tích hợp', helperDesc: 'Công cụ trực quan tự sinh code cho bạn — click trên màn hình để chọn màu, quản lý app, cắt ảnh.',
+    helpColor: 'Chọn màu', helpApps: 'Quản lý App', helpImage: 'Cắt ảnh'
+  }
+};
+
+function applyLandingLang() {
+    const s = LANDING_I18N[landingLang];
+    document.getElementById('landingLangLabel').textContent = landingLang.toUpperCase();
+    localStorage.setItem('icontrol-lang', landingLang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (s[key]) el.innerHTML = s[key];
+    });
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+document.getElementById('landingLangToggle').addEventListener('click', () => {
+    landingLang = landingLang === 'en' ? 'vi' : 'en';
+    applyLandingLang();
+});
+applyLandingLang();
+if (typeof lucide !== 'undefined') lucide.createIcons();
+
+// ═══ Counter Animation ═══
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const el = entry.target;
+            const text = el.textContent.trim();
+            const match = text.match(/^(\d+)/);
+            if (match) {
+                const target = parseInt(match[1]);
+                const suffix = text.replace(match[1], '');
+                let current = 0;
+                const step = Math.max(1, Math.ceil(target / 30));
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) { current = target; clearInterval(timer); }
+                    el.textContent = current + suffix;
+                }, 30);
+            }
+            counterObserver.unobserve(el);
+        }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+
+// ═══ Smooth Nav Scroll ═══
+document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+</script>
+
+</body>
+</html>

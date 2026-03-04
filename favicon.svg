@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a56db"/>
+      <stop offset="100%" style="stop-color:#00b4d8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#g)"/>
+  <!-- Phone outline -->
+  <rect x="150" y="80" width="180" height="320" rx="28" fill="none" stroke="#fff" stroke-width="18"/>
+  <!-- Notch -->
+  <rect x="220" y="80" width="72" height="14" rx="7" fill="#fff" opacity="0.3"/>
+  <!-- Screen content: gear icon -->
+  <circle cx="240" cy="260" r="50" fill="none" stroke="#fff" stroke-width="14" opacity="0.8"/>
+  <circle cx="240" cy="260" r="20" fill="#fff" opacity="0.6"/>
+  <!-- Gear teeth -->
+  <g fill="#fff" opacity="0.8">
+    <rect x="232" y="198" width="16" height="24" rx="4"/>
+    <rect x="232" y="298" width="16" height="24" rx="4"/>
+    <rect x="178" y="252" width="24" height="16" rx="4"/>
+    <rect x="278" y="252" width="24" height="16" rx="4"/>
+    <rect x="190" y="212" width="20" height="16" rx="4" transform="rotate(-45 200 220)"/>
+    <rect x="272" y="290" width="20" height="16" rx="4" transform="rotate(-45 282 298)"/>
+    <rect x="272" y="212" width="20" height="16" rx="4" transform="rotate(45 282 220)"/>
+    <rect x="190" y="290" width="20" height="16" rx="4" transform="rotate(45 200 298)"/>
+  </g>
+  <!-- WiFi signal -->
+  <path d="M340 130 Q360 115 380 130" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
+  <path d="M348 148 Q360 138 372 148" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="360" cy="162" r="5" fill="#fff" opacity="0.9"/>
+  <!-- Home indicator -->
+  <rect x="210" y="370" width="60" height="6" rx="3" fill="#fff" opacity="0.4"/>
+</svg>

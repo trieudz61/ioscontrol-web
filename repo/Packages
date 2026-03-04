@@ -1,0 +1,10 @@
+Package: com.ioscontrol
+Name: IOSControl
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: iOS Automation Tweak — Touch simulation, Color detection, Web IDE, Flow Builder
+Maintainer: IOSControl <support@ioscontrol.com>
+Author: IOSControl
+Section: Tweaks
+Depends: firmware (>= 15.0)
+Filename: debs/com.ioscontrol_1.0.0_iphoneos-arm64.deb

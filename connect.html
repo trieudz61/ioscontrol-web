@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect to IOSControl IDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg: #050508;
+    --bg-card: #0c0e14;
+    --border: rgba(255,255,255,0.06);
+    --text: #e8eaf0;
+    --text-dim: #7a7e94;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --green: #34d399;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(ellipse at 40% 30%, rgba(99,102,241,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 60% 70%, rgba(139,92,246,0.06) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.connect-card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--text);
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.input-field {
+    flex: 1;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-field::placeholder { color: var(--text-dim); }
+.input-field:focus { border-color: var(--accent); }
+
+.connect-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+    white-space: nowrap;
+}
+
+.connect-btn:hover {
+    box-shadow: 0 4px 30px rgba(99, 102, 241, 0.5);
+    transform: translateY(-1px);
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+.hint code {
+    background: rgba(99,102,241,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--accent-light);
+}
+
+.recent {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: left;
+}
+
+.recent h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.recent-item:hover {
+    border-color: var(--accent);
+    background: rgba(99,102,241,0.05);
+}
+
+.recent-item .ri-addr {
+    font-family: monospace;
+    color: var(--text);
+}
+
+.recent-item .ri-go {
+    color: var(--accent-light);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent-light); }
+
+.error-msg {
+    color: #f87171;
+    font-size: 12px;
+    margin-top: 8px;
+    display: none;
+}
+    </style>
+</head>
+<body>
+
+<div class="connect-card">
+    <div class="logo">
+        <div class="logo-icon"><i data-lucide="smartphone" style="width:20px;height:20px;color:#fff;"></i></div>
+        IOSControl
+    </div>
+
+    <h1 id="pageTitle">Connect to Your Device</h1>
+    <p class="subtitle" id="pageSubtitle">Enter your iPhone's IP address and port to access the Web IDE.<br/>Make sure your device is on the same WiFi network.</p>
+
+    <div class="input-group">
+        <input type="text" class="input-field" id="deviceAddr" placeholder="192.168.1.100:9999" autocomplete="off" spellcheck="false" />
+        <button class="connect-btn" id="connectBtn" onclick="connectToDevice()">
+            <i data-lucide="arrow-right" style="width:16px;height:16px;vertical-align:-3px;"></i> Go
+        </button>
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+    <p class="hint" id="hintText">
+        <i data-lucide="info" style="width:12px;height:12px;vertical-align:-2px;margin-right:2px;"></i>
+        Default port is <code>9999</code>. Find IP in iPhone Settings → WiFi → <code>(i)</code>
+    </p>
+
+    <div class="recent" id="recentSection" style="display:none;">
+        <h3 id="recentTitle">Recent Connections</h3>
+        <div id="recentList"></div>
+    </div>
+
+    <a href="/" class="back-link">
+        <i data-lucide="arrow-left" style="width:14px;height:14px;"></i>
+        <span id="backText">Back to Home</span>
+    </a>
+</div>
+
+<script>
+const STORAGE_KEY = 'ioscontrol-recent';
+
+function getRecent() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+}
+
+function saveRecent(addr) {
+    let list = getRecent().filter(a => a !== addr);
+    list.unshift(addr);
+    if (list.length > 5) list = list.slice(0, 5);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    renderRecent();
+}
+
+function renderRecent() {
+    const list = getRecent();
+    const section = document.getElementById('recentSection');
+    const container = document.getElementById('recentList');
+    if (list.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    container.innerHTML = list.map(addr => `
+        <div class="recent-item" onclick="goTo('${addr}')">
+            <span class="ri-addr">${addr}</span>
+            <span class="ri-go">Connect →</span>
+        </div>
+    `).join('');
+}
+
+function connectToDevice() {
+    const input = document.getElementById('deviceAddr');
+    const errorEl = document.getElementById('errorMsg');
+    let addr = input.value.trim();
+    
+    if (!addr) {
+        errorEl.textContent = 'Please enter an IP address';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    // Add http:// if not present
+    if (!addr.startsWith('http://') && !addr.startsWith('https://')) {
+        addr = 'http://' + addr;
+    }
+
+    try {
+        const url = new URL(addr);
+        errorEl.style.display = 'none';
+        saveRecent(input.value.trim());
+        window.open(addr, '_blank');
+    } catch (e) {
+        errorEl.textContent = 'Invalid address format. Use: 192.168.1.100:9999';
+        errorEl.style.display = 'block';
+    }
+}
+
+function goTo(addr) {
+    let url = addr;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'http://' + url;
+    saveRecent(addr);
+    window.open(url, '_blank');
+}
+
+// Enter key
+document.getElementById('deviceAddr').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') connectToDevice();
+});
+
+// Init
+renderRecent();
+if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+
+</body>
+</html>
