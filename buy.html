@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
     <style>
-:root {
+/* ─── Dark Theme (default) ─── */
+:root, [data-theme="dark"] {
     --bg: #050508;
     --bg-card: #0c0e14;
     --border: rgba(255,255,255,0.06);
@@ -21,6 +22,22 @@
     --accent-light: #818cf8;
     --green: #34d399;
     --radius: 12px;
+    --nav-bg: rgba(5,5,8,0.85);
+}
+
+/* ─── Light Theme ─── */
+[data-theme="light"] {
+    --bg: #f5f5f7;
+    --bg-card: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(99,102,241,0.3);
+    --text: #1a1a2e;
+    --text-dim: #555770;
+    --text-muted: #8a8ca0;
+    --accent: #6366f1;
+    --accent-light: #4f46e5;
+    --green: #059669;
+    --nav-bg: rgba(245,245,247,0.9);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -30,6 +47,7 @@ body {
     color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
 }
 a { color: var(--accent-light); text-decoration: none; }
 a:hover { color: var(--accent); }
@@ -38,8 +56,8 @@ a:hover { color: var(--accent); }
 
 /* Nav */
 nav {
-    background: rgba(5,5,8,0.85);
-    backdrop-filter: blur(20px);
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 14px 0;
     position: sticky; top: 0; z-index: 100;
@@ -53,13 +71,22 @@ nav {
     font-weight: 700; font-size: 17px; color: var(--text);
 }
 .nav-logo img { width: 28px; height: 28px; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .nav-back {
     padding: 6px 14px; border-radius: 8px;
     border: 1px solid var(--border); background: transparent;
     color: var(--text-dim); font-size: 13px; cursor: pointer;
-    margin-left: auto; transition: all 0.2s;
+    transition: all 0.2s; text-decoration: none;
 }
 .nav-back:hover { border-color: var(--accent); color: var(--text); }
+.toggle-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-dim); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-size: 13px; font-weight: 600;
+}
+.toggle-btn:hover { border-color: var(--accent); color: var(--text); }
 
 /* Hero */
 .buy-hero {
@@ -72,7 +99,7 @@ nav {
 }
 .buy-hero h1 span {
     background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .buy-hero p { font-size: 15px; color: var(--text-dim); max-width: 500px; margin: 0 auto; }
 
@@ -106,7 +133,7 @@ nav {
 }
 .plan-card.featured .plan-price {
     background: linear-gradient(135deg, #6366f1, #a78bfa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .plan-per { font-size: 12px; color: var(--text-dim); }
 .plan-save {
@@ -205,14 +232,22 @@ nav {
             <img src="/assets/logo-dark.svg" alt="IOSControl" />
             IOSControl
         </a>
-        <a href="/" class="nav-back">← Back to Home</a>
+        <div class="nav-right">
+            <button class="toggle-btn" id="langToggle" title="Switch language">
+                <span id="langLabel">EN</span>
+            </button>
+            <button class="toggle-btn" id="themeToggle" title="Toggle theme">
+                <span id="themeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
+            </button>
+            <a href="/" class="nav-back" data-i18n="backHome">← Back to Home</a>
+        </div>
     </div>
 </nav>
 
 <section class="buy-hero">
     <div class="container">
-        <h1>Buy <span>Premium</span> License</h1>
-        <p>Unlock unlimited script runtime. Purchase directly from the IOSControl app on your iPhone.</p>
+        <h1 data-i18n-html="heroTitle">Buy <span>Premium</span> License</h1>
+        <p data-i18n="heroDesc">Unlock unlimited script runtime. Purchase directly from the IOSControl app on your iPhone.</p>
     </div>
 </section>
 
@@ -221,21 +256,21 @@ nav {
     <div class="container">
         <div class="pricing-grid">
             <div class="plan-card">
-                <div class="plan-label">Weekly</div>
+                <div class="plan-label" data-i18n="planWeekly">Weekly</div>
                 <div class="plan-price">6,999₫</div>
-                <div class="plan-per">~1,000₫/day · 7 days</div>
+                <div class="plan-per" data-i18n="planWeeklyPer">~1,000₫/day · 7 days</div>
             </div>
             <div class="plan-card featured">
-                <div class="plan-label">⭐ Monthly — Popular</div>
+                <div class="plan-label" data-i18n="planMonthly">⭐ Monthly — Popular</div>
                 <div class="plan-price">29,900₫</div>
-                <div class="plan-per">~997₫/day · 30 days</div>
-                <div class="plan-save">Best per day</div>
+                <div class="plan-per" data-i18n="planMonthlyPer">~997₫/day · 30 days</div>
+                <div class="plan-save" data-i18n="planMonthlyBest">Best per day</div>
             </div>
             <div class="plan-card">
-                <div class="plan-label">Yearly</div>
+                <div class="plan-label" data-i18n="planYearly">Yearly</div>
                 <div class="plan-price">299,000₫</div>
-                <div class="plan-per">~819₫/day · 365 days</div>
-                <div class="plan-save">Save 18%</div>
+                <div class="plan-per" data-i18n="planYearlyPer">~819₫/day · 365 days</div>
+                <div class="plan-save" data-i18n="planYearlySave">Save 18%</div>
             </div>
         </div>
     </div>
@@ -246,41 +281,41 @@ nav {
     <div class="container">
         <div class="section-title">
             <i data-lucide="list-ordered"></i>
-            How to Purchase
+            <span data-i18n="howTitle">How to Purchase</span>
         </div>
         <div class="step-card">
             <div class="step-num">1</div>
             <div class="step-content">
-                <h3>Open iControl App on iPhone</h3>
-                <p>Launch the <strong>iControlApp</strong> from your Home Screen. Go to the <strong>Settings</strong> tab (gear icon at the bottom).</p>
+                <h3 data-i18n="step1Title">Open iControl App on iPhone</h3>
+                <p data-i18n-html="step1Desc">Launch the <strong>iControlApp</strong> from your Home Screen. Go to the <strong>Settings</strong> tab (gear icon at the bottom).</p>
             </div>
         </div>
         <div class="step-card">
             <div class="step-num">2</div>
             <div class="step-content">
-                <h3>Tap "Buy Premium"</h3>
-                <p>In the <strong>Account & License</strong> section, tap <strong>"Buy Premium"</strong>. This opens the payment page in Safari.</p>
+                <h3 data-i18n="step2Title">Tap "Buy Premium"</h3>
+                <p data-i18n-html="step2Desc">In the <strong>Account &amp; License</strong> section, tap <strong>"Buy Premium"</strong>. This opens the payment page in Safari.</p>
             </div>
         </div>
         <div class="step-card">
             <div class="step-num">3</div>
             <div class="step-content">
-                <h3>Choose Your Plan</h3>
-                <p>Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Thanh toán / Pay Now"</strong>.</p>
+                <h3 data-i18n="step3Title">Choose Your Plan</h3>
+                <p data-i18n-html="step3Desc">Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Thanh toán / Pay Now"</strong>.</p>
             </div>
         </div>
         <div class="step-card">
             <div class="step-num">4</div>
             <div class="step-content">
-                <h3>Scan QR Code to Pay</h3>
-                <p>A <strong>QR code</strong> will appear. Open your <strong>banking app</strong> (Vietcombank, MB Bank, Momo, ZaloPay, etc.), scan the QR code and complete the transfer.</p>
+                <h3 data-i18n="step4Title">Scan QR Code to Pay</h3>
+                <p data-i18n-html="step4Desc">A <strong>QR code</strong> will appear. Open your <strong>banking app</strong> (Vietcombank, MB Bank, Momo, ZaloPay, etc.), scan the QR code and complete the transfer.</p>
             </div>
         </div>
         <div class="step-card">
             <div class="step-num">5</div>
             <div class="step-content">
-                <h3>Auto Activation ✅</h3>
-                <p>After payment, your license is <strong>automatically activated</strong>. Switch back to the iControlApp — it will show <strong>Premium</strong> status immediately. No need to enter any key manually!</p>
+                <h3 data-i18n="step5Title">Auto Activation ✅</h3>
+                <p data-i18n-html="step5Desc">After payment, your license is <strong>automatically activated</strong>. Switch back to the iControlApp — it will show <strong>Premium</strong> status immediately. No need to enter any key manually!</p>
             </div>
         </div>
     </div>
@@ -291,7 +326,7 @@ nav {
     <div class="container">
         <div class="section-title">
             <i data-lucide="credit-card"></i>
-            Payment Methods
+            <span data-i18n="pmTitle">Payment Methods</span>
         </div>
         <div class="payment-method">
             <div class="pm-header">
@@ -299,11 +334,11 @@ nav {
                     <i data-lucide="qr-code"></i>
                 </div>
                 <div>
-                    <h3>Bank Transfer via QR Code</h3>
-                    <p>Fastest & recommended</p>
+                    <h3 data-i18n="pmQRTitle">Bank Transfer via QR Code</h3>
+                    <p data-i18n="pmQRSub">Fastest & recommended</p>
                 </div>
             </div>
-            <div class="pm-detail">
+            <div class="pm-detail" data-i18n-html="pmQRDetail">
                 Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>
                 Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.
                 <br/><br/>
@@ -318,27 +353,27 @@ nav {
     <div class="container">
         <div class="section-title">
             <i data-lucide="help-circle"></i>
-            Frequently Asked Questions
+            <span data-i18n="faqTitle">Frequently Asked Questions</span>
         </div>
         <div class="faq-item">
-            <div class="faq-q"><i data-lucide="smartphone"></i> Can I use the same key on multiple devices?</div>
-            <div class="faq-a">No. Each license key is bound to one device's hardware UDID. Each device needs its own license.</div>
+            <div class="faq-q"><i data-lucide="smartphone"></i> <span data-i18n="faq1Q">Can I use the same key on multiple devices?</span></div>
+            <div class="faq-a" data-i18n="faq1A">No. Each license key is bound to one device's hardware UDID. Each device needs its own license.</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q"><i data-lucide="refresh-cw"></i> What if I reinstall the tweak?</div>
-            <div class="faq-a">Your license is automatically restored! The system recognizes your device's UDID and re-activates the license — no need to re-enter the key.</div>
+            <div class="faq-q"><i data-lucide="refresh-cw"></i> <span data-i18n="faq2Q">What if I reinstall the tweak?</span></div>
+            <div class="faq-a" data-i18n="faq2A">Your license is automatically restored! The system recognizes your device's UDID and re-activates the license — no need to re-enter the key.</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q"><i data-lucide="plus-circle"></i> Can I extend my existing license?</div>
-            <div class="faq-a">Yes! If you buy additional days while your current license is still active, the new days are <strong>added</strong> to your remaining time. For example: 23 days remaining + 7-day purchase = 30 days total.</div>
+            <div class="faq-q"><i data-lucide="plus-circle"></i> <span data-i18n="faq3Q">Can I extend my existing license?</span></div>
+            <div class="faq-a" data-i18n-html="faq3A">Yes! If you buy additional days while your current license is still active, the new days are <strong>added</strong> to your remaining time. For example: 23 days remaining + 7-day purchase = 30 days total.</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q"><i data-lucide="clock"></i> What happens when my license expires?</div>
-            <div class="faq-a">The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.</div>
+            <div class="faq-q"><i data-lucide="clock"></i> <span data-i18n="faq4Q">What happens when my license expires?</span></div>
+            <div class="faq-a" data-i18n="faq4A">The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.</div>
         </div>
         <div class="faq-item">
-            <div class="faq-q"><i data-lucide="shield"></i> Is the payment secure?</div>
-            <div class="faq-a">Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.</div>
+            <div class="faq-q"><i data-lucide="shield"></i> <span data-i18n="faq5Q">Is the payment secure?</span></div>
+            <div class="faq-a" data-i18n="faq5A">Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.</div>
         </div>
     </div>
 </section>
@@ -349,6 +384,117 @@ nav {
     </div>
 </div>
 
-<script>lucide.createIcons();</script>
+<script>
+// ═══ Theme ═══
+let currentTheme = localStorage.getItem('icontrol-theme') || 'dark';
+
+function applyTheme() {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.getElementById('themeIcon').innerHTML = `<i data-lucide="${currentTheme === 'dark' ? 'moon' : 'sun'}" style="width:16px;height:16px;"></i>`;
+    lucide.createIcons();
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('icontrol-theme', currentTheme);
+    applyTheme();
+});
+applyTheme();
+
+// ═══ i18n ═══
+const I18N = {
+    en: {
+        backHome: '← Back to Home',
+        heroTitle: 'Buy <span>Premium</span> License',
+        heroDesc: 'Unlock unlimited script runtime. Purchase directly from the IOSControl app on your iPhone.',
+        planWeekly: 'Weekly', planMonthly: '⭐ Monthly — Popular', planYearly: 'Yearly',
+        planWeeklyPer: '~1,000₫/day · 7 days', planMonthlyPer: '~997₫/day · 30 days', planYearlyPer: '~819₫/day · 365 days',
+        planMonthlyBest: 'Best per day', planYearlySave: 'Save 18%',
+        howTitle: 'How to Purchase',
+        step1Title: 'Open iControl App on iPhone',
+        step1Desc: 'Launch the <strong>iControlApp</strong> from your Home Screen. Go to the <strong>Settings</strong> tab (gear icon at the bottom).',
+        step2Title: 'Tap "Buy Premium"',
+        step2Desc: 'In the <strong>Account & License</strong> section, tap <strong>"Buy Premium"</strong>. This opens the payment page in Safari.',
+        step3Title: 'Choose Your Plan',
+        step3Desc: 'Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Thanh toán / Pay Now"</strong>.',
+        step4Title: 'Scan QR Code to Pay',
+        step4Desc: 'A <strong>QR code</strong> will appear. Open your <strong>banking app</strong> (Vietcombank, MB Bank, Momo, ZaloPay, etc.), scan the QR code and complete the transfer.',
+        step5Title: 'Auto Activation ✅',
+        step5Desc: 'After payment, your license is <strong>automatically activated</strong>. Switch back to the iControlApp — it will show <strong>Premium</strong> status immediately. No need to enter any key manually!',
+        pmTitle: 'Payment Methods',
+        pmQRTitle: 'Bank Transfer via QR Code', pmQRSub: 'Fastest & recommended',
+        pmQRDetail: 'Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.<br/><br/>Payment is processed via <strong>PayOS</strong> — secure, instant confirmation.',
+        faqTitle: 'Frequently Asked Questions',
+        faq1Q: 'Can I use the same key on multiple devices?',
+        faq1A: "No. Each license key is bound to one device's hardware UDID. Each device needs its own license.",
+        faq2Q: 'What if I reinstall the tweak?',
+        faq2A: "Your license is automatically restored! The system recognizes your device's UDID and re-activates the license — no need to re-enter the key.",
+        faq3Q: 'Can I extend my existing license?',
+        faq3A: 'Yes! If you buy additional days while your current license is still active, the new days are <strong>added</strong> to your remaining time. For example: 23 days remaining + 7-day purchase = 30 days total.',
+        faq4Q: 'What happens when my license expires?',
+        faq4A: 'The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.',
+        faq5Q: 'Is the payment secure?',
+        faq5A: 'Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.'
+    },
+    vi: {
+        backHome: '← Về trang chủ',
+        heroTitle: 'Mua <span>Premium</span> License',
+        heroDesc: 'Mở khóa chạy script không giới hạn. Mua trực tiếp từ ứng dụng IOSControl trên iPhone.',
+        planWeekly: 'Theo tuần', planMonthly: '⭐ Theo tháng — Phổ biến', planYearly: 'Theo năm',
+        planWeeklyPer: '~1.000₫/ngày · 7 ngày', planMonthlyPer: '~997₫/ngày · 30 ngày', planYearlyPer: '~819₫/ngày · 365 ngày',
+        planMonthlyBest: 'Tốt nhất/ngày', planYearlySave: 'Tiết kiệm 18%',
+        howTitle: 'Cách mua',
+        step1Title: 'Mở iControl App trên iPhone',
+        step1Desc: 'Mở <strong>iControlApp</strong> từ màn hình chính. Vào tab <strong>Cài đặt</strong> (biểu tượng bánh răng phía dưới).',
+        step2Title: 'Nhấn "Buy Premium"',
+        step2Desc: 'Trong phần <strong>Account & License</strong>, nhấn <strong>"Buy Premium"</strong>. Trang thanh toán sẽ mở trong Safari.',
+        step3Title: 'Chọn gói',
+        step3Desc: 'Chọn <strong>7 ngày</strong>, <strong>30 ngày</strong>, hoặc <strong>365 ngày</strong>. Sau đó nhấn <strong>"Thanh toán"</strong>.',
+        step4Title: 'Quét mã QR để thanh toán',
+        step4Desc: 'Một <strong>mã QR</strong> sẽ hiện ra. Mở <strong>app ngân hàng</strong> (Vietcombank, MB Bank, Momo, ZaloPay, v.v.), quét mã QR và hoàn tất chuyển khoản.',
+        step5Title: 'Kích hoạt tự động ✅',
+        step5Desc: 'Sau khi thanh toán, license sẽ được <strong>kích hoạt tự động</strong>. Quay lại iControlApp — sẽ hiển thị trạng thái <strong>Premium</strong> ngay lập tức. Không cần nhập key thủ công!',
+        pmTitle: 'Phương thức thanh toán',
+        pmQRTitle: 'Chuyển khoản qua mã QR', pmQRSub: 'Nhanh nhất & khuyên dùng',
+        pmQRDetail: 'Quét mã QR bằng bất kỳ <strong>app ngân hàng</strong> hay ví điện tử nào:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, và 40+ ngân hàng khác.<br/><br/>Thanh toán được xử lý qua <strong>PayOS</strong> — bảo mật, xác nhận tức thì.',
+        faqTitle: 'Câu hỏi thường gặp',
+        faq1Q: 'Có thể dùng cùng key trên nhiều thiết bị không?',
+        faq1A: 'Không. Mỗi license key được gắn với UDID phần cứng của một thiết bị. Mỗi thiết bị cần license riêng.',
+        faq2Q: 'Nếu cài lại tweak thì sao?',
+        faq2A: 'License sẽ được tự động khôi phục! Hệ thống nhận diện UDID thiết bị và kích hoạt lại license — không cần nhập lại key.',
+        faq3Q: 'Có thể gia hạn license hiện tại không?',
+        faq3A: 'Có! Nếu bạn mua thêm ngày khi license vẫn còn hiệu lực, số ngày mới sẽ được <strong>cộng thêm</strong> vào thời gian còn lại. Ví dụ: còn 23 ngày + mua 7 ngày = tổng 30 ngày.',
+        faq4Q: 'Khi license hết hạn thì sao?',
+        faq4A: 'App sẽ chuyển về chế độ Free với giới hạn 2 phút/script. Tất cả script và dữ liệu được giữ nguyên — chỉ cần mua lại để tiếp tục.',
+        faq5Q: 'Thanh toán có an toàn không?',
+        faq5A: 'Có! Thanh toán được xử lý qua PayOS với bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin ngân hàng của bạn.'
+    }
+};
+
+let currentLang = localStorage.getItem('icontrol-lang') || 'en';
+
+function applyLang() {
+    const t = I18N[currentLang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key]) el.innerHTML = t[key];
+    });
+    document.getElementById('langLabel').textContent = currentLang === 'en' ? 'EN' : 'VI';
+    document.documentElement.lang = currentLang;
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'vi' : 'en';
+    localStorage.setItem('icontrol-lang', currentLang);
+    applyLang();
+});
+applyLang();
+
+lucide.createIcons();
+</script>
 </body>
 </html>
