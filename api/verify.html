@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>IOSControl API</title></head>
+<body>
+<script>
+// GitHub Pages doesn't support server-side logic.
+// This is a placeholder. For production, deploy a Cloudflare Worker or Vercel function.
+// For now, all keys are treated as valid for testing.
+const params = new URLSearchParams(window.location.search);
+const key = params.get('key');
+const udid = params.get('udid');
+const result = {
+    licensed: key && key.length > 8 ? true : false,
+    key: key || '',
+    udid: udid || '',
+    expires_at: key ? new Date(Date.now() + 30*86400000).toISOString().split('T')[0] : '',
+    days_left: key && key.length > 8 ? 30 : 0,
+    plan: key && key.length > 8 ? 'premium' : 'free',
+    max_runtime: key && key.length > 8 ? 0 : 120
+};
+document.body.textContent = JSON.stringify(result);
+document.title = '';
+</script>
+</body>
+</html>

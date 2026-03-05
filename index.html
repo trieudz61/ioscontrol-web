@@ -1228,18 +1228,52 @@ footer {
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
+    .container { padding: 0 16px; }
+    .nav-inner { flex-wrap: wrap; gap: 8px; padding: 10px 16px; }
+    .nav-links { display: none; }
+    .nav-cta { gap: 6px !important; }
+    .nav-cta .btn-outline { font-size: 11px; padding: 6px 10px; }
+    .nav-cta .btn-primary-lg { font-size: 11px; padding: 6px 12px; }
+    .toggle-btn-landing { width: 32px; height: 32px; font-size: 12px; }
+    
+    .hero { padding: 80px 0 40px; }
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 14px; padding: 0 8px; }
+    .hero-actions { flex-direction: column; gap: 10px; align-items: center; }
+    .hero-actions .btn-primary-lg, .hero-actions .btn-outline { width: 80%; text-align: center; }
+    #heroTabs { flex-wrap: wrap; gap: 2px; }
+    #heroTabs button { font-size: 9px !important; padding: 3px 6px !important; }
+
+    .section-header h2 { font-size: 24px; }
+    .section-header p { font-size: 13px; }
+
     .features-grid { grid-template-columns: 1fr; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .steps { grid-template-columns: 1fr; }
     .code-section-layout { grid-template-columns: 1fr; }
     .activator-layout { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .activator-layout > div:first-child { flex-direction: row; gap: 12px; justify-content: center; }
+    .activator-layout > div:first-child > div { width: 140px !important; }
+    .activator-description h3 { font-size: 22px; }
+    
+    .pricing-grid { grid-template-columns: 1fr !important; max-width: 400px !important; }
     .pricing-card.featured { transform: none; }
     .pricing-card.featured:hover { transform: translateY(-6px); }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .comparison-table { font-size: 12px; }
-    .comparison-table th, .comparison-table td { padding: 10px 12px; }
-    .nav-links { display: none; }
+    .pricing-price { font-size: 32px; }
+
+    .comparison-table { font-size: 11px; }
+    .comparison-table th, .comparison-table td { padding: 8px 10px; }
+
+    .cta-section { padding: 60px 0; }
+    .cta-section h2 { font-size: 28px; }
+    .cta-actions { flex-direction: column; align-items: center; }
+    .cta-actions a { width: 80%; text-align: center; }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    .code-tabs { flex-wrap: wrap; }
+    .code-feature-list li { font-size: 13px; }
 }
     </style>
 </head>
