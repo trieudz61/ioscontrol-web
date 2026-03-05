@@ -1229,12 +1229,12 @@ footer {
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
-    .nav-inner { flex-wrap: wrap; gap: 8px; padding: 10px 16px; }
+    .nav-inner { flex-wrap: nowrap; gap: 8px; padding: 10px 16px; }
     .nav-links { display: none; }
-    .nav-cta { gap: 6px !important; }
-    .nav-cta .btn-outline { font-size: 11px; padding: 6px 10px; }
-    .nav-cta .btn-primary-lg { font-size: 11px; padding: 6px 12px; }
-    .toggle-btn-landing { width: 32px; height: 32px; font-size: 12px; }
+    .nav-cta { gap: 4px !important; margin-left: auto; }
+    .nav-cta .btn-outline { display: none; }
+    .nav-cta .btn-primary-lg { font-size: 11px; padding: 6px 12px; white-space: nowrap; }
+    .toggle-btn-landing { width: 30px; height: 30px; font-size: 11px; }
     
     .hero { padding: 80px 0 40px; }
     .hero h1 { font-size: 32px; }
@@ -1470,7 +1470,7 @@ footer {
                 <tr><td data-i18n="tblRow13">AI Code Assist</td><td class="cross">✗</td><td class="check">✓ Smart Suggestions</td></tr>
                 <tr><td data-i18n="tblRow14">Notification Triggers</td><td class="cross">✗</td><td class="check">✓ Hook Events</td></tr>
                 <tr><td data-i18n="tblRow15">Clipboard Access</td><td class="cross">✗</td><td class="check">✓ Read/Write</td></tr>
-                <tr><td data-i18n="tblRow16">Price</td><td class="partial">$4.99 - $9.99</td><td class="check" data-i18n="tblFreeOS">Free & Open Source</td></tr>
+                <tr><td data-i18n="tblRow16">Price</td><td class="partial">$4.99 - $9.99</td><td class="check" data-i18n="tblFreeOS">Free + Premium from 6,999₫</td></tr>
             </tbody>
         </table>
     </div>
@@ -1660,8 +1660,8 @@ footer {
             <div class="pricing-card featured fade-in">
                 <div class="pricing-badge" data-i18n="priceBadge">Recommended</div>
                 <h3 data-i18n="price2Name">Premium</h3>
-                <div class="pricing-price gradient-text" data-i18n="priceAmount">999₫<span style="font-size:16px;opacity:0.7;">/day</span></div>
-                <div class="pricing-desc" data-i18n="price2Desc">Unlimited. No restrictions.</div>
+                <div class="pricing-price gradient-text" data-i18n="priceAmount">6,999₫<span style="font-size:16px;opacity:0.7;">/week</span></div>
+                <div class="pricing-desc" data-i18n="price2Desc">Unlimited. No restrictions. Plans: 7d / 30d / 365d</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✓</span> <span data-i18n="pfAllFree">Everything in Free</span></li>
                     <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfUnlimited" style="font-weight:600;">Unlimited script runtime</span></li>
@@ -1670,10 +1670,10 @@ footer {
                     <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfEarly">Early access to new features</span></li>
                     <li style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
                         <span class="pf-check" style="color:#34d399;">✓</span> 
-                        <span data-i18n="pfDayCost" style="color:#34d399;font-weight:500;">~$0.03/day — cheaper than a coffee ☕</span>
+                        <span data-i18n="pfDayCost" style="color:#34d399;font-weight:500;">7d: 6,999₫ · 30d: 29,900₫ · 1yr: 299,000₫</span>
                     </li>
                 </ul>
-                <a href="https://t.me/IOSControl_Recap1s" target="_blank" class="pricing-btn primary" data-i18n="priceBtn2">Activate License →</a>
+                <a href="#pricing" class="pricing-btn primary" data-i18n="priceBtn2">Buy in App →</a>
             </div>
         </div>
     </div>
