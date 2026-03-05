@@ -1226,21 +1226,84 @@ footer {
     color: #fff;
 }
 
+/* ─── Hamburger Menu ─── */
+html, body { overflow-x: hidden; }
+
+.hamburger {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 36px; height: 36px;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 5px; padding: 6px; margin-left: auto;
+    border-radius: 8px; transition: background 0.2s;
+}
+.hamburger:hover { background: rgba(255,255,255,0.05); }
+.hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.mobile-menu {
+    display: none; position: fixed;
+    top: 64px; left: 0; right: 0; bottom: 0;
+    background: rgba(5,5,8,0.97);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    z-index: 99; padding: 24px;
+    flex-direction: column; gap: 8px;
+    transform: translateY(-20px); opacity: 0;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+}
+.mobile-menu.open {
+    display: flex; transform: translateY(0); opacity: 1;
+}
+.mobile-menu a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px; border-radius: 12px;
+    font-size: 15px; font-weight: 500;
+    color: var(--text-dim); transition: all 0.2s;
+    border: 1px solid transparent;
+}
+.mobile-menu a:hover, .mobile-menu a:active {
+    background: rgba(99,102,241,0.06);
+    border-color: var(--border); color: var(--text);
+}
+.mobile-menu .mm-divider {
+    height: 1px; background: var(--border); margin: 8px 0;
+}
+.mobile-menu .mm-cta {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
+}
+.mobile-menu .mm-cta a {
+    justify-content: center; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 12px;
+}
+.mobile-menu .mm-cta .mm-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none; color: #fff;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+}
+.mobile-menu .mm-toggles {
+    display: flex; gap: 8px; justify-content: center; margin-top: 12px;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
-    .nav-inner { flex-wrap: nowrap; gap: 8px; padding: 10px 16px; }
-    .nav-links { display: none; }
-    .nav-cta { gap: 4px !important; margin-left: auto; }
-    .nav-cta .btn-outline { display: none; }
-    .nav-cta .btn-primary-lg { font-size: 11px; padding: 6px 12px; white-space: nowrap; }
-    .toggle-btn-landing { width: 30px; height: 30px; font-size: 11px; }
+    .nav-inner { height: 56px; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none !important; }
+    .hamburger { display: flex; }
     
-    .hero { padding: 80px 0 40px; }
-    .hero h1 { font-size: 32px; }
+    .hero { padding: 76px 0 40px; }
+    .hero h1 { font-size: 30px; }
     .hero p { font-size: 14px; padding: 0 8px; }
     .hero-actions { flex-direction: column; gap: 10px; align-items: center; }
-    .hero-actions .btn-primary-lg, .hero-actions .btn-outline { width: 80%; text-align: center; }
+    .hero-actions .btn-primary-lg, .hero-actions .btn-outline { width: 85%; text-align: center; }
     #heroTabs { flex-wrap: wrap; gap: 2px; }
     #heroTabs button { font-size: 9px !important; padding: 3px 6px !important; }
 
@@ -1261,13 +1324,13 @@ footer {
     .pricing-card.featured:hover { transform: translateY(-6px); }
     .pricing-price { font-size: 32px; }
 
-    .comparison-table { font-size: 11px; }
+    .comparison-table { font-size: 11px; overflow-x: auto; display: block; }
     .comparison-table th, .comparison-table td { padding: 8px 10px; }
 
     .cta-section { padding: 60px 0; }
     .cta-section h2 { font-size: 28px; }
     .cta-actions { flex-direction: column; align-items: center; }
-    .cta-actions a { width: 80%; text-align: center; }
+    .cta-actions a { width: 85%; text-align: center; }
 
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
     .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -1304,8 +1367,33 @@ footer {
             <a href="/buy.html" class="btn-outline" style="border-color:rgba(52,211,153,0.4);color:#34d399;" data-i18n="navPurchase"><i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Buy Key</a>
             <a href="/connect.html" class="btn-primary-lg" data-i18n="navLaunch">Launch IDE →</a>
         </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#features" data-i18n="navFeatures"><i data-lucide="sparkles" style="width:18px;height:18px;"></i>Features</a>
+    <a href="#comparison" data-i18n="navCompare"><i data-lucide="swords" style="width:18px;height:18px;"></i>Compare</a>
+    <a href="#how" data-i18n="navHow"><i data-lucide="wrench" style="width:18px;height:18px;"></i>How it Works</a>
+    <a href="#pricing" data-i18n="navPricing"><i data-lucide="credit-card" style="width:18px;height:18px;"></i>Pricing</a>
+    <a href="/docs.html"><i data-lucide="book-open" style="width:18px;height:18px;"></i>Documentation</a>
+    <div class="mm-divider"></div>
+    <div class="mm-cta">
+        <a href="/buy.html"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>Buy Premium Key</a>
+        <a href="/connect.html" class="mm-primary"><i data-lucide="play" style="width:16px;height:16px;"></i>Launch Web IDE →</a>
+    </div>
+    <div class="mm-toggles">
+        <button class="toggle-btn-landing" id="mobileLangToggle" title="Switch language">
+            <span class="toggle-label" id="mobileLangLabel">EN</span>
+        </button>
+        <button class="toggle-btn-landing" id="mobileThemeToggle" title="Toggle theme">
+            <span id="mobileThemeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
+        </button>
+    </div>
+</div>
 
 <!-- ═══ Hero ═══ -->
 <section class="hero">
@@ -1801,6 +1889,52 @@ document.getElementById('landingThemeToggle').addEventListener('click', () => {
     applyLandingTheme();
 });
 applyLandingTheme();
+
+// ═══ Hamburger Menu ═══
+(function() {
+    const btn = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    
+    btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        menu.classList.toggle('open');
+        document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    });
+    
+    // Close menu when clicking a link
+    menu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            btn.classList.remove('active');
+            menu.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Sync mobile toggles with desktop
+    const mobileTheme = document.getElementById('mobileThemeToggle');
+    const mobileLang = document.getElementById('mobileLangToggle');
+    if (mobileTheme) {
+        mobileTheme.addEventListener('click', () => {
+            document.getElementById('landingThemeToggle').click();
+            // Update mobile icon
+            const icon = landingTheme === 'dark' ? 'moon' : 'sun';
+            document.getElementById('mobileThemeIcon').innerHTML = `<i data-lucide="${icon}" style="width:16px;height:16px;"></i>`;
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+    }
+    if (mobileLang) {
+        mobileLang.addEventListener('click', () => {
+            document.getElementById('landingLangToggle').click();
+            // Sync label
+            setTimeout(() => {
+                const label = document.getElementById('landingLangLabel');
+                const mLabel = document.getElementById('mobileLangLabel');
+                if (label && mLabel) mLabel.textContent = label.textContent;
+            }, 50);
+        });
+    }
+})();
 
 // ═══ i18n ═══
 const LANDING_I18N = {
