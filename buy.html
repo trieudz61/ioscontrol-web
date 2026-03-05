@@ -334,16 +334,16 @@ nav {
         <div class="payment-method">
             <div class="pm-header">
                 <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
-                    <i data-lucide="credit-card"></i>
+                    <i data-lucide="bitcoin"></i>
                 </div>
                 <div>
-                    <h3 data-i18n="pmCardTitle">Credit & Debit Cards</h3>
-                    <p data-i18n="pmCardSub">Visa, Mastercard, Apple Pay, Google Pay</p>
+                    <h3 data-i18n="pmCardTitle">💰 Cryptocurrency</h3>
+                    <p data-i18n="pmCardSub">BTC, ETH, USDT, LTC, 50+ coins</p>
                 </div>
             </div>
             <div class="pm-detail" data-i18n-html="pmCardDetail">
-                Pay with any <strong>international credit or debit card</strong>. We also accept <strong>Apple Pay</strong> and <strong>Google Pay</strong>.<br/><br/>
-                Payment is processed via <strong>Stripe</strong> — PCI-compliant, bank-level encryption. Prices in <strong>USD</strong>.
+                Pay with <strong>Bitcoin, Ethereum, USDT, Litecoin</strong> and 50+ other cryptocurrencies.<br/><br/>
+                Payment is processed via <strong>Cryptomus</strong> — secure crypto payment gateway. Prices in <strong>USD</strong>.
             </div>
         </div>
         <div class="payment-method">
@@ -437,12 +437,12 @@ const I18N = {
         step3Title: 'Choose Your Plan',
         step3Desc: 'Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Pay Now"</strong>.',
         step4Title: 'Complete Payment',
-        step4Desc: 'Pay with <strong>Visa, Mastercard, Apple Pay, or Google Pay</strong> via Stripe. Vietnamese users can also scan a <strong>QR code</strong> with their banking app.',
+        step4Desc: 'Pay with <strong>Bitcoin, Ethereum, USDT</strong> or 50+ cryptocurrencies via Cryptomus. Vietnamese users can also scan a <strong>QR code</strong> with their banking app.',
         step5Title: 'Auto Activation ✅',
         step5Desc: 'After payment, your license is <strong>automatically activated</strong>. Switch back to the IOSControl — it will show <strong>Premium</strong> status immediately. No need to enter any key manually!',
         pmTitle: 'Payment Methods',
-        pmCardTitle: 'Credit & Debit Cards', pmCardSub: 'Visa, Mastercard, Apple Pay, Google Pay',
-        pmCardDetail: 'Pay with any <strong>international credit or debit card</strong>. We also accept <strong>Apple Pay</strong> and <strong>Google Pay</strong>.<br/><br/>Payment is processed via <strong>Stripe</strong> — PCI-compliant, bank-level encryption. Prices in <strong>USD</strong>.',
+        pmCardTitle: '💰 Cryptocurrency', pmCardSub: 'BTC, ETH, USDT, LTC, 50+ coins',
+        pmCardDetail: 'Pay with <strong>Bitcoin, Ethereum, USDT, Litecoin</strong> and 50+ other cryptocurrencies.<br/><br/>Payment is processed via <strong>Cryptomus</strong> — secure crypto payment gateway. Prices in <strong>USD</strong>.',
         pmQRTitle: 'Bank Transfer via QR Code', pmQRSub: 'Vietnam only — PayOS',
         pmQRDetail: 'Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.<br/><br/>Payment is processed via <strong>PayOS</strong> — secure, instant confirmation. Prices in <strong>VND</strong>.',
         faqTitle: 'Frequently Asked Questions',
@@ -455,7 +455,7 @@ const I18N = {
         faq4Q: 'What happens when my license expires?',
         faq4A: 'The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.',
         faq5Q: 'Is the payment secure?',
-        faq5A: 'Yes! Card payments are processed via Stripe, QR payments via PayOS — both with bank-level security. We never store your payment details.'
+        faq5A: 'Yes! Crypto payments are processed via Cryptomus, QR payments via PayOS — both with top-level security. We never store your payment details.'
     },
     vi: {
         backHome: '← Về trang chủ',
@@ -477,8 +477,8 @@ const I18N = {
         step5Title: 'Kích hoạt tự động ✅',
         step5Desc: 'Sau khi thanh toán, license sẽ được <strong>kích hoạt tự động</strong>. Quay lại IOSControl — sẽ hiển thị trạng thái <strong>Premium</strong> ngay lập tức. Không cần nhập key thủ công!',
         pmTitle: 'Phương thức thanh toán',
-        pmCardTitle: 'Thẻ tín dụng & ghi nợ', pmCardSub: 'Visa, Mastercard, Apple Pay, Google Pay',
-        pmCardDetail: 'Thanh toán bằng <strong>thẻ tín dụng hoặc ghi nợ quốc tế</strong>. Hỗ trợ <strong>Apple Pay</strong> và <strong>Google Pay</strong>.<br/><br/>Được xử lý qua <strong>Stripe</strong> — chuẩn PCI, mã hóa cấp ngân hàng. Giá tính bằng <strong>USD</strong>.',
+        pmCardTitle: '💰 Tiền điện tử', pmCardSub: 'BTC, ETH, USDT, LTC, 50+ coins',
+        pmCardDetail: 'Thanh toán bằng <strong>Bitcoin, Ethereum, USDT, Litecoin</strong> và 50+ loại tiền điện tử khác.<br/><br/>Được xử lý qua <strong>Cryptomus</strong> — cổng thanh toán crypto bảo mật. Giá tính bằng <strong>USD</strong>.',
         pmQRTitle: 'Chuyển khoản qua mã QR', pmQRSub: 'Chỉ Việt Nam — PayOS',
         pmQRDetail: 'Quét mã QR bằng bất kỳ <strong>app ngân hàng</strong> hay ví điện tử nào:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, và 40+ ngân hàng khác.<br/><br/>Thanh toán được xử lý qua <strong>PayOS</strong> — bảo mật, xác nhận tức thì. Giá tính bằng <strong>VND</strong>.',
         faqTitle: 'Câu hỏi thường gặp',
@@ -491,7 +491,7 @@ const I18N = {
         faq4Q: 'Khi license hết hạn thì sao?',
         faq4A: 'App sẽ chuyển về chế độ Free với giới hạn 2 phút/script. Tất cả script và dữ liệu được giữ nguyên — chỉ cần mua lại để tiếp tục.',
         faq5Q: 'Thanh toán có an toàn không?',
-        faq5A: 'Có! Thẻ quốc tế qua Stripe, QR qua PayOS — đều bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin thanh toán của bạn.'
+        faq5A: 'Có! Crypto qua Cryptomus, QR qua PayOS — đều bảo mật cao. Chúng tôi không lưu thông tin thanh toán của bạn.'
     }
 };
 
