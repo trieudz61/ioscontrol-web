@@ -257,20 +257,20 @@ nav {
         <div class="pricing-grid">
             <div class="plan-card">
                 <div class="plan-label" data-i18n="planWeekly">Weekly</div>
-                <div class="plan-price">6,999₫</div>
-                <div class="plan-per" data-i18n="planWeeklyPer">~1,000₫/day · 7 days</div>
+                <div class="plan-price" data-i18n="priceWeekly">$2.99</div>
+                <div class="plan-per" data-i18n="planWeeklyPer">~$0.43/day · 7 days</div>
             </div>
             <div class="plan-card featured">
                 <div class="plan-label" data-i18n="planMonthly">⭐ Monthly — Popular</div>
-                <div class="plan-price">29,900₫</div>
-                <div class="plan-per" data-i18n="planMonthlyPer">~997₫/day · 30 days</div>
-                <div class="plan-save" data-i18n="planMonthlyBest">Best per day</div>
+                <div class="plan-price" data-i18n="priceMonthly">$9.99</div>
+                <div class="plan-per" data-i18n="planMonthlyPer">~$0.33/day · 30 days</div>
+                <div class="plan-save" data-i18n="planMonthlyBest">Best value</div>
             </div>
             <div class="plan-card">
                 <div class="plan-label" data-i18n="planYearly">Yearly</div>
-                <div class="plan-price">299,000₫</div>
-                <div class="plan-per" data-i18n="planYearlyPer">~819₫/day · 365 days</div>
-                <div class="plan-save" data-i18n="planYearlySave">Save 18%</div>
+                <div class="plan-price" data-i18n="priceYearly">$49.99</div>
+                <div class="plan-per" data-i18n="planYearlyPer">~$0.14/day · 365 days</div>
+                <div class="plan-save" data-i18n="planYearlySave">Save 58%</div>
             </div>
         </div>
     </div>
@@ -328,8 +328,21 @@ nav {
             <i data-lucide="credit-card"></i>
             <span data-i18n="pmTitle">Payment Methods</span>
         </div>
-
-        <!-- Vietnam: QR Code -->
+        <div class="payment-method">
+            <div class="pm-header">
+                <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
+                    <i data-lucide="credit-card"></i>
+                </div>
+                <div>
+                    <h3 data-i18n="pmCardTitle">Credit & Debit Cards</h3>
+                    <p data-i18n="pmCardSub">Visa, Mastercard, Apple Pay, Google Pay</p>
+                </div>
+            </div>
+            <div class="pm-detail" data-i18n-html="pmCardDetail">
+                Pay with any <strong>international credit or debit card</strong>. We also accept <strong>Apple Pay</strong> and <strong>Google Pay</strong>.<br/><br/>
+                Payment is processed via <strong>Stripe</strong> — PCI-compliant, bank-level encryption. Prices in <strong>USD</strong>.
+            </div>
+        </div>
         <div class="payment-method">
             <div class="pm-header">
                 <div class="pm-icon" style="background:rgba(52,211,153,0.1);color:#34d399;">
@@ -337,69 +350,14 @@ nav {
                 </div>
                 <div>
                     <h3 data-i18n="pmQRTitle">Bank Transfer via QR Code</h3>
-                    <p data-i18n="pmQRSub">Fastest &amp; recommended (Vietnam)</p>
+                    <p data-i18n="pmQRSub">Vietnam only — PayOS</p>
                 </div>
             </div>
             <div class="pm-detail" data-i18n-html="pmQRDetail">
                 Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>
                 Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.
                 <br/><br/>
-                Payment is processed via <strong>PayOS</strong> — secure, instant confirmation.
-            </div>
-        </div>
-
-        <!-- International: Crypto -->
-        <div class="payment-method">
-            <div class="pm-header">
-                <div class="pm-icon" style="background:rgba(251,191,36,0.1);color:#fbbf24;">
-                    <i data-lucide="bitcoin"></i>
-                </div>
-                <div>
-                    <h3 data-i18n="pmCryptoTitle">Cryptocurrency (USDT)</h3>
-                    <p data-i18n="pmCryptoSub">International — instant activation</p>
-                </div>
-            </div>
-            <div class="pm-detail" data-i18n-html="pmCryptoDetail">
-                Pay with <strong>USDT (Tether)</strong> on TRC20 or ERC20 network.<br/>
-                International pricing: <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>
-                Send to our wallet and message your <strong>UDID + TX hash</strong> to <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> for instant activation.
-            </div>
-        </div>
-
-        <!-- International: PayPal -->
-        <div class="payment-method">
-            <div class="pm-header">
-                <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
-                    <i data-lucide="wallet"></i>
-                </div>
-                <div>
-                    <h3 data-i18n="pmPaypalTitle">PayPal</h3>
-                    <p data-i18n="pmPaypalSub">International — worldwide accepted</p>
-                </div>
-            </div>
-            <div class="pm-detail" data-i18n-html="pmPaypalDetail">
-                Pay via <strong>PayPal</strong> — accepted worldwide. Same pricing as crypto:<br/>
-                <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>
-                Contact <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> to receive PayPal payment link. Activation within minutes after payment confirmation.
-            </div>
-        </div>
-
-        <!-- Support -->
-        <div class="payment-method" style="border-color:rgba(99,102,241,0.2);">
-            <div class="pm-header">
-                <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
-                    <i data-lucide="message-circle"></i>
-                </div>
-                <div>
-                    <h3 data-i18n="pmSupportTitle">Need Help?</h3>
-                    <p data-i18n="pmSupportSub">Contact us for any payment issues</p>
-                </div>
-            </div>
-            <div class="pm-detail" data-i18n-html="pmSupportDetail">
-                For payment issues, custom plans, or bulk licensing, contact us:
-                <br/><br/>
-                💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>
-                👥 Community: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>
+                Payment is processed via <strong>PayOS</strong> — secure, instant confirmation. Prices in <strong>VND</strong>.
             </div>
         </div>
     </div>
@@ -465,22 +423,25 @@ const I18N = {
         heroTitle: 'Buy <span>Premium</span> License',
         heroDesc: 'Unlock unlimited script runtime. Purchase directly from the IOSControl app on your iPhone.',
         planWeekly: 'Weekly', planMonthly: '⭐ Monthly — Popular', planYearly: 'Yearly',
-        planWeeklyPer: '~1,000₫/day · 7 days', planMonthlyPer: '~997₫/day · 30 days', planYearlyPer: '~819₫/day · 365 days',
-        planMonthlyBest: 'Best per day', planYearlySave: 'Save 18%',
+        priceWeekly: '$2.99', priceMonthly: '$9.99', priceYearly: '$49.99',
+        planWeeklyPer: '~$0.43/day · 7 days', planMonthlyPer: '~$0.33/day · 30 days', planYearlyPer: '~$0.14/day · 365 days',
+        planMonthlyBest: 'Best value', planYearlySave: 'Save 58%',
         howTitle: 'How to Purchase',
         step1Title: 'Open IOSControl on iPhone',
         step1Desc: 'Launch the <strong>IOSControl</strong> from your Home Screen. Go to the <strong>Settings</strong> tab (gear icon at the bottom).',
         step2Title: 'Tap "Buy Premium"',
         step2Desc: 'In the <strong>Account & License</strong> section, tap <strong>"Buy Premium"</strong>. This opens the payment page in Safari.',
         step3Title: 'Choose Your Plan',
-        step3Desc: 'Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Thanh toán / Pay Now"</strong>.',
-        step4Title: 'Scan QR Code to Pay',
-        step4Desc: 'A <strong>QR code</strong> will appear. Open your <strong>banking app</strong> (Vietcombank, MB Bank, Momo, ZaloPay, etc.), scan the QR code and complete the transfer.',
+        step3Desc: 'Select <strong>7 days</strong>, <strong>30 days</strong>, or <strong>365 days</strong>. Then tap <strong>"Pay Now"</strong>.',
+        step4Title: 'Complete Payment',
+        step4Desc: 'Pay with <strong>Visa, Mastercard, Apple Pay, or Google Pay</strong> via Stripe. Vietnamese users can also scan a <strong>QR code</strong> with their banking app.',
         step5Title: 'Auto Activation ✅',
         step5Desc: 'After payment, your license is <strong>automatically activated</strong>. Switch back to the IOSControl — it will show <strong>Premium</strong> status immediately. No need to enter any key manually!',
         pmTitle: 'Payment Methods',
-        pmQRTitle: 'Bank Transfer via QR Code', pmQRSub: 'Fastest & recommended',
-        pmQRDetail: 'Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.<br/><br/>Payment is processed via <strong>PayOS</strong> — secure, instant confirmation.',
+        pmCardTitle: 'Credit & Debit Cards', pmCardSub: 'Visa, Mastercard, Apple Pay, Google Pay',
+        pmCardDetail: 'Pay with any <strong>international credit or debit card</strong>. We also accept <strong>Apple Pay</strong> and <strong>Google Pay</strong>.<br/><br/>Payment is processed via <strong>Stripe</strong> — PCI-compliant, bank-level encryption. Prices in <strong>USD</strong>.',
+        pmQRTitle: 'Bank Transfer via QR Code', pmQRSub: 'Vietnam only — PayOS',
+        pmQRDetail: 'Scan the QR code with any <strong>Vietnamese banking app</strong> or e-wallet:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.<br/><br/>Payment is processed via <strong>PayOS</strong> — secure, instant confirmation. Prices in <strong>VND</strong>.',
         faqTitle: 'Frequently Asked Questions',
         faq1Q: 'Can I use the same key on multiple devices?',
         faq1A: "No. Each license key is bound to one device's hardware UDID. Each device needs its own license.",
@@ -491,19 +452,14 @@ const I18N = {
         faq4Q: 'What happens when my license expires?',
         faq4A: 'The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.',
         faq5Q: 'Is the payment secure?',
-        faq5A: 'Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.',
-        pmCryptoTitle: 'Cryptocurrency (USDT)', pmCryptoSub: 'International — instant activation',
-        pmCryptoDetail: 'Pay with <strong>USDT (Tether)</strong> on TRC20 or ERC20 network.<br/>International pricing: <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>Send to our wallet and message your <strong>UDID + TX hash</strong> to <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> for instant activation.',
-        pmPaypalTitle: 'PayPal', pmPaypalSub: 'International — worldwide accepted',
-        pmPaypalDetail: 'Pay via <strong>PayPal</strong> — accepted worldwide. Same pricing as crypto:<br/><strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>Contact <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> to receive PayPal payment link. Activation within minutes after payment confirmation.',
-        pmSupportTitle: 'Need Help?', pmSupportSub: 'Contact us for any payment issues',
-        pmSupportDetail: 'For payment issues, custom plans, or bulk licensing, contact us:<br/><br/>💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>👥 Community: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>'
+        faq5A: 'Yes! Card payments are processed via Stripe, QR payments via PayOS — both with bank-level security. We never store your payment details.'
     },
     vi: {
         backHome: '← Về trang chủ',
         heroTitle: 'Mua <span>Premium</span> License',
         heroDesc: 'Mở khóa chạy script không giới hạn. Mua trực tiếp từ ứng dụng IOSControl trên iPhone.',
         planWeekly: 'Theo tuần', planMonthly: '⭐ Theo tháng — Phổ biến', planYearly: 'Theo năm',
+        priceWeekly: '6,999₫', priceMonthly: '29,900₫', priceYearly: '299,000₫',
         planWeeklyPer: '~1.000₫/ngày · 7 ngày', planMonthlyPer: '~997₫/ngày · 30 ngày', planYearlyPer: '~819₫/ngày · 365 ngày',
         planMonthlyBest: 'Tốt nhất/ngày', planYearlySave: 'Tiết kiệm 18%',
         howTitle: 'Cách mua',
@@ -514,12 +470,14 @@ const I18N = {
         step3Title: 'Chọn gói',
         step3Desc: 'Chọn <strong>7 ngày</strong>, <strong>30 ngày</strong>, hoặc <strong>365 ngày</strong>. Sau đó nhấn <strong>"Thanh toán"</strong>.',
         step4Title: 'Quét mã QR để thanh toán',
-        step4Desc: 'Một <strong>mã QR</strong> sẽ hiện ra. Mở <strong>app ngân hàng</strong> (Vietcombank, MB Bank, Momo, ZaloPay, v.v.), quét mã QR và hoàn tất chuyển khoản.',
+        step4Desc: 'Một <strong>mã QR</strong> sẽ hiện ra. Mở <strong>app ngân hàng</strong> (Vietcombank, MB Bank, Momo, ZaloPay, v.v.), quét mã QR và hoàn tất chuyển khoản. Thanh toán quốc tế bằng thẻ Visa/Mastercard cũng được hỗ trợ.',
         step5Title: 'Kích hoạt tự động ✅',
         step5Desc: 'Sau khi thanh toán, license sẽ được <strong>kích hoạt tự động</strong>. Quay lại IOSControl — sẽ hiển thị trạng thái <strong>Premium</strong> ngay lập tức. Không cần nhập key thủ công!',
         pmTitle: 'Phương thức thanh toán',
-        pmQRTitle: 'Chuyển khoản qua mã QR', pmQRSub: 'Nhanh nhất & khuyên dùng',
-        pmQRDetail: 'Quét mã QR bằng bất kỳ <strong>app ngân hàng</strong> hay ví điện tử nào:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, và 40+ ngân hàng khác.<br/><br/>Thanh toán được xử lý qua <strong>PayOS</strong> — bảo mật, xác nhận tức thì.',
+        pmCardTitle: 'Thẻ tín dụng & ghi nợ', pmCardSub: 'Visa, Mastercard, Apple Pay, Google Pay',
+        pmCardDetail: 'Thanh toán bằng <strong>thẻ tín dụng hoặc ghi nợ quốc tế</strong>. Hỗ trợ <strong>Apple Pay</strong> và <strong>Google Pay</strong>.<br/><br/>Được xử lý qua <strong>Stripe</strong> — chuẩn PCI, mã hóa cấp ngân hàng. Giá tính bằng <strong>USD</strong>.',
+        pmQRTitle: 'Chuyển khoản qua mã QR', pmQRSub: 'Chỉ Việt Nam — PayOS',
+        pmQRDetail: 'Quét mã QR bằng bất kỳ <strong>app ngân hàng</strong> hay ví điện tử nào:<br/>Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, và 40+ ngân hàng khác.<br/><br/>Thanh toán được xử lý qua <strong>PayOS</strong> — bảo mật, xác nhận tức thì. Giá tính bằng <strong>VND</strong>.',
         faqTitle: 'Câu hỏi thường gặp',
         faq1Q: 'Có thể dùng cùng key trên nhiều thiết bị không?',
         faq1A: 'Không. Mỗi license key được gắn với UDID phần cứng của một thiết bị. Mỗi thiết bị cần license riêng.',
@@ -530,13 +488,7 @@ const I18N = {
         faq4Q: 'Khi license hết hạn thì sao?',
         faq4A: 'App sẽ chuyển về chế độ Free với giới hạn 2 phút/script. Tất cả script và dữ liệu được giữ nguyên — chỉ cần mua lại để tiếp tục.',
         faq5Q: 'Thanh toán có an toàn không?',
-        faq5A: 'Có! Thanh toán được xử lý qua PayOS với bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin ngân hàng của bạn.',
-        pmCryptoTitle: 'Tiền mã hoá (USDT)', pmCryptoSub: 'Quốc tế — kích hoạt tức thì',
-        pmCryptoDetail: 'Thanh toán bằng <strong>USDT (Tether)</strong> trên mạng TRC20 hoặc ERC20.<br/>Giá quốc tế: <strong>$0.49</strong> (7 ngày) · <strong>$1.49</strong> (30 ngày) · <strong>$11.99</strong> (365 ngày).<br/><br/>Gửi vào ví và nhắn <strong>UDID + TX hash</strong> cho <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz trên Telegram</a> để kích hoạt ngay.',
-        pmPaypalTitle: 'PayPal', pmPaypalSub: 'Quốc tế — chấp nhận toàn cầu',
-        pmPaypalDetail: 'Thanh toán qua <strong>PayPal</strong> — chấp nhận toàn cầu. Cùng mức giá với crypto:<br/><strong>$0.49</strong> (7 ngày) · <strong>$1.49</strong> (30 ngày) · <strong>$11.99</strong> (365 ngày).<br/><br/>Liên hệ <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz trên Telegram</a> để nhận link thanh toán PayPal. Kích hoạt trong vài phút sau khi xác nhận thanh toán.',
-        pmSupportTitle: 'Cần hỗ trợ?', pmSupportSub: 'Liên hệ chúng tôi về vấn đề thanh toán',
-        pmSupportDetail: 'Về vấn đề thanh toán, gói tuỳ chỉnh hoặc mua số lượng lớn, liên hệ:<br/><br/>💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>👥 Cộng đồng: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>'
+        faq5A: 'Có! Thẻ quốc tế qua Stripe, QR qua PayOS — đều bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin thanh toán của bạn.'
     }
 };
 

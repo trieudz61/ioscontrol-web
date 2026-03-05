@@ -1,0 +1,21 @@
+name = "ioscontrol-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# KV namespace for storing licenses
+# Create with: wrangler kv:namespace create LICENSES
+# Then paste the id below
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "YOUR_KV_NAMESPACE_ID"  # Replace after running: wrangler kv:namespace create LICENSES
+
+# Environment variables (set via: wrangler secret put SECRET_NAME)
+# Required secrets:
+#   STRIPE_SECRET_KEY       — sk_live_xxx or sk_test_xxx
+#   STRIPE_WEBHOOK_SECRET   — whsec_xxx (from Stripe dashboard)
+#   PAYOS_CLIENT_ID         — from payos.vn dashboard
+#   PAYOS_API_KEY           — from payos.vn dashboard
+#   PAYOS_CHECKSUM_KEY      — from payos.vn dashboard
+
+[vars]
+ENVIRONMENT = "production"
