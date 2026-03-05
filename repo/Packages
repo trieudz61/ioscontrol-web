@@ -2,13 +2,12 @@ Package: com.trieudz.ioscontrol
 Name: IOSControl
 Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: iOS Automation Tweak — Touch, Color, Record, Web IDE, Flow Builder, Py2Lua
-Depiction: https://ioscontrol.com
+Description: iOS Automation — Touch simulation, Color detection, Web IDE, OCR, Lua scripting
 Maintainer: IOSControl <support@ioscontrol.com>
-Author: IOSControl
+Author: trieudz
 Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Filename: debs/com.trieudz.ioscontrol_1.0.0_iphoneos-arm64.deb
-Size: 3145610
-MD5sum: 9b2516ff62871855aba1c5bbd2a5a443
-SHA256: 5a05631e5f8a7b1e50108306d354f20b65f33624c2511b55af13145416ec59f9
+Size: 14644528
+MD5sum: 52288705ae6f129930cedebf19c2ccba
+SHA256: 1ff882477a068fbd889ef50cd07e2722c024225be61f32f928a5401730aaf096
