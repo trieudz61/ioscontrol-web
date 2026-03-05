@@ -326,6 +326,61 @@
     sections.forEach(s => observer.observe(s));
   }
 
+  // ═══ Hamburger Menu ═══
+  (function initHamburger() {
+    const hBtn = document.getElementById('docsHamburger');
+    const overlay = document.getElementById('mobileOverlay');
+    const mobileSidebar = document.getElementById('mobileSidebarNav');
+    if (!hBtn || !overlay) return;
+
+    hBtn.addEventListener('click', () => {
+      hBtn.classList.toggle('active');
+      overlay.classList.toggle('open');
+      document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+      // Copy sidebar content to mobile overlay
+      if (overlay.classList.contains('open') && sidebar) {
+        mobileSidebar.innerHTML = sidebar.innerHTML;
+      }
+    });
+
+    // Close on link click
+    overlay.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' || e.target.closest('a') || e.target.closest('.sidebar-link')) {
+        hBtn.classList.remove('active');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Mobile theme toggle sync
+    const mTheme = document.getElementById('mobileThemeToggle2');
+    const mLang = document.getElementById('mobileLangToggle2');
+    if (mTheme) {
+      mTheme.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme();
+        const icon = currentTheme === 'dark' ? 'moon' : 'sun';
+        document.getElementById('mobileThemeIcon2').innerHTML = `<i data-lucide="${icon}" style="width:16px;height:16px;"></i>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      });
+    }
+    if (mLang) {
+      mLang.addEventListener('click', () => {
+        currentLang = currentLang === 'en' ? 'vi' : 'en';
+        applyLang();
+        buildSidebar();
+        buildContent();
+        initScrollSpy();
+        document.getElementById('mobileLangLabel2').textContent = currentLang.toUpperCase();
+        // Re-copy sidebar
+        if (overlay.classList.contains('open') && sidebar) {
+          mobileSidebar.innerHTML = sidebar.innerHTML;
+        }
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      });
+    }
+  })();
+
   // Init
   applyTheme();
   applyLang();

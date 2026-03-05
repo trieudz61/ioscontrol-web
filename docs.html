@@ -24,11 +24,9 @@
             <input type="text" id="searchInput" placeholder="Search APIs... (⌘K)" autocomplete="off" />
         </div>
         <div class="nav-controls">
-            <!-- Language Toggle -->
             <button class="toggle-btn" id="langToggle" title="Switch language">
                 <span class="toggle-label" id="langLabel">EN</span>
             </button>
-            <!-- Theme Toggle -->
             <button class="toggle-btn" id="themeToggle" title="Toggle theme">
                 <span id="themeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
             </button>
@@ -38,8 +36,27 @@
             <a href="/connect.html">IDE</a>
             <a href="https://github.com" target="_blank">GitHub</a>
         </div>
+        <button class="hamburger" id="docsHamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-overlay" id="mobileOverlay">
+    <div class="mobile-overlay-nav">
+        <a href="/"><i data-lucide="home" style="width:16px;height:16px;"></i> Home</a>
+        <a href="/connect.html"><i data-lucide="play" style="width:16px;height:16px;"></i> Launch IDE</a>
+        <a href="/buy.html"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i> Buy Premium</a>
+        <a href="https://github.com" target="_blank"><i data-lucide="github" style="width:16px;height:16px;"></i> GitHub</a>
+    </div>
+    <div class="mobile-overlay-toggles">
+        <button class="toggle-btn" id="mobileLangToggle2"><span class="toggle-label" id="mobileLangLabel2">EN</span></button>
+        <button class="toggle-btn" id="mobileThemeToggle2"><span id="mobileThemeIcon2"><i data-lucide="moon" style="width:16px;height:16px;"></i></span></button>
+    </div>
+    <div class="mobile-overlay-divider"></div>
+    <div class="mobile-overlay-sidebar" id="mobileSidebarNav"></div>
+</div>
 
 <div class="layout">
     <!-- Sidebar -->
