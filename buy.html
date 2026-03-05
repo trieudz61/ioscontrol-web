@@ -328,6 +328,8 @@ nav {
             <i data-lucide="credit-card"></i>
             <span data-i18n="pmTitle">Payment Methods</span>
         </div>
+
+        <!-- Vietnam: QR Code -->
         <div class="payment-method">
             <div class="pm-header">
                 <div class="pm-icon" style="background:rgba(52,211,153,0.1);color:#34d399;">
@@ -335,7 +337,7 @@ nav {
                 </div>
                 <div>
                     <h3 data-i18n="pmQRTitle">Bank Transfer via QR Code</h3>
-                    <p data-i18n="pmQRSub">Fastest & recommended</p>
+                    <p data-i18n="pmQRSub">Fastest &amp; recommended (Vietnam)</p>
                 </div>
             </div>
             <div class="pm-detail" data-i18n-html="pmQRDetail">
@@ -343,6 +345,61 @@ nav {
                 Vietcombank, BIDV, Agribank, MB Bank, Techcombank, VPBank, TPBank, ACB, Sacombank, Momo, ZaloPay, VNPay, and 40+ more banks.
                 <br/><br/>
                 Payment is processed via <strong>PayOS</strong> — secure, instant confirmation.
+            </div>
+        </div>
+
+        <!-- International: Crypto -->
+        <div class="payment-method">
+            <div class="pm-header">
+                <div class="pm-icon" style="background:rgba(251,191,36,0.1);color:#fbbf24;">
+                    <i data-lucide="bitcoin"></i>
+                </div>
+                <div>
+                    <h3 data-i18n="pmCryptoTitle">Cryptocurrency (USDT)</h3>
+                    <p data-i18n="pmCryptoSub">International — instant activation</p>
+                </div>
+            </div>
+            <div class="pm-detail" data-i18n-html="pmCryptoDetail">
+                Pay with <strong>USDT (Tether)</strong> on TRC20 or ERC20 network.<br/>
+                International pricing: <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>
+                Send to our wallet and message your <strong>UDID + TX hash</strong> to <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> for instant activation.
+            </div>
+        </div>
+
+        <!-- International: PayPal -->
+        <div class="payment-method">
+            <div class="pm-header">
+                <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
+                    <i data-lucide="wallet"></i>
+                </div>
+                <div>
+                    <h3 data-i18n="pmPaypalTitle">PayPal</h3>
+                    <p data-i18n="pmPaypalSub">International — worldwide accepted</p>
+                </div>
+            </div>
+            <div class="pm-detail" data-i18n-html="pmPaypalDetail">
+                Pay via <strong>PayPal</strong> — accepted worldwide. Same pricing as crypto:<br/>
+                <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>
+                Contact <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> to receive PayPal payment link. Activation within minutes after payment confirmation.
+            </div>
+        </div>
+
+        <!-- Support -->
+        <div class="payment-method" style="border-color:rgba(99,102,241,0.2);">
+            <div class="pm-header">
+                <div class="pm-icon" style="background:rgba(99,102,241,0.1);color:#818cf8;">
+                    <i data-lucide="message-circle"></i>
+                </div>
+                <div>
+                    <h3 data-i18n="pmSupportTitle">Need Help?</h3>
+                    <p data-i18n="pmSupportSub">Contact us for any payment issues</p>
+                </div>
+            </div>
+            <div class="pm-detail" data-i18n-html="pmSupportDetail">
+                For payment issues, custom plans, or bulk licensing, contact us:
+                <br/><br/>
+                💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>
+                👥 Community: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>
             </div>
         </div>
     </div>
@@ -434,7 +491,13 @@ const I18N = {
         faq4Q: 'What happens when my license expires?',
         faq4A: 'The app reverts to Free mode with a 2-minute script limit. All your scripts and data are preserved — just purchase again to continue.',
         faq5Q: 'Is the payment secure?',
-        faq5A: 'Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.'
+        faq5A: 'Yes! Payment is processed via PayOS with bank-level security. We never store your banking details.',
+        pmCryptoTitle: 'Cryptocurrency (USDT)', pmCryptoSub: 'International — instant activation',
+        pmCryptoDetail: 'Pay with <strong>USDT (Tether)</strong> on TRC20 or ERC20 network.<br/>International pricing: <strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>Send to our wallet and message your <strong>UDID + TX hash</strong> to <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> for instant activation.',
+        pmPaypalTitle: 'PayPal', pmPaypalSub: 'International — worldwide accepted',
+        pmPaypalDetail: 'Pay via <strong>PayPal</strong> — accepted worldwide. Same pricing as crypto:<br/><strong>$0.49</strong> (7 days) · <strong>$1.49</strong> (30 days) · <strong>$11.99</strong> (365 days).<br/><br/>Contact <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz on Telegram</a> to receive PayPal payment link. Activation within minutes after payment confirmation.',
+        pmSupportTitle: 'Need Help?', pmSupportSub: 'Contact us for any payment issues',
+        pmSupportDetail: 'For payment issues, custom plans, or bulk licensing, contact us:<br/><br/>💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>👥 Community: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>'
     },
     vi: {
         backHome: '← Về trang chủ',
@@ -467,7 +530,13 @@ const I18N = {
         faq4Q: 'Khi license hết hạn thì sao?',
         faq4A: 'App sẽ chuyển về chế độ Free với giới hạn 2 phút/script. Tất cả script và dữ liệu được giữ nguyên — chỉ cần mua lại để tiếp tục.',
         faq5Q: 'Thanh toán có an toàn không?',
-        faq5A: 'Có! Thanh toán được xử lý qua PayOS với bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin ngân hàng của bạn.'
+        faq5A: 'Có! Thanh toán được xử lý qua PayOS với bảo mật cấp ngân hàng. Chúng tôi không lưu thông tin ngân hàng của bạn.',
+        pmCryptoTitle: 'Tiền mã hoá (USDT)', pmCryptoSub: 'Quốc tế — kích hoạt tức thì',
+        pmCryptoDetail: 'Thanh toán bằng <strong>USDT (Tether)</strong> trên mạng TRC20 hoặc ERC20.<br/>Giá quốc tế: <strong>$0.49</strong> (7 ngày) · <strong>$1.49</strong> (30 ngày) · <strong>$11.99</strong> (365 ngày).<br/><br/>Gửi vào ví và nhắn <strong>UDID + TX hash</strong> cho <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz trên Telegram</a> để kích hoạt ngay.',
+        pmPaypalTitle: 'PayPal', pmPaypalSub: 'Quốc tế — chấp nhận toàn cầu',
+        pmPaypalDetail: 'Thanh toán qua <strong>PayPal</strong> — chấp nhận toàn cầu. Cùng mức giá với crypto:<br/><strong>$0.49</strong> (7 ngày) · <strong>$1.49</strong> (30 ngày) · <strong>$11.99</strong> (365 ngày).<br/><br/>Liên hệ <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz trên Telegram</a> để nhận link thanh toán PayPal. Kích hoạt trong vài phút sau khi xác nhận thanh toán.',
+        pmSupportTitle: 'Cần hỗ trợ?', pmSupportSub: 'Liên hệ chúng tôi về vấn đề thanh toán',
+        pmSupportDetail: 'Về vấn đề thanh toán, gói tuỳ chỉnh hoặc mua số lượng lớn, liên hệ:<br/><br/>💬 Telegram: <a href="https://t.me/traborz" target="_blank" style="color:var(--accent-light);font-weight:600;">@traborz</a><br/>👥 Cộng đồng: <a href="https://t.me/IOSControl_Comunity" target="_blank" style="color:var(--accent-light);font-weight:600;">IOSControl Community</a>'
     }
 };
 
