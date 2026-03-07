@@ -1,20 +1,3 @@
-Package: com.trieudz.ioscontrol
-Name: IOSControl
-Version: 1.0.0
-Architecture: iphoneos-arm64
-Description: Ultimate iOS Automation — Touch, Screenshot, Color detection, OCR, App management, Lua scripting with Web IDE.
-Depiction: https://ioscontrol.com/
-Maintainer: IOSControl <support@ioscontrol.com>
-Author: trieudz
-Section: Tweaks
-Depends: mobilesubstrate, firmware (>= 15.0)
-Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol_1.0.0_iphoneos-arm64.deb
-Size: 14147998
-Installed-Size: 22296
-MD5sum: 942085d655abd32fdba17259c2d48218
-SHA256: c712c1be0a5d3f4c4a4231dcc043c25eb3eab2355ebf3cfcd237ec52b970487f
-
 Package: com.trieudz.icontrolapp
 Name: iControlApp
 Version: 1.1.0
