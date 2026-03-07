@@ -343,6 +343,64 @@ curl -X POST http://device-ip:9999/api/touch \\
 </div>`,
     },
   },
+  {
+    id: "spoof",
+    title: {
+      en: "How to spoof device identity?",
+      vi: "Cách fake thông tin thiết bị?",
+    },
+    icon: '<i data-lucide="smartphone" style="width:16px;height:16px;"></i>',
+    content: {
+      en: `<p>IOSControl includes a powerful <strong>Device Identity Spoof</strong> feature that lets you fake your device info per-app:</p>
+<ol>
+  <li><strong>Open iControlApp</strong> → go to the <strong>Spoof</strong> tab</li>
+  <li><strong>Select target app</strong> from the installed apps list</li>
+  <li><strong>Pick an iPhone model</strong> (30+ models: iPhone 8 → iPhone 16 Pro Max)</li>
+  <li><strong>iOS version</strong> is auto-generated based on the selected model</li>
+  <li><strong>Tap "Fake"</strong> → the app restarts with the new identity</li>
+  <li><strong>Open the app</strong> — it now sees the spoofed device info</li>
+  <li><strong>To restore:</strong> tap "Restore" on the same app</li>
+</ol>
+<div class="guide-note">
+  <strong>Key features:</strong>
+  <ul>
+    <li>✅ <strong>Per-app</strong> — only fakes the app you choose, system stays untouched</li>
+    <li>✅ <strong>No respring</strong> — works instantly, no SpringBoard restart needed</li>
+    <li>✅ <strong>Full identity</strong> — model, iOS version, serial, IMEI, carrier, user agent</li>
+    <li>✅ <strong>Persistent</strong> — survives app restarts until you restore</li>
+    <li>✅ <strong>Batch mode</strong> — select multiple apps and fake them all at once</li>
+  </ul>
+</div>
+<p><strong>Use cases:</strong> Multi-account management, app testing on different models, privacy protection, ban evasion.</p>
+<div class="guide-note">
+  <strong>⭐ Premium feature:</strong> Device Identity Spoof requires a Premium license.
+</div>`,
+      vi: `<p>IOSControl tích hợp tính năng <strong>Fake Thông Tin Thiết Bị</strong> mạnh mẽ, cho phép giả lập thông tin device theo từng app:</p>
+<ol>
+  <li><strong>Mở iControlApp</strong> → vào tab <strong>Spoof</strong></li>
+  <li><strong>Chọn app mục tiêu</strong> từ danh sách các app đã cài</li>
+  <li><strong>Chọn model iPhone</strong> (30+ model: iPhone 8 → iPhone 16 Pro Max)</li>
+  <li><strong>Phiên bản iOS</strong> tự động sinh theo model đã chọn</li>
+  <li><strong>Bấm "Fake"</strong> → app khởi động lại với identity mới</li>
+  <li><strong>Mở app</strong> — giờ app sẽ thấy thông tin thiết bị giả lập</li>
+  <li><strong>Để khôi phục:</strong> bấm "Restore" trên app đó</li>
+</ol>
+<div class="guide-note">
+  <strong>Tính năng chính:</strong>
+  <ul>
+    <li>✅ <strong>Theo từng app</strong> — chỉ fake app bạn chọn, hệ thống không bị ảnh hưởng</li>
+    <li>✅ <strong>Không cần respring</strong> — hoạt động ngay lập tức</li>
+    <li>✅ <strong>Full identity</strong> — model, iOS, serial, IMEI, nhà mạng, user agent</li>
+    <li>✅ <strong>Bền vững</strong> — giữ sau khi tắt/mở app cho đến khi restore</li>
+    <li>✅ <strong>Batch mode</strong> — chọn nhiều app và fake cùng lúc</li>
+  </ul>
+</div>
+<p><strong>Use cases:</strong> Quản lý đa tài khoản, test app trên nhiều model, bảo vệ quyền riêng tư, reset fingerprint.</p>
+<div class="guide-note">
+  <strong>⭐ Tính năng Premium:</strong> Fake Thông Tin Thiết Bị yêu cầu license Premium.
+</div>`,
+    },
+  },
 ];
 
 const API_SECTIONS = [
@@ -2395,6 +2453,62 @@ const API_SECTIONS = [
         ret: "JSON {status, version, name, ip}",
         example:
           'curl http://{device-ip}:9999/ping\n\n# Response: {"status":"ok","version":"1.0.0","name":"IOSControl","ip":"192.168.1.x"}',
+      },
+    ],
+  },
+  {
+    id: "spoof",
+    icon: '<i data-lucide="smartphone" style="width:16px;height:16px;"></i>',
+    title: { en: "Device Spoofing", vi: "Giả lập thiết bị" },
+    desc: {
+      en: "Fake device model, iOS version, serial number, and carrier for specific apps. Premium feature.",
+      vi: "Fake model thiết bị, phiên bản iOS, số serial, và nhà mạng cho từng app. Tính năng Premium.",
+    },
+    apis: [
+      {
+        name: "ic.spoof.name()",
+        type: "func",
+        desc: { en: "Get current spoofed device name", vi: "Lấy tên thiết bị đang fake" },
+        params: [],
+        ret: "string",
+        example: 'local name = ic.spoof.name()\nlog("Spoofed as: " .. name)',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "ic.spoof.model()",
+        type: "func",
+        desc: { en: "Get current spoofed model identifier", vi: "Lấy mã model đang fake" },
+        params: [],
+        ret: "string (e.g. \"iPhone15,3\")",
+        example: 'local m = ic.spoof.model()\nlog("Model: " .. m)  -- iPhone15,3',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "ic.spoof.ios()",
+        type: "func",
+        desc: { en: "Get current spoofed iOS version", vi: "Lấy phiên bản iOS đang fake" },
+        params: [],
+        ret: "string (e.g. \"16.5.1\")",
+        example: 'log("iOS: " .. ic.spoof.ios())',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "ic.spoof.serial()",
+        type: "func",
+        desc: { en: "Get current spoofed serial number", vi: "Lấy số serial đang fake" },
+        params: [],
+        ret: "string",
+        example: 'log("Serial: " .. ic.spoof.serial())',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "ic.spoof.carrier()",
+        type: "func",
+        desc: { en: "Get current spoofed carrier name", vi: "Lấy tên nhà mạng đang fake" },
+        params: [],
+        ret: "string",
+        example: 'log("Carrier: " .. ic.spoof.carrier())',
+        tags: ["new", "exclusive"],
       },
     ],
   },
