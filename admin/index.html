@@ -240,8 +240,9 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 <div class="app hidden" id="app">
   <nav class="sidebar">
     <div class="sidebar-logo">🎮 <span>IOSControl</span></div>
-    <a href="#" class="active" onclick="showSection('keys')">📋 License Keys</a>
-    <a href="#" onclick="showSection('generate')">🔑 Generate Key</a>
+    <a href="#" class="active" onclick="showSection('keys', this)">📋 License Keys</a>
+    <a href="#" onclick="showSection('devices', this)">📱 Devices</a>
+    <a href="#" onclick="showSection('generate', this)">🔑 Generate Key</a>
     <div class="sidebar-spacer"></div>
     <div class="sidebar-footer">IOSControl Admin v1.0</div>
   </nav>
@@ -282,6 +283,26 @@ tr:hover td { background:rgba(255,255,255,0.02); }
           <tr><td colspan="7" class="loading"><div class="spinner"></div>Loading...</td></tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- Devices Section -->
+    <div id="devicesSection" style="display:none">
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+        <div class="stat-card"><div class="stat-label">Total Devices</div><div class="stat-value" id="devTotal">-</div></div>
+        <div class="stat-card"><div class="stat-label">Free Users</div><div class="stat-value" id="devFree" style="color:var(--text-dim)">-</div></div>
+        <div class="stat-card"><div class="stat-label">Premium Users</div><div class="stat-value" id="devPremium" style="color:var(--green)">-</div></div>
+      </div>
+      <div class="toolbar">
+        <h2>Devices</h2>
+        <input type="text" class="search-box" placeholder="Search UDID, IP..." id="deviceSearchBox" oninput="filterDevices()">
+        <button class="btn btn-ghost" onclick="loadDevices()">↻ Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>UDID</th><th>Plan</th><th>IP</th><th>Country</th><th>License Key</th><th>Last Seen</th></tr></thead>
+          <tbody id="devicesBody"><tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </main>
 </div>
@@ -346,6 +367,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 const API_BASE = 'https://ioscontrol-worker.ioscontrol.workers.dev';
 let SECRET = '';
 let allKeys = [];
+let allDevices = [];
 
 // Auth
 function doLogin() {
@@ -520,10 +542,59 @@ function toast(msg, isError = false) {
   setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-function showSection(s) {
+function showSection(s, el) {
   document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-  event.target.classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('keysSection') && (document.getElementById('keysSection').style.display = s === 'keys' ? '' : 'none');
+  document.getElementById('devicesSection').style.display = s === 'devices' ? '' : 'none';
+  document.getElementById('statsGrid').style.display = s === 'keys' ? '' : 'none';
   if (s === 'generate') showGenerateModal();
+  if (s === 'devices') loadDevices();
+}
+
+// Devices
+async function loadDevices() {
+  const tbody = document.getElementById('devicesBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  const d = await api('/admin/api/devices');
+  allDevices = d.devices || [];
+  document.getElementById('devTotal').textContent = d.total ?? '-';
+  document.getElementById('devFree').textContent = d.free ?? '-';
+  document.getElementById('devPremium').textContent = d.premium ?? '-';
+  renderDevices(allDevices);
+}
+
+function renderDevices(devices) {
+  const tbody = document.getElementById('devicesBody');
+  if (!devices.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon">📱</div>No devices tracked yet.<br>Devices appear after calling /api/verify</td></tr>';
+    return;
+  }
+  // Sort: free first
+  devices.sort((a,b) => (a.plan === 'free' ? -1 : 1) - (b.plan === 'free' ? -1 : 1));
+  tbody.innerHTML = devices.map(d => {
+    const badge = d.plan === 'premium' ? 'badge-active' : 'badge-free';
+    const lastSeen = d.last_seen ? new Date(d.last_seen).toLocaleString() : '-';
+    return `<tr>
+      <td class="udid-cell" title="${d.udid}">${d.udid}</td>
+      <td><span class="badge ${badge}">${d.plan}</span></td>
+      <td style="font-size:12px;color:var(--text-dim)">${d.ip || '-'}</td>
+      <td>${d.country || '-'}</td>
+      <td class="key-cell">${d.license_key || '-'}</td>
+      <td style="font-size:12px">${lastSeen}</td>
+    </tr>`;
+  }).join('');
+}
+
+function filterDevices() {
+  const q = document.getElementById('deviceSearchBox').value.toLowerCase();
+  const filtered = allDevices.filter(d =>
+    (d.udid || '').toLowerCase().includes(q) ||
+    (d.ip || '').includes(q) ||
+    (d.plan || '').includes(q) ||
+    (d.country || '').toLowerCase().includes(q)
+  );
+  renderDevices(filtered);
 }
 </script>
 </body>
