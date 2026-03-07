@@ -363,6 +363,19 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 
 <div class="toast" id="toast"></div>
 
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay hidden" id="deleteModal">
+  <div class="modal">
+    <h3>🗑 Delete License</h3>
+    <p style="color:var(--text-dim);margin-bottom:8px">Are you sure? This cannot be undone.</p>
+    <p class="key-cell" id="deleteKeyDisplay" style="font-size:14px;margin-bottom:16px"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API_BASE = 'https://ioscontrol-worker.ioscontrol.workers.dev';
 let SECRET = '';
@@ -508,10 +521,23 @@ async function toggleLock(key) {
 }
 
 // Delete
-async function deleteKey(key) {
-  if (!confirm(`Delete key ${key}? This cannot be undone.`)) return;
-  const d = await api(`/admin/api/keys/${key}`, 'DELETE');
-  if (d.success) { toast('🗑 Key deleted'); loadKeys(); loadStats(); }
+let pendingDeleteKey = null;
+function deleteKey(key) {
+  pendingDeleteKey = key;
+  document.getElementById('deleteKeyDisplay').textContent = key;
+  document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+async function confirmDelete() {
+  if (!pendingDeleteKey) return;
+  try {
+    const d = await api(`/admin/api/keys/${pendingDeleteKey}`, 'DELETE');
+    if (d.success) { toast('🗑 Key deleted'); }
+    else { toast('❌ ' + (d.error || 'Delete failed'), true); }
+  } catch(e) { toast('❌ Network error: ' + e.message, true); }
+  closeModal('deleteModal');
+  pendingDeleteKey = null;
+  loadKeys(); loadStats();
 }
 
 // Generate
