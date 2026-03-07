@@ -27,7 +27,7 @@ Section: Applications
 Depends: firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.icontrolapp_1.1.0_iphoneos-arm64.deb
-Size: 1323908
+Size: 1324256
 Installed-Size: 2200
-MD5sum: 5e964e3e148f6ced7dfa8ed46a1db986
-SHA256: 24783bfd3da280871c6ff1bb079320c40db3e9319aaf63838d219177af211373
+MD5sum: 72ee6af35f814d61ae87bc63cc5e3840
+SHA256: 98959f58640428b1d92d516051bc0887a8a829ed6a99fb4d2cb6c12ada670d8f
