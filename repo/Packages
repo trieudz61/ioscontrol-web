@@ -14,20 +14,3 @@ Size: 14155560
 Installed-Size: 22296
 MD5sum: be85022f6feb43235b7c92da196b7ce4
 SHA256: c7ec0742b40af90b9108b7e5ead8e3f4a05b409246a658373ea4b25f1b5d08f6
-
-Package: com.trieudz.icontrolapp
-Name: iControlApp
-Version: 1.1.0
-Architecture: iphoneos-arm64
-Description: iControl Script Manager — Manage and run Lua scripts on-device. ICSpoof device spoofing.
-Depiction: https://ioscontrol.com/
-Maintainer: IOSControl <support@ioscontrol.com>
-Author: trieudz
-Section: Applications
-Depends: firmware (>= 15.0)
-Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.icontrolapp_1.1.0_iphoneos-arm64.deb
-Size: 1324256
-Installed-Size: 2200
-MD5sum: 72ee6af35f814d61ae87bc63cc5e3840
-SHA256: 98959f58640428b1d92d516051bc0887a8a829ed6a99fb4d2cb6c12ada670d8f
