@@ -1,11 +1,11 @@
 {
-  "version": "1.0.0",
-  "build": 1,
+  "version": "1.1.1",
+  "build": 2,
   "minimum_os": "15.0",
-  "release_date": "2026-03-05",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.0.0_iphoneos-arm64.deb",
+  "release_date": "2026-03-07",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.1.1_iphoneos-arm64.deb",
   "changelog": {
-    "en": "Initial release: Touch simulation, Color detection, Record & Playback, Web IDE, Flow Builder, Py2Lua converter, Helper tools.",
-    "vi": "Phiên bản đầu tiên: Mô phỏng chạm, Phát hiện màu, Ghi & Phát lại, Web IDE, Flow Builder, Chuyển đổi Py2Lua, Công cụ hỗ trợ."
+    "en": "- Added ICSpoof tab for device spoofing\n- Self-update system (install updates directly from app)\n- Vietnamese translation for all ICSpoof screens\n- Beta notice in marquee\n- Fixed tab bar overlapping last app",
+    "vi": "- Thêm tab ICSpoof giả lập thiết bị\n- Hệ thống tự cập nhật (cài trực tiếp trong app)\n- Dịch tiếng Việt toàn bộ ICSpoof\n- Thông báo Beta trên marquee\n- Sửa lỗi tab bar che app cuối"
   }
 }
