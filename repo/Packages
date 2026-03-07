@@ -1,15 +1,32 @@
 Package: com.trieudz.ioscontrol
 Name: IOSControl
-Version: 1.1.0
+Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: Ultimate iOS Automation — Touch, Screenshot, Color detection, OCR, App management, Lua scripting with Web IDE. ICSpoof device spoofing.
+Description: Ultimate iOS Automation — Touch, Screenshot, Color detection, OCR, App management, Lua scripting with Web IDE.
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol_1.1.0_iphoneos-arm64.deb
+Filename: debs/com.trieudz.ioscontrol_1.0.0_iphoneos-arm64.deb
+Size: 14147998
+Installed-Size: 22296
+MD5sum: 942085d655abd32fdba17259c2d48218
+SHA256: c712c1be0a5d3f4c4a4231dcc043c25eb3eab2355ebf3cfcd237ec52b970487f
+
+Package: com.trieudz.icontrolapp
+Name: iControlApp
+Version: 1.1.0
+Architecture: iphoneos-arm64
+Description: iControl Script Manager — Manage and run Lua scripts on-device. ICSpoof device spoofing.
+Depiction: https://ioscontrol.com/
+Maintainer: IOSControl <support@ioscontrol.com>
+Author: trieudz
+Section: Applications
+Depends: firmware (>= 15.0)
+Icon: https://ioscontrol.com/repo/icon.png
+Filename: debs/com.trieudz.icontrolapp_1.1.0_iphoneos-arm64.deb
 Size: 1323908
 Installed-Size: 2200
 MD5sum: 5e964e3e148f6ced7dfa8ed46a1db986
