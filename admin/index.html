@@ -1132,38 +1132,75 @@ async function publishRelease() {
   const version = document.getElementById('relNewVersion').value.trim();
   if (!version) { showToast('❌ Version is required'); return; }
 
-  const body = {
-    version,
-    min_ios: document.getElementById('relMinIOS').value.trim() || '14.0',
-    max_ios: document.getElementById('relMaxIOS').value.trim() || '18.2',
-    changelog: document.getElementById('relChangelog').value.trim(),
-    size: selectedDebFile ? formatBytes(selectedDebFile.size) : '-'
-  };
+  const changelog = document.getElementById('relChangelog').value.trim();
+  const minIOS = document.getElementById('relMinIOS').value.trim() || '14.0';
+  const maxIOS = document.getElementById('relMaxIOS').value.trim() || '18.2';
 
-  // If .deb file selected, upload it as base64
-  if (selectedDebFile) {
-    showToast('⏳ Uploading .deb file...');
-    const arrayBuf = await selectedDebFile.arrayBuffer();
-    const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuf)));
-    body.deb_filename = selectedDebFile.name;
-    body.deb_base64 = base64;
-    body.deb_size = selectedDebFile.size;
+  if (!selectedDebFile) {
+    showToast('❌ Please select a .deb file'); return;
   }
 
+  const btn = document.querySelector('#releasesSection .btn-primary');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader"></i> Uploading...';
+
   try {
-    const r = await api('/admin/api/releases', 'POST', body);
-    if (r.success) {
-      showToast('🚀 Release ' + version + ' published!');
-      document.getElementById('relNewVersion').value = '';
-      document.getElementById('relChangelog').value = '';
-      document.getElementById('relFile').value = '';
-      selectedDebFile = null;
-      document.getElementById('relFileName').textContent = 'No file selected';
-      document.getElementById('relFileName').style.color = 'var(--text-dim)';
-      loadReleases();
-    } else showToast('❌ ' + (r.error || 'Failed'));
+    // Step 1: Read file as base64 (chunked to avoid crash)
+    showToast('⏳ Step 1/3: Reading file...');
+    const arrayBuf = await selectedDebFile.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuf);
+    let binary = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+    }
+    const base64 = btoa(binary);
+    showToast(`✅ File read (${formatBytes(bytes.length)})`);
+
+    // Step 2: Upload to GitHub repo
+    showToast('⏳ Step 2/3: Uploading to Sileo repo...');
+    const ghRes = await api('/admin/api/releases/upload-repo', 'POST', {
+      filename: selectedDebFile.name,
+      base64: base64,
+      version: version,
+      changelog: changelog,
+      min_ios: minIOS,
+      max_ios: maxIOS,
+      size: bytes.length
+    });
+
+    if (!ghRes.success) {
+      showToast('❌ GitHub upload failed: ' + (ghRes.error || 'Unknown'));
+      return;
+    }
+    showToast('✅ Uploaded to Sileo repo!');
+
+    // Step 3: Save release metadata
+    showToast('⏳ Step 3/3: Saving release info...');
+    const body = {
+      version,
+      min_ios: minIOS,
+      max_ios: maxIOS,
+      changelog,
+      size: formatBytes(bytes.length),
+      deb_filename: selectedDebFile.name,
+    };
+    await api('/admin/api/releases', 'POST', body);
+
+    showToast('🚀 Release v' + version + ' published to Sileo!');
+    document.getElementById('relNewVersion').value = '';
+    document.getElementById('relChangelog').value = '';
+    document.getElementById('relFile').value = '';
+    selectedDebFile = null;
+    document.getElementById('relFileName').textContent = 'No file selected';
+    document.getElementById('relFileName').style.color = 'var(--text-dim)';
+    loadReleases();
   } catch (e) {
-    showToast('❌ Upload failed: ' + e.message);
+    showToast('❌ Error: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="rocket"></i> Publish Release';
+    lucide.createIcons();
   }
 }
 
