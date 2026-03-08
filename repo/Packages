@@ -1,6 +1,6 @@
 Package: com.trieudz.ioscontrol
 Name: IOSControl
-Version: 1.1.3
+Version: 1.1.4
 Architecture: iphoneos-arm64
 Description: update
 Depiction: https://ioscontrol.com/
