@@ -275,6 +275,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 .empty-state { text-align:center; padding:48px 20px; color:var(--text-dim); }
 
 /* Utility Grids */
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
 .form-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
 .ann-grid { display:grid; grid-template-columns:1fr auto auto; gap:12px; align-items:end; }
@@ -294,10 +295,11 @@ tr:hover td { background:rgba(255,255,255,0.02); }
   .stat-value { font-size:22px; }
   .modal { padding:20px; }
   /* Override custom grids */
-  .grid-3 { grid-template-columns:1fr; gap:10px; }
-  .form-grid { grid-template-columns:1fr; }
-  .ann-grid { grid-template-columns:1fr; align-items:start; }
-  .ann-grid button { justify-content:center; }
+  .grid-4 { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
+  .grid-3 { grid-template-columns:1fr !important; gap:10px !important; }
+  .form-grid { grid-template-columns:1fr !important; }
+  .ann-grid { grid-template-columns:1fr !important; align-items:start !important; }
+  .ann-grid button { justify-content:center !important; }
 }
 </style>
 </head>
@@ -348,7 +350,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 
   <main class="main">
     <!-- Stats -->
-    <div class="stats-grid" id="statsGrid">
+    <div class="grid-4" id="statsGrid" style="margin-bottom:28px">
       <div class="stat-card"><div class="stat-label"><i data-lucide="layers"></i> Total Keys</div><div class="stat-value" id="statTotal">-</div></div>
       <div class="stat-card"><div class="stat-label"><i data-lucide="check-circle"></i> Active</div><div class="stat-value" id="statActive">-</div></div>
       <div class="stat-card"><div class="stat-label"><i data-lucide="x-circle"></i> Expired</div><div class="stat-value" id="statExpired">-</div></div>
