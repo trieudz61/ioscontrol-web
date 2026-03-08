@@ -711,11 +711,14 @@ function renderDevices(devices) {
     return;
   }
   tbody.innerHTML = devices.map(d => {
-    const badge = d.plan === 'premium' ? 'badge-active' : 'badge-free';
+    let badge = 'badge-free', label = d.plan || 'free';
+    if (d.plan === 'premium') { badge = 'badge-active'; }
+    else if (d.expired) { badge = 'badge-expired'; label = 'EXPIRED'; }
+    else if (d.locked) { badge = 'badge-expired'; label = 'LOCKED'; }
     const lastSeen = d.last_seen ? new Date(d.last_seen).toLocaleString() : '-';
     return `<tr>
       <td class="udid-cell" title="${d.udid}">${d.udid}</td>
-      <td><span class="badge ${badge}">${d.plan}</span></td>
+      <td><span class="badge ${badge}">${label}</span></td>
       <td style="font-size:12px;color:var(--text-dim)">${d.ip || '-'}</td>
       <td>${d.country || '-'}</td>
       <td class="key-cell">${d.license_key || '-'}</td>
