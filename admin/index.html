@@ -1062,6 +1062,9 @@ function renderReleases() {
       <td style="font-size:12px">${s.published_at}</td>
       <td style="text-align:right">
         ${s.download_url ? `<a href="${s.download_url}" class="btn btn-ghost btn-sm" title="Download from Sileo repo" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="deleteSileoPackage('${s.deb_filename}')" title="Delete from repo">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
       </td>
     </tr>`;
   }
@@ -1168,6 +1171,24 @@ async function deleteRelease(id) {
     const r = await api(`/admin/api/releases/${id}`, 'DELETE');
     if (r.success) { showToast('🗑 Deleted'); loadReleases(); }
     else showToast('❌ ' + (r.error || 'Failed'));
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+function deleteSileoPackage(filename) {
+  document.getElementById('confirmTitle').textContent = 'Delete Sileo Package';
+  document.getElementById('confirmMsg').textContent = '⚠️ This will remove the .deb file from the Sileo repo. Users will no longer be able to install this version.';
+  document.getElementById('confirmDetail').textContent = '📦 ' + filename;
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api('/admin/api/releases/delete-repo', 'POST', { filename });
+    if (r.success) {
+      showToast('🗑 Deleted from repo');
+      sileoPackage = null;
+      loadReleases();
+    } else {
+      showToast('❌ ' + (r.error || 'Failed'));
+    }
   };
   document.getElementById('confirmModal').classList.remove('hidden');
   lucide.createIcons();
