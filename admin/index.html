@@ -1008,25 +1008,30 @@ async function loadReleases() {
       if (m) pkg[m[1]] = m[2];
     });
 
-    sileoPackage = {
-      id: '_sileo_current',
-      version: pkg.Version || vData.version || '?',
-      changelog: vData.changelog?.en || pkg.Description || '-',
-      min_ios: vData.minimum_os || '15.0',
-      max_ios: '18.2',
-      size: pkg.Size ? formatBytes(parseInt(pkg.Size)) : '-',
-      deb_filename: pkg.Filename ? pkg.Filename.split('/').pop() : '-',
-      has_deb: true,
-      is_sileo: true,
-      published_at: vData.release_date || '-',
-      download_url: pkg.Filename ? 'https://ioscontrol.com/repo/' + pkg.Filename : null,
-      package_id: pkg.Package || '-',
-      md5: pkg.MD5sum || '-',
-    };
+    // Only show LIVE entry if Packages has a valid package
+    if (pkg.Version && pkg.Filename) {
+      sileoPackage = {
+        id: '_sileo_current',
+        version: pkg.Version,
+        changelog: vData.changelog?.en || pkg.Description || '-',
+        min_ios: vData.minimum_os || '15.0',
+        max_ios: '18.2',
+        size: pkg.Size ? formatBytes(parseInt(pkg.Size)) : '-',
+        deb_filename: pkg.Filename.split('/').pop(),
+        has_deb: true,
+        is_sileo: true,
+        published_at: vData.release_date || '-',
+        download_url: 'https://ioscontrol.com/repo/' + pkg.Filename,
+        package_id: pkg.Package || '-',
+        md5: pkg.MD5sum || '-',
+      };
 
-    document.getElementById('relVersion').textContent = sileoPackage.version;
-    document.getElementById('relSize').textContent = sileoPackage.size;
-    document.getElementById('relDate').textContent = sileoPackage.published_at;
+      document.getElementById('relVersion').textContent = sileoPackage.version;
+      document.getElementById('relSize').textContent = sileoPackage.size;
+      document.getElementById('relDate').textContent = sileoPackage.published_at;
+    } else {
+      sileoPackage = null;
+    }
   } catch (e) { console.warn('Failed to fetch repo info', e); }
 
   try {
