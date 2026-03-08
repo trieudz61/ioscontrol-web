@@ -1236,6 +1236,22 @@ async function publishRelease() {
     });
     const gzBlobSha = (await gzBlobRes.json()).sha;
 
+    // Also create version.json blob
+    const versionJson = JSON.stringify({
+      version: version,
+      build: Date.now(),
+      minimum_os: minIOS,
+      release_date: new Date().toISOString().slice(0, 10),
+      download_url: `https://ioscontrol.com/repo/debs/${filename}`,
+      changelog: { en: changelog || 'Bug fixes and improvements', vi: changelog || 'Sửa lỗi và cải thiện' }
+    }, null, 2) + '\n';
+
+    const vjBlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: btoa(versionJson), encoding: 'base64' })
+    });
+    const vjBlobSha = (await vjBlobRes.json()).sha;
+
     const treeRes = await fetch(`https://api.github.com/repos/${repo}/git/trees`, {
       method: 'POST', headers: ghHeaders,
       body: JSON.stringify({
@@ -1244,6 +1260,7 @@ async function publishRelease() {
           { path: `repo/debs/${filename}`, mode: '100644', type: 'blob', sha: blobData.sha },
           { path: 'repo/Packages', mode: '100644', type: 'blob', sha: pkgBlobSha },
           { path: 'repo/Packages.gz', mode: '100644', type: 'blob', sha: gzBlobSha },
+          { path: 'version.json', mode: '100644', type: 'blob', sha: vjBlobSha },
         ]
       })
     });
