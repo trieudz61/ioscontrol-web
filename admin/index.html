@@ -6,6 +6,7 @@
 <title>IOSControl — Admin Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
   --bg: #0a0a0f;
@@ -114,6 +115,8 @@ body {
   display:flex; flex-direction:column; gap:4px;
   border-right:1px solid var(--border); animation: slideIn .2s ease;
 }
+.mobile-nav-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 12px; }
+.mobile-nav-header h3 { font-size:16px; font-weight:700; color:var(--text); }
 @keyframes slideIn { from { transform:translateX(-100%); } to { transform:translateX(0); } }
 .mobile-nav-inner a {
   display:flex; align-items:center; gap:10px;
@@ -307,8 +310,12 @@ tr:hover td { background:rgba(255,255,255,0.02); }
     <button class="hamburger" onclick="toggleMobileNav()"><i data-lucide="menu"></i></button>
     <a class="logo" href="https://ioscontrol.com"><span>IOSControl</span></a>
   </div>
-  <div class="mobile-nav" id="mobileNav" onclick="closeMobileNav(event)">
+  <div class="mobile-nav" id="mobileNav" onclick="if(event.target === this) closeMobileNav()">
     <div class="mobile-nav-inner">
+      <div class="mobile-nav-header">
+        <h3>Menu</h3>
+        <button class="btn btn-ghost" onclick="closeMobileNav()" style="padding:4px"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+      </div>
       <a href="#" class="active" onclick="showSection('keys',this);closeMobileNav()"><i data-lucide="key-round" style="width:16px;height:16px"></i> License Keys</a>
       <a href="#" onclick="showSection('devices',this);closeMobileNav()"><i data-lucide="smartphone" style="width:16px;height:16px"></i> Devices</a>
       <a href="#" onclick="showSection('announcements',this);closeMobileNav()"><i data-lucide="megaphone" style="width:16px;height:16px"></i> Announcements</a>
@@ -336,6 +343,16 @@ tr:hover td { background:rgba(255,255,255,0.02); }
       <div class="stat-card"><div class="stat-label"><i data-lucide="check-circle"></i> Active</div><div class="stat-value" id="statActive">-</div></div>
       <div class="stat-card"><div class="stat-label"><i data-lucide="x-circle"></i> Expired</div><div class="stat-value" id="statExpired">-</div></div>
       <div class="stat-card"><div class="stat-label"><i data-lucide="lock"></i> Locked</div><div class="stat-value" id="statLocked">-</div></div>
+    </div>
+
+    <!-- Chart Section -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:28px" id="chartWrapper">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:8px">
+        <i data-lucide="trending-up" style="width:18px;height:18px;color:var(--accent)"></i> New Licenses (Last 14 Days)
+      </h3>
+      <div style="width:100%;height:220px;position:relative">
+        <canvas id="revenueChart"></canvas>
+      </div>
     </div>
 
     <!-- Keys Section -->
@@ -615,6 +632,71 @@ let SECRET = '';
 let allKeys = [];
 let allDevices = [];
 let sortState = { keys: { col: null, asc: true }, devices: { col: null, asc: true } };
+let chartInstance = null;
+
+// Draw Chart
+function renderChart(keysData) {
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+  
+  // Get last 14 days
+  const now = new Date();
+  const days = [];
+  const counts = {};
+  
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const label = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    days.push(label);
+    counts[label] = 0;
+  }
+  
+  keysData.forEach(k => {
+    if (k.created_at) {
+      const d = new Date(k.created_at);
+      const label = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+      if (counts[label] !== undefined) counts[label]++;
+    }
+  });
+  
+  const values = days.map(d => counts[d]);
+  
+  if (chartInstance) chartInstance.destroy();
+  
+  Chart.defaults.color = 'rgba(255,255,255,0.45)';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'New Keys',
+        data: values,
+        borderColor: '#6c5ce7',
+        backgroundColor: 'rgba(108,92,231,0.1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#12121a',
+        pointBorderColor: '#6c5ce7',
+        pointHoverBackgroundColor: '#6c5ce7',
+        pointRadius: 3,
+        pointHoverRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display:false }, tooltip: { mode: 'index', intersect: false, backgroundColor: '#1a1a26', titleColor: '#fff', bodyColor: '#00d68f', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1 } },
+      scales: {
+        x: { grid: { display: false, drawBorder: false } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false }, beginAtZero: true, ticks: { precision: 0 } }
+      },
+      interaction: { mode: 'nearest', axis: 'x', intersect: false }
+    }
+  });
+}
 
 // Auth
 function doLogin() {
@@ -666,6 +748,7 @@ async function loadKeys() {
   allKeys = d.keys || [];
   sortState.keys = { col: null, asc: true };
   renderKeys(allKeys);
+  renderChart(allKeys);
 }
 
 function renderKeys(keys) {
@@ -826,6 +909,9 @@ function showSection(s, el) {
     if (sec) sec.style.display = 'none';
   });
   document.getElementById('statsGrid').style.display = s === 'keys' ? '' : 'none';
+  const cw = document.getElementById('chartWrapper');
+  if (cw) cw.style.display = s === 'keys' ? '' : 'none';
+  
   if (s === 'keys') document.getElementById('keysSection').style.display = '';
   if (s === 'devices') { document.getElementById('devicesSection').style.display = ''; loadDevices(); }
   if (s === 'announcements') { document.getElementById('announcementsSection').style.display = ''; loadAnnouncements(); }
@@ -835,9 +921,8 @@ function showSection(s, el) {
 
 // Mobile nav
 function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
-function closeMobileNav(e) {
-  if (!e || e.target === document.getElementById('mobileNav'))
-    document.getElementById('mobileNav').classList.remove('open');
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
 }
 
 // Devices

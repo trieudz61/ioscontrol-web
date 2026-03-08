@@ -750,12 +750,33 @@ nav .nav-inner {
 .code-block-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
     padding: 12px 16px;
     background: rgba(255,255,255,0.02);
     border-bottom: 1px solid var(--border);
     font-size: 12px;
     color: var(--text-dim);
+}
+
+.code-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copy-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    transition: color 0.2s;
+}
+.copy-btn:hover {
+    color: var(--text);
 }
 
 .code-block pre {
@@ -1633,7 +1654,10 @@ html, body { overflow-x: hidden; }
                     <button class="code-tab" onclick="showCodeTab('lua')"><i data-lucide="moon" style="width:13px;height:13px;vertical-align:-2px;margin-right:3px;"></i>Lua</button>
                 </div>
                 <div class="code-block" id="pythonCode">
-                    <div class="code-block-header"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.py</div>
+                    <div class="code-block-header">
+                        <div class="code-title"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.py</div>
+                        <button class="copy-btn" onclick="copyCode(this, 'pythonCode')"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button>
+                    </div>
                     <pre><span class="cm"># Auto-farm game coins</span>
 <span class="kw">import</span> random
 
@@ -1652,7 +1676,10 @@ html, body { overflow-x: hidden; }
 <span class="fn">log</span>(<span class="str">"✅ Farming complete!"</span>)</pre>
                 </div>
                 <div class="code-block" id="luaCode" style="display:none;">
-                    <div class="code-block-header"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.lua</div>
+                    <div class="code-block-header">
+                        <div class="code-title"><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>auto_farm.lua</div>
+                        <button class="copy-btn" onclick="copyCode(this, 'luaCode')"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button>
+                    </div>
                     <pre><span class="cm">-- Auto-farm game coins</span>
 
 <span class="kw">for</span> i <span class="op">=</span> <span class="num">0</span>, <span class="num">99</span> <span class="kw">do</span>
@@ -2223,6 +2250,21 @@ document.querySelectorAll('nav a[href^="#"]').forEach(link => {
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
+// ═══ Copy Code ═══
+function copyCode(btn, codeId) {
+    const codeBlock = document.querySelector(`#${codeId} pre`);
+    if (!codeBlock) return;
+    const text = codeBlock.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i data-lucide="check" style="width:12px;height:12px;color:#34d399"></i> Copied';
+        lucide.createIcons();
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            lucide.createIcons();
+        }, 2000);
+    }).catch(err => console.error('Failed to copy', err));
+}
 </script>
 
 </body>
