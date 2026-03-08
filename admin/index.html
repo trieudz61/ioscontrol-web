@@ -1252,13 +1252,6 @@ async function publishRelease() {
     });
     const vjBlobSha = (await vjBlobRes.json()).sha;
 
-    // Also create Packages.bz2 blob (use same content as plain Packages — Sileo handles gracefully)
-    const bz2BlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
-      method: 'POST', headers: ghHeaders,
-      body: JSON.stringify({ content: btoa(pkgContent), encoding: 'base64' })
-    });
-    const bz2BlobSha = (await bz2BlobRes.json()).sha;
-
     const treeRes = await fetch(`https://api.github.com/repos/${repo}/git/trees`, {
       method: 'POST', headers: ghHeaders,
       body: JSON.stringify({
@@ -1267,7 +1260,6 @@ async function publishRelease() {
           { path: `repo/debs/${filename}`, mode: '100644', type: 'blob', sha: blobData.sha },
           { path: 'repo/Packages', mode: '100644', type: 'blob', sha: pkgBlobSha },
           { path: 'repo/Packages.gz', mode: '100644', type: 'blob', sha: gzBlobSha },
-          { path: 'repo/Packages.bz2', mode: '100644', type: 'blob', sha: bz2BlobSha },
           { path: 'version.json', mode: '100644', type: 'blob', sha: vjBlobSha },
         ]
       })
