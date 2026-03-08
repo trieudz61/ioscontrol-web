@@ -1,8 +1,8 @@
 Package: com.trieudz.ioscontrol
 Name: IOSControl
-Version: 1.1.1
+Version: 1.1.2
 Architecture: iphoneos-arm64
-Description: Ultimate iOS Automation
+Description: test update
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
