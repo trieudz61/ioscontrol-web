@@ -1216,6 +1216,26 @@ async function publishRelease() {
     });
     const pkgBlobSha = (await pkgBlobRes.json()).sha;
 
+    // Gzip Packages for Sileo (reads .gz first)
+    const pkgBytes = new TextEncoder().encode(pkgContent);
+    const cs = new CompressionStream('gzip');
+    const writer = cs.writable.getWriter();
+    writer.write(pkgBytes);
+    writer.close();
+    const gzBuf = await new Response(cs.readable).arrayBuffer();
+    const gzBytes = new Uint8Array(gzBuf);
+    let gzBin = '';
+    for (let i = 0; i < gzBytes.length; i += 8192) {
+      gzBin += String.fromCharCode.apply(null, gzBytes.subarray(i, i + 8192));
+    }
+    const gzBase64 = btoa(gzBin);
+
+    const gzBlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: gzBase64, encoding: 'base64' })
+    });
+    const gzBlobSha = (await gzBlobRes.json()).sha;
+
     const treeRes = await fetch(`https://api.github.com/repos/${repo}/git/trees`, {
       method: 'POST', headers: ghHeaders,
       body: JSON.stringify({
@@ -1223,6 +1243,7 @@ async function publishRelease() {
         tree: [
           { path: `repo/debs/${filename}`, mode: '100644', type: 'blob', sha: blobData.sha },
           { path: 'repo/Packages', mode: '100644', type: 'blob', sha: pkgBlobSha },
+          { path: 'repo/Packages.gz', mode: '100644', type: 'blob', sha: gzBlobSha },
         ]
       })
     });
