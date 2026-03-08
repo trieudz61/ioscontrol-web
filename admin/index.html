@@ -42,13 +42,13 @@ body {
 .login-logo i { color:var(--accent); }
 .login-logo span { color:var(--accent); }
 .login-box {
-  display:flex; gap:10px;
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
   background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--radius); padding:6px;
+  border-radius:var(--radius); padding:6px; max-width:90vw;
 }
 .login-box input {
   background:transparent; border:none; color:var(--text);
-  font-size:15px; padding:12px 16px; outline:none; width:300px;
+  font-size:15px; padding:12px 16px; outline:none; flex:1; min-width:200px;
   font-family:inherit;
 }
 .login-box button {
@@ -274,6 +274,11 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 @keyframes spin { to { transform:rotate(360deg); } }
 .empty-state { text-align:center; padding:48px 20px; color:var(--text-dim); }
 
+/* Utility Grids */
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.ann-grid { display:grid; grid-template-columns:1fr auto auto; gap:12px; align-items:end; }
+
 /* Responsive */
 @media (max-width:768px) {
   .sidebar { display:none; }
@@ -288,6 +293,11 @@ tr:hover td { background:rgba(255,255,255,0.02); }
   td, th { padding:10px 10px; font-size:12px; }
   .stat-value { font-size:22px; }
   .modal { padding:20px; }
+  /* Override custom grids */
+  .grid-3 { grid-template-columns:1fr; gap:10px; }
+  .form-grid { grid-template-columns:1fr; }
+  .ann-grid { grid-template-columns:1fr; align-items:start; }
+  .ann-grid button { justify-content:center; }
 }
 </style>
 </head>
@@ -387,7 +397,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 
     <!-- Devices Section -->
     <div id="devicesSection" style="display:none">
-      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="grid-3" style="margin-bottom:28px">
         <div class="stat-card"><div class="stat-label"><i data-lucide="monitor-smartphone"></i> Total Devices</div><div class="stat-value" id="devTotal">-</div></div>
         <div class="stat-card"><div class="stat-label"><i data-lucide="user"></i> Free</div><div class="stat-value" id="devFree" style="color:var(--text-dim)">-</div></div>
         <div class="stat-card"><div class="stat-label"><i data-lucide="crown"></i> Premium</div><div class="stat-value" id="devPremium" style="color:var(--green)">-</div></div>
@@ -427,7 +437,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
       <!-- Add new announcement -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
         <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="plus-circle" style="width:16px;height:16px;color:var(--accent)"></i> New Announcement</h3>
-        <div style="display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:end">
+        <div class="ann-grid">
           <div>
             <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Message (EN)</label>
             <input type="text" id="annMsgEN" placeholder="🎉 New feature: Device Spoofing is here!" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
@@ -478,7 +488,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
       <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px">Manage tweak versions, Sileo/Cydia repo metadata, and app binary files.</p>
 
       <!-- Current Version Info -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+      <div class="grid-3" style="margin-bottom:24px">
         <div class="stat-card"><div class="stat-label"><i data-lucide="tag"></i> Current Version</div><div class="stat-value" id="relVersion" style="font-size:22px">-</div></div>
         <div class="stat-card"><div class="stat-label"><i data-lucide="hard-drive"></i> Package Size</div><div class="stat-value" id="relSize" style="font-size:22px">-</div></div>
         <div class="stat-card"><div class="stat-label"><i data-lucide="calendar"></i> Last Updated</div><div class="stat-value" id="relDate" style="font-size:22px">-</div></div>
@@ -487,7 +497,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
       <!-- New Release Form -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
         <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="upload" style="width:16px;height:16px;color:var(--accent)"></i> Publish New Release</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+        <div class="form-grid" style="margin-bottom:12px">
           <div>
             <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Version</label>
             <input type="text" id="relNewVersion" placeholder="1.2.0" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
