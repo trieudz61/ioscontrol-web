@@ -1,11 +1,11 @@
 {
-  "version": "1.1.4",
-  "build": 1772982634253,
-  "minimum_os": "14.0",
-  "release_date": "2026-03-08",
+  "version": "1.0.0",
+  "build": 1,
+  "minimum_os": "15.0",
+  "release_date": "2026-03-05",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.0.0_iphoneos-arm64.deb",
   "changelog": {
-    "en": "update",
-    "vi": "update"
+    "en": "Initial release: Touch simulation, Color detection, Record & Playback, Web IDE, Flow Builder, Py2Lua converter, Helper tools.",
+    "vi": "Phiên bản đầu tiên: Mô phỏng chạm, Phát hiện màu, Ghi & Phát lại, Web IDE, Flow Builder, Chuyển đổi Py2Lua, Công cụ hỗ trợ."
   }
 }
