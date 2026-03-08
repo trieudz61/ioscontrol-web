@@ -988,11 +988,21 @@ let allReleases = [];
 
 async function loadReleases() {
   const tbody = document.getElementById('relBody');
-  tbody.innerHTML = '<tr><td colspan="5" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+
+  // Fetch current Sileo version from version.json
+  try {
+    const vRes = await fetch('https://ioscontrol.com/version.json?' + Date.now());
+    const vData = await vRes.json();
+    document.getElementById('relVersion').textContent = vData.version || '-';
+    document.getElementById('relSize').textContent = vData.size || '-';
+    document.getElementById('relDate').textContent = vData.release_date || '-';
+  } catch (e) {}
+
   try {
     const d = await api('/admin/api/releases');
     allReleases = d.releases || [];
-    // Update stat cards
+    // Override stat cards with latest cloud release if any
     if (allReleases.length > 0) {
       const latest = allReleases[0];
       document.getElementById('relVersion').textContent = latest.version || '-';
@@ -1001,7 +1011,7 @@ async function loadReleases() {
     }
     renderReleases();
   } catch (e) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Failed to load</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load</td></tr>';
   }
 }
 
