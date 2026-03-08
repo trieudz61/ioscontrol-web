@@ -488,9 +488,19 @@ tr:hover td { background:rgba(255,255,255,0.02); }
           <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Changelog</label>
           <textarea id="relChangelog" rows="3" placeholder="- Added Device Spoofing&#10;- Fixed premium gate&#10;- Improved performance" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical"></textarea>
         </div>
+        <div style="margin-bottom:14px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:6px">.deb Package File</label>
+          <div style="display:flex;gap:10px;align-items:center">
+            <label for="relFile" class="btn btn-ghost" style="cursor:pointer;margin:0">
+              <i data-lucide="file-up"></i> Choose .deb
+            </label>
+            <input type="file" id="relFile" accept=".deb" style="display:none" onchange="onDebSelected(this)">
+            <span id="relFileName" style="font-size:12px;color:var(--text-dim)">No file selected</span>
+          </div>
+        </div>
         <div style="display:flex;gap:12px;align-items:center">
           <button class="btn btn-primary" onclick="publishRelease()"><i data-lucide="rocket"></i> Publish Release</button>
-          <span style="font-size:12px;color:var(--text-dim)">This will update the Sileo repo metadata</span>
+          <span style="font-size:12px;color:var(--text-dim)">Uploads .deb + updates Sileo repo metadata</span>
         </div>
       </div>
 
@@ -502,6 +512,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
               <th>Version</th>
               <th>Changelog</th>
               <th>iOS Range</th>
+              <th>Package</th>
               <th>Published</th>
               <th style="text-align:right">Actions</th>
             </tr>
@@ -977,18 +988,26 @@ async function loadReleases() {
 function renderReleases() {
   const tbody = document.getElementById('relBody');
   if (!allReleases.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No releases yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No releases yet</td></tr>';
     return;
   }
   tbody.innerHTML = allReleases.map((r, i) => {
     const date = r.published_at ? new Date(r.published_at).toLocaleString() : '-';
     const cl = (r.changelog || '').replace(/\n/g, '<br>');
+    const debInfo = r.has_deb
+      ? `<span style="font-size:10px;color:var(--green)">📦 ${r.deb_filename || '.deb'} (${r.size || '?'})</span>`
+      : `<span style="font-size:10px;color:var(--text-dim)">No file</span>`;
+    const dlBtn = r.has_deb
+      ? `<a href="${API_BASE}/admin/api/releases/download/${r.id}" class="btn btn-ghost btn-sm" title="Download .deb" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>`
+      : '';
     return `<tr>
       <td><span class="badge ${i === 0 ? 'badge-active' : 'badge-free'}">${r.version}</span></td>
       <td style="font-size:12px;max-width:300px;white-space:pre-wrap">${cl}</td>
       <td style="font-size:12px">${r.min_ios || '?'} — ${r.max_ios || '?'}</td>
+      <td>${debInfo}</td>
       <td style="font-size:12px">${date}</td>
       <td style="text-align:right">
+        ${dlBtn}
         <button class="btn btn-ghost btn-sm" onclick="deleteRelease('${r.id}')" title="Delete">
           <i data-lucide="trash-2" style="color:var(--red)"></i>
         </button>
@@ -998,22 +1017,64 @@ function renderReleases() {
   lucide.createIcons();
 }
 
+let selectedDebFile = null;
+
+function onDebSelected(input) {
+  const file = input.files[0];
+  selectedDebFile = file || null;
+  const label = document.getElementById('relFileName');
+  if (file) {
+    label.textContent = `${file.name} (${formatBytes(file.size)})`;
+    label.style.color = 'var(--green)';
+  } else {
+    label.textContent = 'No file selected';
+    label.style.color = 'var(--text-dim)';
+  }
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
 async function publishRelease() {
   const version = document.getElementById('relNewVersion').value.trim();
   if (!version) { showToast('❌ Version is required'); return; }
+
   const body = {
     version,
     min_ios: document.getElementById('relMinIOS').value.trim() || '14.0',
     max_ios: document.getElementById('relMaxIOS').value.trim() || '18.2',
-    changelog: document.getElementById('relChangelog').value.trim()
+    changelog: document.getElementById('relChangelog').value.trim(),
+    size: selectedDebFile ? formatBytes(selectedDebFile.size) : '-'
   };
-  const r = await api('/admin/api/releases', 'POST', body);
-  if (r.success) {
-    showToast('🚀 Release ' + version + ' published!');
-    document.getElementById('relNewVersion').value = '';
-    document.getElementById('relChangelog').value = '';
-    loadReleases();
-  } else showToast('❌ ' + (r.error || 'Failed'));
+
+  // If .deb file selected, upload it as base64
+  if (selectedDebFile) {
+    showToast('⏳ Uploading .deb file...');
+    const arrayBuf = await selectedDebFile.arrayBuffer();
+    const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuf)));
+    body.deb_filename = selectedDebFile.name;
+    body.deb_base64 = base64;
+    body.deb_size = selectedDebFile.size;
+  }
+
+  try {
+    const r = await api('/admin/api/releases', 'POST', body);
+    if (r.success) {
+      showToast('🚀 Release ' + version + ' published!');
+      document.getElementById('relNewVersion').value = '';
+      document.getElementById('relChangelog').value = '';
+      document.getElementById('relFile').value = '';
+      selectedDebFile = null;
+      document.getElementById('relFileName').textContent = 'No file selected';
+      document.getElementById('relFileName').style.color = 'var(--text-dim)';
+      loadReleases();
+    } else showToast('❌ ' + (r.error || 'Failed'));
+  } catch (e) {
+    showToast('❌ Upload failed: ' + e.message);
+  }
 }
 
 async function deleteRelease(id) {
