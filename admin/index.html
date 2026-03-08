@@ -596,6 +596,19 @@ tr:hover td { background:rgba(255,255,255,0.02); }
 
 <div class="toast" id="toast"></div>
 
+<!-- Generic Confirm Modal -->
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal">
+    <h3><i data-lucide="alert-triangle"></i> <span id="confirmTitle">Confirm</span></h3>
+    <p style="color:var(--text-dim);margin-bottom:8px" id="confirmMsg">Are you sure?</p>
+    <p id="confirmDetail" style="font-size:13px;margin-bottom:16px;color:var(--text);word-break:break-all"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-danger" id="confirmBtn" onclick=""><i data-lucide="trash-2"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API_BASE = 'https://ioscontrol-worker.ioscontrol.workers.dev';
 let SECRET = '';
@@ -923,7 +936,7 @@ function renderAnnouncements() {
         <button class="btn btn-ghost btn-sm" onclick="toggleAnnouncement('${a.id}',${!a.active})" title="${a.active ? 'Deactivate' : 'Activate'}">
           <i data-lucide="${a.active ? 'eye-off' : 'eye'}"></i>
         </button>
-        <button class="btn btn-ghost btn-sm" onclick="deleteAnnouncement('${a.id}')" title="Delete">
+        <button class="btn btn-ghost btn-sm" onclick="deleteAnnouncement('${a.id}', \`${a.message.replace(/`/g,"'")}\`)" title="Delete">
           <i data-lucide="trash-2" style="color:var(--red)"></i>
         </button>
       </td>
@@ -956,11 +969,18 @@ async function toggleAnnouncement(id, active) {
   else showToast('❌ ' + (r.error || 'Failed'));
 }
 
-async function deleteAnnouncement(id) {
-  if (!confirm('Delete this announcement?')) return;
-  const r = await api(`/admin/api/announcements/${id}`, 'DELETE');
-  if (r.success) { showToast('🗑 Deleted'); loadAnnouncements(); }
-  else showToast('❌ ' + (r.error || 'Failed'));
+async function deleteAnnouncement(id, msg) {
+  document.getElementById('confirmTitle').textContent = 'Delete Announcement';
+  document.getElementById('confirmMsg').textContent = 'This announcement will be permanently deleted.';
+  document.getElementById('confirmDetail').textContent = msg || '';
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api(`/admin/api/announcements/${id}`, 'DELETE');
+    if (r.success) { showToast('🗑 Deleted'); loadAnnouncements(); }
+    else showToast('❌ ' + (r.error || 'Failed'));
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
 }
 
 // ═══ Releases ═══
@@ -1078,10 +1098,17 @@ async function publishRelease() {
 }
 
 async function deleteRelease(id) {
-  if (!confirm('Delete this release?')) return;
-  const r = await api(`/admin/api/releases/${id}`, 'DELETE');
-  if (r.success) { showToast('🗑 Deleted'); loadReleases(); }
-  else showToast('❌ ' + (r.error || 'Failed'));
+  document.getElementById('confirmTitle').textContent = 'Delete Release';
+  document.getElementById('confirmMsg').textContent = 'This release and its .deb file will be permanently deleted.';
+  document.getElementById('confirmDetail').textContent = '';
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api(`/admin/api/releases/${id}`, 'DELETE');
+    if (r.success) { showToast('🗑 Deleted'); loadReleases(); }
+    else showToast('❌ ' + (r.error || 'Failed'));
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
 }
 
 // Init icons
