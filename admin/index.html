@@ -815,6 +815,7 @@ function toast(msg, isError = false) {
   el.className = `toast show ${isError ? 'toast-error' : 'toast-success'}`;
   setTimeout(() => el.classList.remove('show'), 3000);
 }
+const showToast = (msg) => toast(msg, msg.startsWith('❌'));
 
 function showSection(s, el) {
   document.querySelectorAll('.sidebar a:not(.sidebar-logo)').forEach(a => a.classList.remove('active'));
