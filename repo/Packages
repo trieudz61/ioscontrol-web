@@ -2,7 +2,7 @@ Package: com.trieudz.ioscontrol
 Name: IOSControl
 Version: 1.1.0
 Architecture: iphoneos-arm64
-Description: Force update, cloud announcements, bug fixes
+Description: Force update, cloud announcements, version sync
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
@@ -10,6 +10,6 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.1.0_iphoneos-arm64.deb
-Size: 15027398
+Size: 15027982
 Installed-Size: 14675
-SHA256: 5abacd52997840e57e097b5f9afd108f96a47c28cd10f9dfeff32a44eee1b6e4
+SHA256: 6c621efefb2fd8c9481f1aa76dfb730d33ad86cc479766a291d1bd453bc924af
