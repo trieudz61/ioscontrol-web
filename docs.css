@@ -500,6 +500,24 @@ nav {
   font-size: 11px;
   color: var(--text-dim);
 }
+.code-block-header > span {
+  display: flex;
+  align-items: center;
+}
+.copy-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  transition: color 0.2s;
+}
+.copy-btn:hover {
+  color: var(--text);
+}
 .code-block pre {
   padding: 14px;
   overflow-x: auto;

@@ -212,19 +212,19 @@
           const isRest = a.type === 'get' || a.type === 'post' || a.type === 'ws';
           if (isRest) {
             // REST/WS: single column
-            html += `<div class="code-block"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>${ui('example')} — Shell</span></div><pre>${hl(a.example)}</pre></div>`;
+            html += `<div class="code-block"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>${ui('example')} — Shell</span><button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button></div><pre>${hl(a.example)}</pre></div>`;
           } else if (a.example_py && a.example) {
             // Side-by-side Python | Lua
             html += `<div class="code-side-by-side">
-              <div class="code-block code-half"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>Python</span></div><pre>${hlPy(a.example_py)}</pre></div>
-              <div class="code-block code-half"><div class="code-block-header"><span><i data-lucide="moon" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>Lua</span></div><pre>${hl(a.example)}</pre></div>
+              <div class="code-block code-half"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>Python</span><button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button></div><pre>${hlPy(a.example_py)}</pre></div>
+              <div class="code-block code-half"><div class="code-block-header"><span><i data-lucide="moon" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>Lua</span><button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button></div><pre>${hl(a.example)}</pre></div>
             </div>`;
           } else {
             // Fallback: single column
             const lang = a.example_py ? 'Python' : 'Lua';
             const code = a.example_py || a.example;
             const hlfn = a.example_py ? hlPy : hl;
-            html += `<div class="code-block"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>${ui('example')} — ${lang}</span></div><pre>${hlfn(code)}</pre></div>`;
+            html += `<div class="code-block"><div class="code-block-header"><span><i data-lucide="file-code" style="width:13px;height:13px;vertical-align:-2px;margin-right:4px;"></i>${ui('example')} — ${lang}</span><button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button></div><pre>${hlfn(code)}</pre></div>`;
           }
         }
 
@@ -388,6 +388,23 @@
   buildContent();
   initSearch();
   initScrollSpy();
+  
+  // Expose copyCode to global scope
+  window.copyCode = function(btn) {
+    const pre = btn.parentElement.nextElementSibling;
+    if (!pre) return;
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i data-lucide="check" style="width:12px;height:12px;color:var(--green)"></i> Copied';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }, 2000);
+    }).catch(err => console.error('Failed to copy', err));
+  };
+
   // Final re-render of all Lucide icons
   if (typeof lucide !== 'undefined') lucide.createIcons();
 })();
