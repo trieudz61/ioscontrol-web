@@ -311,6 +311,8 @@ tr:hover td { background:rgba(255,255,255,0.02); }
     <div class="mobile-nav-inner">
       <a href="#" class="active" onclick="showSection('keys',this);closeMobileNav()"><i data-lucide="key-round" style="width:16px;height:16px"></i> License Keys</a>
       <a href="#" onclick="showSection('devices',this);closeMobileNav()"><i data-lucide="smartphone" style="width:16px;height:16px"></i> Devices</a>
+      <a href="#" onclick="showSection('announcements',this);closeMobileNav()"><i data-lucide="megaphone" style="width:16px;height:16px"></i> Announcements</a>
+      <a href="#" onclick="showSection('releases',this);closeMobileNav()"><i data-lucide="package" style="width:16px;height:16px"></i> Releases</a>
       <a href="#" onclick="showSection('generate',this);closeMobileNav()"><i data-lucide="plus-circle" style="width:16px;height:16px"></i> Generate Key</a>
     </div>
   </div>
@@ -320,6 +322,8 @@ tr:hover td { background:rgba(255,255,255,0.02); }
     <a href="https://ioscontrol.com" class="sidebar-logo"><i data-lucide="gamepad-2"></i> <span>IOSControl</span></a>
     <a href="#" class="active" onclick="showSection('keys', this)"><i data-lucide="key-round"></i> License Keys</a>
     <a href="#" onclick="showSection('devices', this)"><i data-lucide="smartphone"></i> Devices</a>
+    <a href="#" onclick="showSection('announcements', this)"><i data-lucide="megaphone"></i> Announcements</a>
+    <a href="#" onclick="showSection('releases', this)"><i data-lucide="package"></i> Releases</a>
     <a href="#" onclick="showSection('generate', this)"><i data-lucide="plus-circle"></i> Generate Key</a>
     <div class="sidebar-spacer"></div>
     <div class="sidebar-footer">IOSControl Admin v1.0</div>
@@ -394,6 +398,121 @@ tr:hover td { background:rgba(255,255,255,0.02); }
         </table>
       </div>
     </div>
+
+    <!-- Announcements Section -->
+    <div id="announcementsSection" style="display:none">
+      <div class="toolbar">
+        <h2><i data-lucide="megaphone"></i> Announcements</h2>
+        <button class="btn btn-ghost" onclick="loadAnnouncements()"><i data-lucide="refresh-cw"></i> Refresh</button>
+      </div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px">Manage scrolling ticker messages shown on the tweak. Active announcements appear as a marquee banner in the app.</p>
+
+      <!-- Add new announcement -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="plus-circle" style="width:16px;height:16px;color:var(--accent)"></i> New Announcement</h3>
+        <div style="display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:end">
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Message (EN)</label>
+            <input type="text" id="annMsgEN" placeholder="🎉 New feature: Device Spoofing is here!" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Type</label>
+            <select id="annType" style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+              <option value="info">ℹ️ Info</option>
+              <option value="promo">🎉 Promo</option>
+              <option value="warning">⚠️ Warning</option>
+              <option value="update">🆕 Update</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="addAnnouncement()"><i data-lucide="send"></i> Publish</button>
+        </div>
+        <div style="margin-top:10px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Message (VI) — optional</label>
+          <input type="text" id="annMsgVI" placeholder="🎉 Tính năng mới: Fake thiết bị đã có!" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+        </div>
+      </div>
+
+      <!-- Active Announcements -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th>Message</th>
+              <th>Type</th>
+              <th>Created</th>
+              <th style="width:60px">Active</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="annBody">
+            <tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Releases Section -->
+    <div id="releasesSection" style="display:none">
+      <div class="toolbar">
+        <h2><i data-lucide="package"></i> Releases</h2>
+        <button class="btn btn-ghost" onclick="loadReleases()"><i data-lucide="refresh-cw"></i> Refresh</button>
+      </div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px">Manage tweak versions, Sileo/Cydia repo metadata, and app binary files.</p>
+
+      <!-- Current Version Info -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+        <div class="stat-card"><div class="stat-label"><i data-lucide="tag"></i> Current Version</div><div class="stat-value" id="relVersion" style="font-size:22px">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="hard-drive"></i> Package Size</div><div class="stat-value" id="relSize" style="font-size:22px">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="calendar"></i> Last Updated</div><div class="stat-value" id="relDate" style="font-size:22px">-</div></div>
+      </div>
+
+      <!-- New Release Form -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="upload" style="width:16px;height:16px;color:var(--accent)"></i> Publish New Release</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Version</label>
+            <input type="text" id="relNewVersion" placeholder="1.2.0" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Min iOS</label>
+            <input type="text" id="relMinIOS" placeholder="14.0" value="14.0" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Max iOS</label>
+            <input type="text" id="relMaxIOS" placeholder="18.2" value="18.2" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Changelog</label>
+          <textarea id="relChangelog" rows="3" placeholder="- Added Device Spoofing&#10;- Fixed premium gate&#10;- Improved performance" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical"></textarea>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <button class="btn btn-primary" onclick="publishRelease()"><i data-lucide="rocket"></i> Publish Release</button>
+          <span style="font-size:12px;color:var(--text-dim)">This will update the Sileo repo metadata</span>
+        </div>
+      </div>
+
+      <!-- Release History -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Changelog</th>
+              <th>iOS Range</th>
+              <th>Published</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="relBody">
+            <tr><td colspan="5" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -677,11 +796,16 @@ function showSection(s, el) {
   document.querySelectorAll('.sidebar a:not(.sidebar-logo)').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.mobile-nav-inner a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
-  document.getElementById('keysSection').style.display = s === 'keys' ? '' : 'none';
-  document.getElementById('devicesSection').style.display = s === 'devices' ? '' : 'none';
+  ['keysSection','devicesSection','announcementsSection','releasesSection'].forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec) sec.style.display = 'none';
+  });
   document.getElementById('statsGrid').style.display = s === 'keys' ? '' : 'none';
+  if (s === 'keys') document.getElementById('keysSection').style.display = '';
+  if (s === 'devices') { document.getElementById('devicesSection').style.display = ''; loadDevices(); }
+  if (s === 'announcements') { document.getElementById('announcementsSection').style.display = ''; loadAnnouncements(); }
+  if (s === 'releases') { document.getElementById('releasesSection').style.display = ''; loadReleases(); }
   if (s === 'generate') showGenerateModal();
-  if (s === 'devices') loadDevices();
 }
 
 // Mobile nav
@@ -750,6 +874,153 @@ function sortDevices(col) {
     return 0;
   });
   renderDevices(sorted);
+}
+
+// ═══ Announcements ═══
+let allAnnouncements = [];
+
+async function loadAnnouncements() {
+  const tbody = document.getElementById('annBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  try {
+    const d = await api('/admin/api/announcements');
+    allAnnouncements = d.announcements || [];
+    renderAnnouncements();
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load</td></tr>';
+  }
+}
+
+function renderAnnouncements() {
+  const tbody = document.getElementById('annBody');
+  if (!allAnnouncements.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No announcements yet</td></tr>';
+    return;
+  }
+  const typeBadge = { info: 'badge-active', promo: 'badge-active', warning: 'badge-expired', update: 'badge-locked' };
+  tbody.innerHTML = allAnnouncements.map((a, i) => {
+    const badge = typeBadge[a.type] || 'badge-free';
+    const created = a.created_at ? new Date(a.created_at).toLocaleString() : '-';
+    const viMsg = a.message_vi ? `<br><span style="font-size:11px;color:var(--text-dim)">🇻🇳 ${a.message_vi}</span>` : '';
+    return `<tr>
+      <td style="color:var(--text-dim)">${i + 1}</td>
+      <td style="max-width:300px">${a.message}${viMsg}</td>
+      <td><span class="badge ${badge}">${a.type}</span></td>
+      <td style="font-size:12px">${created}</td>
+      <td><span class="badge ${a.active ? 'badge-active' : 'badge-free'}">${a.active ? 'ON' : 'OFF'}</span></td>
+      <td style="text-align:right">
+        <button class="btn btn-ghost btn-sm" onclick="toggleAnnouncement('${a.id}',${!a.active})" title="${a.active ? 'Deactivate' : 'Activate'}">
+          <i data-lucide="${a.active ? 'eye-off' : 'eye'}"></i>
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="deleteAnnouncement('${a.id}')" title="Delete">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+async function addAnnouncement() {
+  const msg = document.getElementById('annMsgEN').value.trim();
+  if (!msg) { showToast('❌ Message (EN) is required'); return; }
+  const body = {
+    message: msg,
+    message_vi: document.getElementById('annMsgVI').value.trim() || '',
+    type: document.getElementById('annType').value,
+    active: true
+  };
+  const r = await api('/admin/api/announcements', 'POST', body);
+  if (r.success) {
+    showToast('✅ Announcement published!');
+    document.getElementById('annMsgEN').value = '';
+    document.getElementById('annMsgVI').value = '';
+    loadAnnouncements();
+  } else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+async function toggleAnnouncement(id, active) {
+  const r = await api(`/admin/api/announcements/${id}`, 'PUT', { active });
+  if (r.success) { showToast(active ? '✅ Activated' : '⏸ Deactivated'); loadAnnouncements(); }
+  else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+async function deleteAnnouncement(id) {
+  if (!confirm('Delete this announcement?')) return;
+  const r = await api(`/admin/api/announcements/${id}`, 'DELETE');
+  if (r.success) { showToast('🗑 Deleted'); loadAnnouncements(); }
+  else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+// ═══ Releases ═══
+let allReleases = [];
+
+async function loadReleases() {
+  const tbody = document.getElementById('relBody');
+  tbody.innerHTML = '<tr><td colspan="5" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  try {
+    const d = await api('/admin/api/releases');
+    allReleases = d.releases || [];
+    // Update stat cards
+    if (allReleases.length > 0) {
+      const latest = allReleases[0];
+      document.getElementById('relVersion').textContent = latest.version || '-';
+      document.getElementById('relSize').textContent = latest.size || '-';
+      document.getElementById('relDate').textContent = latest.published_at ? new Date(latest.published_at).toLocaleDateString() : '-';
+    }
+    renderReleases();
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Failed to load</td></tr>';
+  }
+}
+
+function renderReleases() {
+  const tbody = document.getElementById('relBody');
+  if (!allReleases.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No releases yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allReleases.map((r, i) => {
+    const date = r.published_at ? new Date(r.published_at).toLocaleString() : '-';
+    const cl = (r.changelog || '').replace(/\n/g, '<br>');
+    return `<tr>
+      <td><span class="badge ${i === 0 ? 'badge-active' : 'badge-free'}">${r.version}</span></td>
+      <td style="font-size:12px;max-width:300px;white-space:pre-wrap">${cl}</td>
+      <td style="font-size:12px">${r.min_ios || '?'} — ${r.max_ios || '?'}</td>
+      <td style="font-size:12px">${date}</td>
+      <td style="text-align:right">
+        <button class="btn btn-ghost btn-sm" onclick="deleteRelease('${r.id}')" title="Delete">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+async function publishRelease() {
+  const version = document.getElementById('relNewVersion').value.trim();
+  if (!version) { showToast('❌ Version is required'); return; }
+  const body = {
+    version,
+    min_ios: document.getElementById('relMinIOS').value.trim() || '14.0',
+    max_ios: document.getElementById('relMaxIOS').value.trim() || '18.2',
+    changelog: document.getElementById('relChangelog').value.trim()
+  };
+  const r = await api('/admin/api/releases', 'POST', body);
+  if (r.success) {
+    showToast('🚀 Release ' + version + ' published!');
+    document.getElementById('relNewVersion').value = '';
+    document.getElementById('relChangelog').value = '';
+    loadReleases();
+  } else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+async function deleteRelease(id) {
+  if (!confirm('Delete this release?')) return;
+  const r = await api(`/admin/api/releases/${id}`, 'DELETE');
+  if (r.success) { showToast('🗑 Deleted'); loadReleases(); }
+  else showToast('❌ ' + (r.error || 'Failed'));
 }
 
 // Init icons
