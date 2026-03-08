@@ -986,18 +986,48 @@ async function deleteAnnouncement(id, msg) {
 // ═══ Releases ═══
 let allReleases = [];
 
+let sileoPackage = null;
+
 async function loadReleases() {
   const tbody = document.getElementById('relBody');
   tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
 
-  // Fetch current Sileo version from version.json
+  // Fetch current Sileo version from version.json + Packages
   try {
-    const vRes = await fetch('https://ioscontrol.com/version.json?' + Date.now());
+    const [vRes, pRes] = await Promise.all([
+      fetch('https://ioscontrol.com/version.json?' + Date.now()),
+      fetch('https://ioscontrol.com/repo/Packages?' + Date.now())
+    ]);
     const vData = await vRes.json();
-    document.getElementById('relVersion').textContent = vData.version || '-';
-    document.getElementById('relSize').textContent = vData.size || '-';
-    document.getElementById('relDate').textContent = vData.release_date || '-';
-  } catch (e) {}
+    const pkgText = await pRes.text();
+
+    // Parse Packages file
+    const pkg = {};
+    pkgText.split('\n').forEach(line => {
+      const m = line.match(/^(\S+):\s*(.+)/);
+      if (m) pkg[m[1]] = m[2];
+    });
+
+    sileoPackage = {
+      id: '_sileo_current',
+      version: pkg.Version || vData.version || '?',
+      changelog: vData.changelog?.en || pkg.Description || '-',
+      min_ios: vData.minimum_os || '15.0',
+      max_ios: '18.2',
+      size: pkg.Size ? formatBytes(parseInt(pkg.Size)) : '-',
+      deb_filename: pkg.Filename ? pkg.Filename.split('/').pop() : '-',
+      has_deb: true,
+      is_sileo: true,
+      published_at: vData.release_date || '-',
+      download_url: pkg.Filename ? 'https://ioscontrol.com/repo/' + pkg.Filename : null,
+      package_id: pkg.Package || '-',
+      md5: pkg.MD5sum || '-',
+    };
+
+    document.getElementById('relVersion').textContent = sileoPackage.version;
+    document.getElementById('relSize').textContent = sileoPackage.size;
+    document.getElementById('relDate').textContent = sileoPackage.published_at;
+  } catch (e) { console.warn('Failed to fetch repo info', e); }
 
   try {
     const d = await api('/admin/api/releases');
@@ -1017,11 +1047,27 @@ async function loadReleases() {
 
 function renderReleases() {
   const tbody = document.getElementById('relBody');
-  if (!allReleases.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No releases yet</td></tr>';
-    return;
+  let rows = '';
+
+  // Always show current Sileo repo package first
+  if (sileoPackage) {
+    const s = sileoPackage;
+    rows += `<tr style="background:rgba(108,92,231,0.06)">
+      <td><span class="badge badge-active">${s.version}</span> <span style="font-size:9px;color:var(--accent);font-weight:700">LIVE</span></td>
+      <td style="font-size:12px;max-width:300px">${s.changelog}</td>
+      <td style="font-size:12px">${s.min_ios} — ${s.max_ios}</td>
+      <td><span style="font-size:10px;color:var(--green)">📦 ${s.deb_filename} (${s.size})</span><br>
+        <span style="font-size:9px;color:var(--text-dim)">MD5: ${s.md5}</span>
+      </td>
+      <td style="font-size:12px">${s.published_at}</td>
+      <td style="text-align:right">
+        ${s.download_url ? `<a href="${s.download_url}" class="btn btn-ghost btn-sm" title="Download from Sileo repo" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>` : ''}
+      </td>
+    </tr>`;
   }
-  tbody.innerHTML = allReleases.map((r, i) => {
+
+  // Cloud releases below
+  rows += allReleases.map((r, i) => {
     const date = r.published_at ? new Date(r.published_at).toLocaleString() : '-';
     const cl = (r.changelog || '').replace(/\n/g, '<br>');
     const debInfo = r.has_deb
@@ -1031,7 +1077,7 @@ function renderReleases() {
       ? `<a href="${API_BASE}/admin/api/releases/download/${r.id}" class="btn btn-ghost btn-sm" title="Download .deb" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>`
       : '';
     return `<tr>
-      <td><span class="badge ${i === 0 ? 'badge-active' : 'badge-free'}">${r.version}</span></td>
+      <td><span class="badge badge-free">${r.version}</span></td>
       <td style="font-size:12px;max-width:300px;white-space:pre-wrap">${cl}</td>
       <td style="font-size:12px">${r.min_ios || '?'} — ${r.max_ios || '?'}</td>
       <td>${debInfo}</td>
@@ -1044,6 +1090,12 @@ function renderReleases() {
       </td>
     </tr>`;
   }).join('');
+
+  if (!rows) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No releases yet</td></tr>';
+  } else {
+    tbody.innerHTML = rows;
+  }
   lucide.createIcons();
 }
 
