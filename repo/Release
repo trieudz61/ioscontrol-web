@@ -5,4 +5,12 @@ Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl - iOS Automation Tweak. The most powerful jailbreak automation tool.
+Description: IOSControl - iOS Automation Tweak
+MD5Sum:
+ 7a723a05a624653fd0e16416d0935665 570 Packages
+ 11a83902fe4d2906522030fc5f4d88f9 401 Packages.gz
+ e66efaf737ece1d0004debb16f7b1052 445 Packages.bz2
+SHA256:
+ 70479ce32a0c7059307801f3f0ff5bf9e866c12084c60c9cecef2bbc1b781c7e 570 Packages
+ fe9f64eda487b65536eebcab724225554f6a6e39a888211ceab77f4dfd63adfb 401 Packages.gz
+ 5c4f0ce69c1e8fa0919d195e5d326dd23e5a0add09cdb8be7768451bfddb70e3 445 Packages.bz2
