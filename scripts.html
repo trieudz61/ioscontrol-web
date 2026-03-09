@@ -295,7 +295,7 @@ nav {
 
 <section class="hero-section">
     <div class="container">
-        <h1>📚 <span>Script Library</span></h1>
+        <h1><i data-lucide="library" style="width:36px;height:36px;vertical-align:-6px;color:var(--accent-light);margin-right:6px;"></i> <span>Script Library</span></h1>
         <p>Ready-to-use Lua code snippets for IOSControl. Copy, paste, and customize for your automation tasks.</p>
         <div class="search-wrap">
             <span class="search-icon"><i data-lucide="search" style="width:16px;height:16px;"></i></span>
@@ -306,15 +306,15 @@ nav {
 
 <div class="container">
     <div class="filter-bar" id="filterBar">
-        <button class="filter-tag active" data-cat="all">All</button>
-        <button class="filter-tag" data-cat="touch">🖐️ Touch</button>
-        <button class="filter-tag" data-cat="image">🖼️ Image</button>
-        <button class="filter-tag" data-cat="color">🎨 Color</button>
-        <button class="filter-tag" data-cat="ocr">📝 OCR</button>
-        <button class="filter-tag" data-cat="loop">🔁 Loop</button>
-        <button class="filter-tag" data-cat="network">🌐 Network</button>
-        <button class="filter-tag" data-cat="system">⚙️ System</button>
-        <button class="filter-tag" data-cat="utility">🧰 Utility</button>
+        <button class="filter-tag active" data-cat="all"><i data-lucide="layers" style="width:14px;height:14px;vertical-align:-2px;"></i> All</button>
+        <button class="filter-tag" data-cat="touch"><i data-lucide="hand" style="width:14px;height:14px;vertical-align:-2px;"></i> Touch</button>
+        <button class="filter-tag" data-cat="image"><i data-lucide="image" style="width:14px;height:14px;vertical-align:-2px;"></i> Image</button>
+        <button class="filter-tag" data-cat="color"><i data-lucide="palette" style="width:14px;height:14px;vertical-align:-2px;"></i> Color</button>
+        <button class="filter-tag" data-cat="ocr"><i data-lucide="scan-text" style="width:14px;height:14px;vertical-align:-2px;"></i> OCR</button>
+        <button class="filter-tag" data-cat="loop"><i data-lucide="repeat" style="width:14px;height:14px;vertical-align:-2px;"></i> Loop</button>
+        <button class="filter-tag" data-cat="network"><i data-lucide="globe" style="width:14px;height:14px;vertical-align:-2px;"></i> Network</button>
+        <button class="filter-tag" data-cat="system"><i data-lucide="settings" style="width:14px;height:14px;vertical-align:-2px;"></i> System</button>
+        <button class="filter-tag" data-cat="utility"><i data-lucide="wrench" style="width:14px;height:14px;vertical-align:-2px;"></i> Utility</button>
     </div>
     <div class="scripts-grid" id="scriptsGrid"></div>
 </div>
@@ -330,7 +330,7 @@ nav {
 const SCRIPTS = [
   {
     id: 'find-image', title: 'Find Image on Screen', cat: 'image', color: 'indigo',
-    icon: '🖼️', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
+    icon: 'image', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
     desc: 'Search for a template image on screen. Tap on it when found, or wait and retry.',
     code: `<span class="cm">-- Find image and tap on it</span>
 <span class="kw">local</span> <span class="var">x</span>, <span class="var">y</span> <span class="op">=</span> <span class="fn">findImage</span>(<span class="str">"target.png"</span>, <span class="num">1</span>, <span class="num">0.9</span>)
@@ -353,7 +353,7 @@ const SCRIPTS = [
   },
   {
     id: 'smart-loop', title: 'Smart Loop with Retry', cat: 'loop', color: 'green',
-    icon: '🔁', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
+    icon: 'repeat', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
     desc: 'Loop with retry logic, random delays, and error handling for stable automation.',
     code: `<span class="cm">-- Loop with max retries and random delay</span>
 <span class="kw">local</span> <span class="var">MAX_RETRIES</span> <span class="op">=</span> <span class="num">50</span>
@@ -376,7 +376,7 @@ const SCRIPTS = [
   },
   {
     id: 'check-ip', title: 'Check Public IP Address', cat: 'network', color: 'cyan',
-    icon: '🌐', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
+    icon: 'globe', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
     desc: 'Get your public IP address via HTTP request. Useful for VPN/proxy verification.',
     code: `<span class="cm">-- Check public IP address</span>
 <span class="kw">local</span> <span class="var">result</span> <span class="op">=</span> <span class="fn">execute</span>(<span class="str">"curl -s https://api.ipify.org"</span>)
@@ -399,7 +399,7 @@ const SCRIPTS = [
   },
   {
     id: 'color-detect', title: 'Color Detection & Wait', cat: 'color', color: 'pink',
-    icon: '🎨', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
+    icon: 'palette', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
     desc: 'Detect pixel colors, wait for a specific color to appear, and find color patterns.',
     code: `<span class="cm">-- Get color at point</span>
 <span class="kw">local</span> <span class="var">c</span> <span class="op">=</span> <span class="fn">getColor</span>(<span class="num">200</span>, <span class="num">400</span>)
@@ -424,7 +424,7 @@ const SCRIPTS = [
   },
   {
     id: 'ocr-text', title: 'OCR — Read Text on Screen', cat: 'ocr', color: 'orange',
-    icon: '📝', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
+    icon: 'scan-text', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
     desc: 'Recognize text on screen. Find specific text and tap on it.',
     code: `<span class="cm">-- Read all text in a region</span>
 <span class="kw">local</span> <span class="var">results</span> <span class="op">=</span> <span class="fn">ocr</span>({
@@ -444,7 +444,7 @@ const SCRIPTS = [
   },
   {
     id: 'app-control', title: 'App Launch & Kill', cat: 'system', color: 'red',
-    icon: '📱', iconBg: 'rgba(248,113,113,0.12)', iconColor: '#f87171',
+    icon: 'smartphone', iconBg: 'rgba(248,113,113,0.12)', iconColor: '#f87171',
     desc: 'Launch, kill, and check app states. Automate multi-app workflows.',
     code: `<span class="cm">-- Launch Safari</span>
 <span class="fn">appRun</span>(<span class="str">"com.apple.mobilesafari"</span>)
@@ -464,7 +464,7 @@ const SCRIPTS = [
   },
   {
     id: 'swipe-scroll', title: 'Swipe & Scroll Patterns', cat: 'touch', color: 'indigo',
-    icon: '👆', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
+    icon: 'move', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
     desc: 'Common swipe and scroll patterns for navigation and list browsing.',
     code: `<span class="cm">-- Scroll down</span>
 <span class="fn">swipe</span>(<span class="num">215</span>, <span class="num">700</span>, <span class="num">215</span>, <span class="num">300</span>, <span class="num">0.3</span>)
@@ -486,7 +486,7 @@ const SCRIPTS = [
   },
   {
     id: 'multi-touch', title: 'Multi-finger Gestures', cat: 'touch', color: 'green',
-    icon: '🤏', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
+    icon: 'hand', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
     desc: 'Pinch to zoom, rotate, and multi-finger touch sequences.',
     code: `<span class="cm">-- Pinch to zoom in (scale > 1)</span>
 <span class="fn">pinch</span>(<span class="num">215</span>, <span class="num">466</span>, <span class="num">2.0</span>, <span class="num">0.5</span>)
@@ -506,7 +506,7 @@ const SCRIPTS = [
   },
   {
     id: 'clipboard-text', title: 'Clipboard & Text Input', cat: 'utility', color: 'cyan',
-    icon: '📋', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
+    icon: 'clipboard', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
     desc: 'Copy/paste clipboard, input text into fields, and combine with touch.',
     code: `<span class="cm">-- Type text into focused field</span>
 <span class="fn">tap</span>(<span class="num">215</span>, <span class="num">300</span>)   <span class="cm">-- tap on text field</span>
@@ -523,7 +523,7 @@ const SCRIPTS = [
   },
   {
     id: 'screenshot-crop', title: 'Screenshot & Save', cat: 'image', color: 'pink',
-    icon: '📸', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
+    icon: 'camera', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
     desc: 'Take full or cropped screenshots and save to custom paths.',
     code: `<span class="cm">-- Full screenshot</span>
 <span class="kw">local</span> <span class="var">path</span> <span class="op">=</span> <span class="fn">screenshot</span>(<span class="str">"full_screen"</span>)
@@ -541,7 +541,7 @@ const SCRIPTS = [
   },
   {
     id: 'network-toggle', title: 'Network & Airplane Toggle', cat: 'network', color: 'orange',
-    icon: '✈️', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
+    icon: 'wifi', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
     desc: 'Toggle airplane mode, cellular data. Useful for IP rotation.',
     code: `<span class="cm">-- Toggle airplane mode (reset IP)</span>
 <span class="fn">setAirplaneMode</span>(<span class="num">true</span>, <span class="num">3</span>)  <span class="cm">-- on, auto-off after 3s</span>
@@ -565,7 +565,7 @@ const SCRIPTS = [
   },
   {
     id: 'screen-res', title: 'Screen Info & Coordinates', cat: 'utility', color: 'indigo',
-    icon: '📐', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
+    icon: 'ruler', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
     desc: 'Get screen resolution, calculate relative positions, and device info.',
     code: `<span class="cm">-- Get screen size (POINT coords)</span>
 <span class="kw">local</span> <span class="var">w</span>, <span class="var">h</span> <span class="op">=</span> <span class="fn">getScreenResolution</span>()
@@ -608,7 +608,7 @@ function render() {
         <div class="script-card" data-color="${s.color}" data-cat="${s.cat}">
             <div class="card-header">
                 <div class="card-meta">
-                    <div class="card-icon" style="background:${s.iconBg};color:${s.iconColor};">${s.icon}</div>
+                    <div class="card-icon" style="background:${s.iconBg};color:${s.iconColor};"><i data-lucide="${s.icon}" style="width:20px;height:20px;"></i></div>
                     <span class="card-title">${s.title}</span>
                 </div>
                 <span class="card-cat" style="background:${s.iconBg};color:${s.iconColor};">${s.cat}</span>
