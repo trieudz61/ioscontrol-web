@@ -1,11 +1,11 @@
 {
-  "version": "1.1.1",
-  "build": 1772985855180,
+  "version": "1.2.0",
+  "build": 1773186000000,
   "minimum_os": "14.0",
-  "release_date": "2026-03-08",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.1.1_iphoneos-arm64.deb",
+  "release_date": "2026-03-09",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.2.0_iphoneos-arm64.deb",
   "changelog": {
-    "en": "update",
-    "vi": "update"
+    "en": "v1.2.0 — Security improvements, coordinate system unification, string obfuscation",
+    "vi": "v1.2.0 — Cải thiện bảo mật, thống nhất hệ tọa độ, mã hóa chuỗi"
   }
 }
