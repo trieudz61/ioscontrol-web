@@ -1490,6 +1490,41 @@ html, body { overflow-x: hidden; }
     </div>
 </div>
 
+<!-- ═══ Video Demo ═══ -->
+<section id="demo" style="padding:60px 0 40px;">
+    <div class="container" style="text-align:center;">
+        <h2 style="font-size:2rem;margin-bottom:8px;">
+            <i data-lucide="play-circle" style="width:28px;height:28px;vertical-align:-5px;margin-right:8px;color:var(--accent);"></i>
+            <span data-i18n="demoTitle">Watch Demo</span>
+        </h2>
+        <p style="color:var(--text-dim);margin-bottom:24px;" data-i18n="demoDesc">See IOSControl in action — Web IDE, native app, and live automation</p>
+        
+        <div style="display:flex;justify-content:center;gap:8px;margin-bottom:20px;">
+            <button onclick="switchDemo('en')" id="demoBtnEN" class="btn-outline" style="padding:6px 16px;font-size:13px;border-radius:20px;cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent);">🇺🇸 English</button>
+            <button onclick="switchDemo('vi')" id="demoBtnVI" class="btn-outline" style="padding:6px 16px;font-size:13px;border-radius:20px;cursor:pointer;">🇻🇳 Tiếng Việt</button>
+        </div>
+        
+        <div style="max-width:800px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);">
+            <div id="demoEN" style="position:relative;padding-bottom:56.25%;height:0;">
+                <iframe src="https://www.youtube.com/embed/k2fzLxgmOi4" title="IOSControl Demo (English)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+            </div>
+            <div id="demoVI" style="position:relative;padding-bottom:56.25%;height:0;display:none;">
+                <iframe src="https://www.youtube.com/embed/wP6xg6qgTiQ" title="IOSControl Demo (Tiếng Việt)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+function switchDemo(lang) {
+    document.getElementById('demoEN').style.display = lang === 'en' ? '' : 'none';
+    document.getElementById('demoVI').style.display = lang === 'vi' ? '' : 'none';
+    document.getElementById('demoBtnEN').style.background = lang === 'en' ? 'var(--accent)' : 'transparent';
+    document.getElementById('demoBtnEN').style.color = lang === 'en' ? '#fff' : '';
+    document.getElementById('demoBtnVI').style.background = lang === 'vi' ? 'var(--accent)' : 'transparent';
+    document.getElementById('demoBtnVI').style.color = lang === 'vi' ? '#fff' : '';
+}
+</script>
+
 <!-- ═══ Features ═══ -->
 <section class="features" id="features">
     <div class="container">
