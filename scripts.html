@@ -284,6 +284,9 @@ nav {
             IOSControl <span class="nav-badge">Scripts</span>
         </a>
         <div class="nav-right">
+            <button class="toggle-btn" id="langToggle" title="Switch language">
+                <span class="toggle-label" id="langLabel">EN</span>
+            </button>
             <button class="toggle-btn" id="themeToggle" title="Toggle theme">
                 <span id="themeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
             </button>
@@ -295,11 +298,11 @@ nav {
 
 <section class="hero-section">
     <div class="container">
-        <h1><i data-lucide="library" style="width:36px;height:36px;vertical-align:-6px;color:var(--accent-light);margin-right:6px;"></i> <span>Script Library</span></h1>
-        <p>Ready-to-use Lua code snippets for IOSControl. Copy, paste, and customize for your automation tasks.</p>
+        <h1><i data-lucide="library" style="width:36px;height:36px;vertical-align:-6px;color:var(--accent-light);margin-right:6px;"></i> <span data-i18n="heroTitle">Script Library</span></h1>
+        <p data-i18n="heroDesc">Ready-to-use Lua code snippets for IOSControl. Copy, paste, and customize for your automation tasks.</p>
         <div class="search-wrap">
             <span class="search-icon"><i data-lucide="search" style="width:16px;height:16px;"></i></span>
-            <input type="text" id="searchInput" placeholder="Search scripts... (find image, loop, OCR...)" autocomplete="off" />
+            <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search scripts... (find image, loop, OCR...)" autocomplete="off" />
         </div>
     </div>
 </section>
@@ -321,17 +324,67 @@ nav {
 
 <div class="page-footer">
     <div class="container">
-        © 2024-2026 IOSControl · <a href="/">Home</a> · <a href="/docs.html">Docs</a> · <a href="https://t.me/IOSControl_Comunity">Community</a>
+        © 2024-2026 IOSControl · <a href="/" data-i18n="ftHome">Home</a> · <a href="/docs.html" data-i18n="ftDocs">Docs</a> · <a href="https://t.me/IOSControl_Comunity" data-i18n="ftCommunity">Community</a>
     </div>
 </div>
 
 <script>
 // ═══ Script Data ═══
+// ═══ i18n ═══
+const SCRIPTS_I18N = {
+  en: {
+    heroTitle: 'Script Library',
+    heroDesc: 'Ready-to-use Lua code snippets for IOSControl. Copy, paste, and customize for your automation tasks.',
+    searchPlaceholder: 'Search scripts... (find image, loop, OCR...)',
+    filterAll: 'All', filterTouch: 'Touch', filterImage: 'Image', filterColor: 'Color',
+    filterOcr: 'OCR', filterLoop: 'Loop', filterNetwork: 'Network', filterSystem: 'System', filterUtility: 'Utility',
+    noResultsTitle: 'No scripts found', noResultsDesc: 'Try a different search or category',
+    copyBtn: 'Copy', copiedBtn: 'Copied!',
+    ftHome: 'Home', ftDocs: 'Docs', ftCommunity: 'Community',
+    s1Title: 'Find Image on Screen', s1Desc: 'Search for a template image on screen. Tap on it when found, or wait and retry.',
+    s2Title: 'Smart Loop with Retry', s2Desc: 'Loop with retry logic, random delays, and error handling for stable automation.',
+    s3Title: 'Check Public IP Address', s3Desc: 'Get your public IP address via HTTP request. Useful for VPN/proxy verification.',
+    s4Title: 'Color Detection & Wait', s4Desc: 'Detect pixel colors, wait for a specific color to appear, and find color patterns.',
+    s5Title: 'OCR — Read Text on Screen', s5Desc: 'Recognize text on screen. Find specific text and tap on it.',
+    s6Title: 'App Launch & Kill', s6Desc: 'Launch, kill, and check app states. Automate multi-app workflows.',
+    s7Title: 'Swipe & Scroll Patterns', s7Desc: 'Common swipe and scroll patterns for navigation and list browsing.',
+    s8Title: 'Multi-finger Gestures', s8Desc: 'Pinch to zoom, rotate, and multi-finger touch sequences.',
+    s9Title: 'Clipboard & Text Input', s9Desc: 'Copy/paste clipboard, input text into fields, and combine with touch.',
+    s10Title: 'Screenshot & Save', s10Desc: 'Take full or cropped screenshots and save to custom paths.',
+    s11Title: 'Network & Airplane Toggle', s11Desc: 'Toggle airplane mode, cellular data. Useful for IP rotation.',
+    s12Title: 'Screen Info & Coordinates', s12Desc: 'Get screen resolution, calculate relative positions, and device info.',
+  },
+  vi: {
+    heroTitle: 'Thư viện Script',
+    heroDesc: 'Các đoạn code Lua sẵn dùng cho IOSControl. Sao chép, dán, và tuỳ chỉnh cho các tác vụ tự động hoá.',
+    searchPlaceholder: 'Tìm script... (tìm ảnh, vòng lặp, OCR...)',
+    filterAll: 'Tất cả', filterTouch: 'Chạm', filterImage: 'Hình ảnh', filterColor: 'Màu sắc',
+    filterOcr: 'OCR', filterLoop: 'Vòng lặp', filterNetwork: 'Mạng', filterSystem: 'Hệ thống', filterUtility: 'Tiện ích',
+    noResultsTitle: 'Không tìm thấy script', noResultsDesc: 'Thử tìm kiếm hoặc danh mục khác',
+    copyBtn: 'Sao chép', copiedBtn: 'Đã chép!',
+    ftHome: 'Trang chủ', ftDocs: 'Tài liệu', ftCommunity: 'Cộng đồng',
+    s1Title: 'Tìm hình ảnh trên màn hình', s1Desc: 'Tìm kiếm hình mẫu trên màn hình. Nhấn vào khi tìm thấy, hoặc chờ và thử lại.',
+    s2Title: 'Vòng lặp thông minh', s2Desc: 'Vòng lặp với logic thử lại, delay ngẫu nhiên, và xử lý lỗi cho tự động hoá ổn định.',
+    s3Title: 'Kiểm tra IP công cộng', s3Desc: 'Lấy IP công cộng qua HTTP request. Hữu ích cho xác minh VPN/proxy.',
+    s4Title: 'Phát hiện màu & Chờ', s4Desc: 'Phát hiện màu pixel, chờ màu cụ thể xuất hiện, và tìm mẫu màu.',
+    s5Title: 'OCR — Đọc chữ trên màn hình', s5Desc: 'Nhận dạng chữ trên màn hình. Tìm văn bản cụ thể và nhấn vào.',
+    s6Title: 'Mở & Tắt ứng dụng', s6Desc: 'Mở, tắt, và kiểm tra trạng thái app. Tự động hoá workflows nhiều app.',
+    s7Title: 'Vuốt & Cuộn trang', s7Desc: 'Các mẫu vuốt và cuộn phổ biến để điều hướng và duyệt danh sách.',
+    s8Title: 'Thao tác nhiều ngón', s8Desc: 'Pinch zoom, xoay, và chuỗi thao tác nhiều ngón tay.',
+    s9Title: 'Clipboard & Nhập văn bản', s9Desc: 'Sao chép/dán clipboard, nhập văn bản vào ô, và kết hợp với thao tác chạm.',
+    s10Title: 'Chụp ảnh màn hình', s10Desc: 'Chụp ảnh toàn màn hình hoặc vùng cắt và lưu vào đường dẫn tuỳ chỉnh.',
+    s11Title: 'Bật/Tắt mạng & Máy bay', s11Desc: 'Bật/tắt chế độ máy bay, dữ liệu di động. Hữu ích cho xoay IP.',
+    s12Title: 'Thông tin màn hình & Toạ độ', s12Desc: 'Lấy độ phân giải, tính vị trí tương đối, và thông tin thiết bị.',
+  }
+};
+
+const FILTER_KEYS = ['All','Touch','Image','Color','Ocr','Loop','Network','System','Utility'];
+const TITLE_KEYS = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12'];
+
 const SCRIPTS = [
   {
-    id: 'find-image', title: 'Find Image on Screen', cat: 'image', color: 'indigo',
+    id: 'find-image', titleKey: 's1', cat: 'image', color: 'indigo',
     icon: 'image', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
-    desc: 'Search for a template image on screen. Tap on it when found, or wait and retry.',
     code: `<span class="cm">-- Find image and tap on it</span>
 <span class="kw">local</span> <span class="var">x</span>, <span class="var">y</span> <span class="op">=</span> <span class="fn">findImage</span>(<span class="str">"target.png"</span>, <span class="num">1</span>, <span class="num">0.9</span>)
 <span class="kw">if</span> <span class="var">x</span> <span class="op">~=</span> <span class="num">-1</span> <span class="kw">then</span>
@@ -352,9 +405,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'smart-loop', title: 'Smart Loop with Retry', cat: 'loop', color: 'green',
+    id: 'smart-loop', titleKey: 's2', cat: 'loop', color: 'green',
     icon: 'repeat', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
-    desc: 'Loop with retry logic, random delays, and error handling for stable automation.',
     code: `<span class="cm">-- Loop with max retries and random delay</span>
 <span class="kw">local</span> <span class="var">MAX_RETRIES</span> <span class="op">=</span> <span class="num">50</span>
 <span class="kw">local</span> <span class="var">success</span> <span class="op">=</span> <span class="num">0</span>
@@ -375,9 +427,8 @@ const SCRIPTS = [
 <span class="fn">log</span>(<span class="str">"Done! Success: "</span> <span class="op">..</span> <span class="var">success</span>)`
   },
   {
-    id: 'check-ip', title: 'Check Public IP Address', cat: 'network', color: 'cyan',
+    id: 'check-ip', titleKey: 's3', cat: 'network', color: 'cyan',
     icon: 'globe', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
-    desc: 'Get your public IP address via HTTP request. Useful for VPN/proxy verification.',
     code: `<span class="cm">-- Check public IP address</span>
 <span class="kw">local</span> <span class="var">result</span> <span class="op">=</span> <span class="fn">execute</span>(<span class="str">"curl -s https://api.ipify.org"</span>)
 <span class="fn">log</span>(<span class="str">"Public IP: "</span> <span class="op">..</span> <span class="var">result</span>)
@@ -398,9 +449,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'color-detect', title: 'Color Detection & Wait', cat: 'color', color: 'pink',
+    id: 'color-detect', titleKey: 's4', cat: 'color', color: 'pink',
     icon: 'palette', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
-    desc: 'Detect pixel colors, wait for a specific color to appear, and find color patterns.',
     code: `<span class="cm">-- Get color at point</span>
 <span class="kw">local</span> <span class="var">c</span> <span class="op">=</span> <span class="fn">getColor</span>(<span class="num">200</span>, <span class="num">400</span>)
 <span class="fn">log</span>(string.<span class="fn">format</span>(<span class="str">"Color: 0x%06X"</span>, <span class="var">c</span>))
@@ -423,9 +473,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'ocr-text', title: 'OCR — Read Text on Screen', cat: 'ocr', color: 'orange',
+    id: 'ocr-text', titleKey: 's5', cat: 'ocr', color: 'orange',
     icon: 'scan-text', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
-    desc: 'Recognize text on screen. Find specific text and tap on it.',
     code: `<span class="cm">-- Read all text in a region</span>
 <span class="kw">local</span> <span class="var">results</span> <span class="op">=</span> <span class="fn">ocr</span>({
     <span class="var">region</span> <span class="op">=</span> {<span class="num">0</span>, <span class="num">0</span>, <span class="num">430</span>, <span class="num">500</span>},
@@ -443,9 +492,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'app-control', title: 'App Launch & Kill', cat: 'system', color: 'red',
+    id: 'app-control', titleKey: 's6', cat: 'system', color: 'red',
     icon: 'smartphone', iconBg: 'rgba(248,113,113,0.12)', iconColor: '#f87171',
-    desc: 'Launch, kill, and check app states. Automate multi-app workflows.',
     code: `<span class="cm">-- Launch Safari</span>
 <span class="fn">appRun</span>(<span class="str">"com.apple.mobilesafari"</span>)
 <span class="fn">sleep</span>(<span class="num">2</span>)
@@ -463,9 +511,8 @@ const SCRIPTS = [
 <span class="fn">pressHome</span>()`
   },
   {
-    id: 'swipe-scroll', title: 'Swipe & Scroll Patterns', cat: 'touch', color: 'indigo',
+    id: 'swipe-scroll', titleKey: 's7', cat: 'touch', color: 'indigo',
     icon: 'move', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
-    desc: 'Common swipe and scroll patterns for navigation and list browsing.',
     code: `<span class="cm">-- Scroll down</span>
 <span class="fn">swipe</span>(<span class="num">215</span>, <span class="num">700</span>, <span class="num">215</span>, <span class="num">300</span>, <span class="num">0.3</span>)
 
@@ -485,9 +532,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'multi-touch', title: 'Multi-finger Gestures', cat: 'touch', color: 'green',
+    id: 'multi-touch', titleKey: 's8', cat: 'touch', color: 'green',
     icon: 'hand', iconBg: 'rgba(52,211,153,0.12)', iconColor: '#34d399',
-    desc: 'Pinch to zoom, rotate, and multi-finger touch sequences.',
     code: `<span class="cm">-- Pinch to zoom in (scale > 1)</span>
 <span class="fn">pinch</span>(<span class="num">215</span>, <span class="num">466</span>, <span class="num">2.0</span>, <span class="num">0.5</span>)
 
@@ -505,9 +551,8 @@ const SCRIPTS = [
 <span class="fn">touchUp</span>(<span class="num">1</span>, <span class="num">280</span>, <span class="num">400</span>)`
   },
   {
-    id: 'clipboard-text', title: 'Clipboard & Text Input', cat: 'utility', color: 'cyan',
+    id: 'clipboard-text', titleKey: 's9', cat: 'utility', color: 'cyan',
     icon: 'clipboard', iconBg: 'rgba(34,211,238,0.12)', iconColor: '#22d3ee',
-    desc: 'Copy/paste clipboard, input text into fields, and combine with touch.',
     code: `<span class="cm">-- Type text into focused field</span>
 <span class="fn">tap</span>(<span class="num">215</span>, <span class="num">300</span>)   <span class="cm">-- tap on text field</span>
 <span class="fn">sleep</span>(<span class="num">0.5</span>)
@@ -522,9 +567,8 @@ const SCRIPTS = [
 <span class="fn">log</span>(<span class="str">"Clipboard: "</span> <span class="op">..</span> <span class="var">text</span>)`
   },
   {
-    id: 'screenshot-crop', title: 'Screenshot & Save', cat: 'image', color: 'pink',
+    id: 'screenshot-crop', titleKey: 's10', cat: 'image', color: 'pink',
     icon: 'camera', iconBg: 'rgba(244,114,182,0.12)', iconColor: '#f472b6',
-    desc: 'Take full or cropped screenshots and save to custom paths.',
     code: `<span class="cm">-- Full screenshot</span>
 <span class="kw">local</span> <span class="var">path</span> <span class="op">=</span> <span class="fn">screenshot</span>(<span class="str">"full_screen"</span>)
 <span class="fn">log</span>(<span class="str">"Saved: "</span> <span class="op">..</span> <span class="var">path</span>)
@@ -540,9 +584,8 @@ const SCRIPTS = [
 <span class="fn">log</span>(<span class="str">"Captured 5 screenshots"</span>)`
   },
   {
-    id: 'network-toggle', title: 'Network & Airplane Toggle', cat: 'network', color: 'orange',
+    id: 'network-toggle', titleKey: 's11', cat: 'network', color: 'orange',
     icon: 'wifi', iconBg: 'rgba(251,146,60,0.12)', iconColor: '#fb923c',
-    desc: 'Toggle airplane mode, cellular data. Useful for IP rotation.',
     code: `<span class="cm">-- Toggle airplane mode (reset IP)</span>
 <span class="fn">setAirplaneMode</span>(<span class="num">true</span>, <span class="num">3</span>)  <span class="cm">-- on, auto-off after 3s</span>
 <span class="fn">sleep</span>(<span class="num">5</span>)  <span class="cm">-- wait to reconnect</span>
@@ -564,9 +607,8 @@ const SCRIPTS = [
 <span class="kw">end</span>`
   },
   {
-    id: 'screen-res', title: 'Screen Info & Coordinates', cat: 'utility', color: 'indigo',
+    id: 'screen-res', titleKey: 's12', cat: 'utility', color: 'indigo',
     icon: 'ruler', iconBg: 'rgba(99,102,241,0.12)', iconColor: '#818cf8',
-    desc: 'Get screen resolution, calculate relative positions, and device info.',
     code: `<span class="cm">-- Get screen size (POINT coords)</span>
 <span class="kw">local</span> <span class="var">w</span>, <span class="var">h</span> <span class="op">=</span> <span class="fn">getScreenResolution</span>()
 <span class="fn">log</span>(<span class="str">"Screen: "</span> <span class="op">..</span> <span class="var">w</span> <span class="op">..</span> <span class="str">"x"</span> <span class="op">..</span> <span class="var">h</span>)
@@ -590,36 +632,43 @@ const grid = document.getElementById('scriptsGrid');
 let activeFilter = 'all';
 let searchQuery = '';
 
+function T(key) { return SCRIPTS_I18N[currentLang][key] || SCRIPTS_I18N.en[key] || key; }
+
 function render() {
     let filtered = SCRIPTS.filter(s => {
+        const title = T(s.titleKey + 'Title');
+        const desc = T(s.titleKey + 'Desc');
         const matchCat = activeFilter === 'all' || s.cat === activeFilter;
         const matchQ = !searchQuery ||
-            s.title.toLowerCase().includes(searchQuery) ||
-            s.desc.toLowerCase().includes(searchQuery) ||
+            title.toLowerCase().includes(searchQuery) ||
+            desc.toLowerCase().includes(searchQuery) ||
             s.cat.toLowerCase().includes(searchQuery);
         return matchCat && matchQ;
     });
     if (filtered.length === 0) {
-        grid.innerHTML = '<div class="no-results"><i data-lucide="search-x" style="width:40px;height:40px;margin:0 auto;"></i><p style="margin-top:12px;font-size:15px;">No scripts found</p><p style="font-size:13px;margin-top:4px;">Try a different search or category</p></div>';
+        grid.innerHTML = `<div class="no-results"><i data-lucide="search-x" style="width:40px;height:40px;margin:0 auto;"></i><p style="margin-top:12px;font-size:15px;">${T('noResultsTitle')}</p><p style="font-size:13px;margin-top:4px;">${T('noResultsDesc')}</p></div>`;
         lucide.createIcons();
         return;
     }
-    grid.innerHTML = filtered.map(s => `
+    grid.innerHTML = filtered.map(s => {
+        const title = T(s.titleKey + 'Title');
+        const desc = T(s.titleKey + 'Desc');
+        return `
         <div class="script-card" data-color="${s.color}" data-cat="${s.cat}">
             <div class="card-header">
                 <div class="card-meta">
                     <div class="card-icon" style="background:${s.iconBg};color:${s.iconColor};"><i data-lucide="${s.icon}" style="width:20px;height:20px;"></i></div>
-                    <span class="card-title">${s.title}</span>
+                    <span class="card-title">${title}</span>
                 </div>
                 <span class="card-cat" style="background:${s.iconBg};color:${s.iconColor};">${s.cat}</span>
             </div>
-            <div class="card-desc">${s.desc}</div>
+            <div class="card-desc">${desc}</div>
             <div class="card-code" id="code-${s.id}">
-                <button class="copy-btn" onclick="copyCode('${s.id}')"><i data-lucide="copy" style="width:12px;height:12px;"></i> Copy</button>
+                <button class="copy-btn" onclick="copyCode('${s.id}')"><i data-lucide="copy" style="width:12px;height:12px;"></i> ${T('copyBtn')}</button>
                 <pre>${s.code}</pre>
             </div>
         </div>
-    `).join('');
+    `}).join('');
     lucide.createIcons();
 }
 
@@ -646,10 +695,10 @@ function copyCode(id) {
     const text = pre.innerText;
     navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector(`#code-${id} .copy-btn`);
-        btn.innerHTML = '<i data-lucide="check" style="width:12px;height:12px;color:#34d399;"></i> Copied!';
+        btn.innerHTML = `<i data-lucide="check" style="width:12px;height:12px;color:#34d399;"></i> ${T('copiedBtn')}`;
         lucide.createIcons();
         setTimeout(() => {
-            btn.innerHTML = '<i data-lucide="copy" style="width:12px;height:12px;"></i> Copy';
+            btn.innerHTML = `<i data-lucide="copy" style="width:12px;height:12px;"></i> ${T('copyBtn')}`;
             lucide.createIcons();
         }, 2000);
     });
@@ -669,8 +718,43 @@ document.getElementById('themeToggle').addEventListener('click', () => {
 });
 applyTheme();
 
+// ═══ Language ═══
+let currentLang = localStorage.getItem('icontrol-lang') || 'en';
+function applyLang() {
+    document.getElementById('langLabel').textContent = currentLang.toUpperCase();
+    localStorage.setItem('icontrol-lang', currentLang);
+    // Static i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = T(key);
+        if (val) el.innerHTML = val;
+    });
+    // Placeholder i18n
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const val = T(key);
+        if (val) el.placeholder = val;
+    });
+    // Filter tags
+    const filterBtns = document.querySelectorAll('.filter-tag');
+    const catNames = ['All','Touch','Image','Color','Ocr','Loop','Network','System','Utility'];
+    filterBtns.forEach((btn, i) => {
+        if (catNames[i]) {
+            const icon = btn.querySelector('i');
+            const iconHtml = icon ? icon.outerHTML + ' ' : '';
+            btn.innerHTML = iconHtml + T('filter' + catNames[i]);
+        }
+    });
+    lucide.createIcons();
+    render();
+}
+document.getElementById('langToggle').addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'vi' : 'en';
+    applyLang();
+});
+
 // Init
-render();
+applyLang();
 </script>
 
 </body>
