@@ -1,15 +1,10 @@
-Package: com.trieudz.ioscontrol
+Package: com.ioscontrol
 Name: IOSControl
-Version: 1.5.0
+Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: -Fix something about findcolor
-Depiction: https://ioscontrol.com/
+Description: iOS Automation Tweak — Touch simulation, Color detection, Web IDE, Flow Builder
 Maintainer: IOSControl <support@ioscontrol.com>
-Author: trieudz
+Author: IOSControl
 Section: Tweaks
-Depends: mobilesubstrate, firmware (>= 14.0)
-Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb
-Size: 15033160
-Installed-Size: 14681
-SHA256: b9888d7fadf6efe00c866ee174b38930e21c8b8e02a20dd1a4fd40351043be71
+Depends: firmware (>= 15.0)
+Filename: debs/com.ioscontrol_1.0.0_iphoneos-arm64.deb
