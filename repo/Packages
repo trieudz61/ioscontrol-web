@@ -1,15 +1,15 @@
 Package: com.trieudz.ioscontrol
 Name: IOSControl
-Version: 1.5.0
+Version: 1.5.1
 Architecture: iphoneos-arm64
-Description: Fix Somethings
+Description: fix something about security
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 14.0)
 Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb
-Size: 15033340
-Installed-Size: 14681
-SHA256: f1d1ded49a5feb9e871c0ec035de42a3a65ed5ca8ac4e3c7bfb39a0ec5edec12
+Filename: debs/com.trieudz.ioscontrol_1.5.1_iphoneos-arm64.deb
+Size: 15034372
+Installed-Size: 14682
+SHA256: 86608a0d9ec3adf7abe62a096440e36ec1c4a22190f91b21dbc8951c496650ae
