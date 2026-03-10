@@ -1,0 +1,11 @@
+{
+  "version": "1.5.0",
+  "build": 1741596000,
+  "minimum_os": "15.0",
+  "release_date": "2026-03-10",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb",
+  "changelog": {
+    "en": "v1.5.0: Fixed findColor scale calculation, fixed Helper color pick coordinate bug, improved findColor region support",
+    "vi": "v1.5.0: Sửa findColor scale, sửa toạ độ Helper color pick, cải thiện findColor region"
+  }
+}
