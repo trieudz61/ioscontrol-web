@@ -1,10 +1,11 @@
 {
-  "version": "1.5.1",
-  "minimum_os": "15.0",
+  "version": "1.5.2",
+  "build": 1773137402000,
+  "minimum_os": "14.0",
   "release_date": "2026-03-10",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.5.1_iphoneos-arm64.deb",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.5.2_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.5.1: Fix Spoof tab premium gate, Upgrade to Premium button opens payment page",
-    "vi": "v1.5.1: Sửa premium gate tab Spoof, nút Upgrade mở trang thanh toán"
+    "en": "v1.5.2 release",
+    "vi": "Phiên bản v1.5.2"
   }
 }
