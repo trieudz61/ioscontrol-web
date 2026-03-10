@@ -2,14 +2,14 @@ Package: com.trieudz.ioscontrol
 Name: IOSControl
 Version: 1.5.0
 Architecture: iphoneos-arm64
-Description: iOS automation tweak — touch, OCR, Lua scripting, Web IDE, device identity management
+Description: Fix Somethings
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
-Depends: mobilesubstrate, firmware (>= 15.0)
+Depends: mobilesubstrate, firmware (>= 14.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb
 Size: 15033340
-Installed-Size: 14700
+Installed-Size: 14681
 SHA256: f1d1ded49a5feb9e871c0ec035de42a3a65ed5ca8ac4e3c7bfb39a0ec5edec12
