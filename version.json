@@ -1,11 +1,11 @@
 {
-  "version": "1.4.0",
-  "build": 1773085292000,
+  "version": "1.5.0",
+  "build": 1773129097313,
   "minimum_os": "14.0",
   "release_date": "2026-03-10",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.4.0_iphoneos-arm64.deb",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.4.0 release",
-    "vi": "Phiên bản v1.4.0"
+    "en": "-Fix something about findcolor",
+    "vi": "-Fix something about findcolor"
   }
 }

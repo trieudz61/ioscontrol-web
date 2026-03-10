@@ -1,16 +1,15 @@
 Package: com.trieudz.ioscontrol
+Name: IOSControl
 Version: 1.5.0
 Architecture: iphoneos-arm64
-Maintainer: trieudz
-Installed-Size: 22928
-Depends: mobilesubstrate, firmware (>= 15.0)
+Description: -Fix something about findcolor
+Depiction: https://ioscontrol.com/
+Maintainer: IOSControl <support@ioscontrol.com>
+Author: trieudz
+Section: Tweaks
+Depends: mobilesubstrate, firmware (>= 14.0)
+Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.5.0_iphoneos-arm64.deb
 Size: 15033160
-MD5sum: ba4b8c4237aa335b486cc47356e7f437
-SHA1: 838aeda9a0e362c24fa830ebecefbcde39e08872
+Installed-Size: 14681
 SHA256: b9888d7fadf6efe00c866ee174b38930e21c8b8e02a20dd1a4fd40351043be71
-Section: Tweaks
-Description: AutoTouch-like automation tweak for iOS (touch, screenshot, OCR, Lua scripting)
-Author: trieudz
-Name: IOSControl
-
