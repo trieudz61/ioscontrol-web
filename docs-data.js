@@ -736,7 +736,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table — array of hex colors",
-        example: "local colors = getColors({{100,200}, {150,300}})",
+        example: 'local colors = getColors({{100,200}, {200,300}, {300,400}})\nfor i, c in ipairs(colors) do\n    log("Point " .. i .. ": " .. string.format("0x%06X", c))\nend',
       },
       {
         name: "findColor(color, count, region)",
@@ -791,7 +791,7 @@ const API_SECTIONS = [
         ],
         ret: "table — match locations",
         example:
-          "local r = findColors({\n  {color=0xFF0000, x=0, y=0},\n  {color=0x00FF00, x=10, y=0}\n})",
+          '-- Find pattern: red + green 10px apart\nlocal x, y = findColors({\n    {0, 0, 0xFF0000},\n    {10, 0, 0x00FF00}\n})\nif x then\n    log("Pattern found at " .. x .. "," .. y)\n    tap(x, y)\nend',
       },
       {
         name: "waitForColor(x, y, color, timeout)",
@@ -911,7 +911,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table|false — match location or false",
-        example: 'local m = waitForImage("dialog.png", 15)',
+        example: '-- Wait 30s, match 90%\nlocal m = waitForImage("dialog.png", 30, 0.9)\nif m then\n    tap(m.x, m.y)\n    log("Found dialog!")\nelse\n    log("Timeout — dialog not appeared")\nend',
         tags: ["exclusive"],
       },
       {
@@ -1073,7 +1073,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table|false",
-        example: 'waitForText("Welcome", 10)',
+        example: 'local pos = waitForText("Welcome", 15)\nif pos then\n    tap(pos.x, pos.y)\n    log("Found Welcome!")\nelse\n    log("Text not found after 15s")\nend',
         tags: ["exclusive"],
       },
       {
@@ -1111,7 +1111,7 @@ const API_SECTIONS = [
         ],
         ret: "boolean, x, y",
         example:
-          '-- One-liner: find and tap button\nlocal ok, x, y = tapImage("btn_ok.png")\nif ok then log("Tapped at " .. x .. "," .. y) end',
+          '-- Find and tap with all params\ntapImage("btn_ok.png", 10, 0.85)\n-- timeout 10s, match 85%\n\n-- Default: timeout=5s, threshold=0.8\ntapImage("next_btn.png")',
         tags: ["new", "exclusive"],
       },
       {
@@ -1140,7 +1140,7 @@ const API_SECTIONS = [
         ],
         ret: "boolean, x, y",
         example:
-          '-- Login flow in 3 lines\ntapText("Login")\nsleep(1)\ntapText("Continue")',
+          '-- Login flow with timeout\ntapText("Login", 10)  -- Wait 10s\nsleep(1)\ntapText("Continue", 5)',
         tags: ["new", "exclusive"],
       },
       {
@@ -1430,7 +1430,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'appKill("com.apple.safari")',
+        example: 'appKill("com.apple.mobilesafari")\nsleep(1)\nlog("Safari killed")',
       },
       {
         name: "appState(bundleId)",
@@ -1472,7 +1472,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'openURL("https://google.com")\nopenURL("tel://123456789")',
+        example: '-- Open website\nopenURL("https://google.com")\n\n-- Deep link to Instagram\nopenURL("instagram://user?username=abc")',
       },
     ],
   },
@@ -1522,7 +1522,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'keyDown("home")',
+        example: '-- Press Home button\nkeyDown("home")\nsleep(0.1)\nkeyUp("home")',
       },
       {
         name: "keyUp(keyType)",
@@ -1612,7 +1612,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'toast("Script started!", 3)',
+        example: 'toast("Bước 1 hoàn thành!", 3)\nsleep(2)\ntoast("Đang xử lý bước 2...", 2)',
       },
       {
         name: "alert(message)",
@@ -1627,7 +1627,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'alert("Are you sure?")',
+        example: 'alert("Nhấn OK để tiếp tục!")',
       },
       {
         name: "vibrate()",
@@ -1635,7 +1635,7 @@ const API_SECTIONS = [
         desc: { en: "Vibrate the device", vi: "Rung thiết bị" },
         params: [],
         ret: "void",
-        example: "vibrate()",
+        example: '-- Rung khi hoàn thành\nvibrate()\nlog("Done!")',
       },
       {
         name: "log(message)",
@@ -1650,7 +1650,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'log("Step 1 complete ✅")',
+        example: 'log("Hello!")\nlog("Count: " .. 42)\nlog("Table: " .. jsonEncode({a = 1}))',
       },
     ],
   },
@@ -1727,7 +1727,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: "randomSleep(0.5, 2.0)  -- Anti-detection",
+        example: '-- Anti-detection random delay\nrandomSleep(1.0, 3.0)\nlog("Done waiting")',
         tags: ["exclusive"],
       },
     ],
@@ -1748,7 +1748,7 @@ const API_SECTIONS = [
         params: [],
         ret: "table — {width, height}",
         example:
-          'local s = screenSize()\nlog("Screen: " .. s.width .. "x" .. s.height)',
+          'local s = screenSize()\nlog("Screen: " .. s.width .. "x" .. s.height)\n-- iPhone 8 Plus: 414x736',
       },
       {
         name: "deviceInfo()",
@@ -1759,7 +1759,7 @@ const API_SECTIONS = [
         },
         params: [],
         ret: "table — device details",
-        example: 'local d = deviceInfo()\nlog(d.model .. " iOS " .. d.version)',
+        example: 'local d = deviceInfo()\nlog("Model: " .. d.model)\nlog("iOS: " .. d.version)\nlog("Name: " .. d.name)',
         tags: ["exclusive"],
       },
     ],
@@ -1832,7 +1832,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table — {status, body, headers}",
-        example: 'local r = httpPost(url, {key="value"})',
+        example: '-- POST JSON with headers\nlocal body = jsonEncode({\n    username = "admin",\n    password = "123456"\n})\nlocal r = httpPost(\n    "https://api.example.com/login",\n    body,\n    {["Content-Type"] = "application/json"}\n)\nlocal result = jsonDecode(r.body)\nlog("Token: " .. result.token)',
         tags: ["exclusive"],
       },
     ],
@@ -1932,7 +1932,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table",
-        example: 'local t = jsonDecode(\'{"name":"test"}\')',
+        example: 'local json = \'{"name":"Trieu","age":25,"items":[1,2,3]}\'\nlocal t = jsonDecode(json)\nlog(t.name)     -- "Trieu"\nlog(t.age)      -- 25\nlog(t.items[1]) -- 1',
         tags: ["exclusive"],
       },
       {
@@ -1951,7 +1951,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "string",
-        example: "local s = jsonEncode({score=100})",
+        example: 'local t = {\n    name = "Trieu",\n    age = 25,\n    items = {1, 2, 3},\n    nested = {key = "value"}\n}\nlocal json = jsonEncode(t)\nlog(json)',
         tags: ["exclusive"],
       },
     ],
@@ -1987,7 +1987,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "number",
-        example: "local x = randomInt(100, 300)",
+        example: '-- Random tap offset (anti-detection)\nlocal dx = randomInt(-5, 5)\nlocal dy = randomInt(-5, 5)\ntap(207 + dx, 400 + dy)',
         tags: ["exclusive"],
       },
       {
