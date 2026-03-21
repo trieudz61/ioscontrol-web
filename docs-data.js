@@ -1914,11 +1914,11 @@ const API_SECTIONS = [
         tags: ["new", "exclusive"],
       },
       {
-        name: "setSystemProxy(host, port, type)",
+        name: "setSystemProxy(host, port, type, user, pass)",
         type: "func",
         desc: {
-          en: "Set device-wide Wi-Fi proxy. Affects ALL apps on the device.",
-          vi: "Đặt proxy thiết bị qua Wi-Fi. Ảnh hưởng TẤT CẢ app trên thiết bị.",
+          en: "Set device-wide Wi-Fi proxy. Affects ALL apps. Supports auth.",
+          vi: "Đặt proxy thiết bị qua Wi-Fi. Ảnh hưởng TẤT CẢ app. Hỗ trợ xác thực.",
         },
         params: [
           {
@@ -1939,9 +1939,21 @@ const API_SECTIONS = [
             d: { en: "'http' (default) or 'socks'", vi: "'http' (mặc định) hoặc 'socks'" },
             req: false,
           },
+          {
+            n: "user",
+            t: "string",
+            d: { en: "Username for proxy auth", vi: "Username xác thực proxy" },
+            req: false,
+          },
+          {
+            n: "pass",
+            t: "string",
+            d: { en: "Password for proxy auth", vi: "Password xác thực proxy" },
+            req: false,
+          },
         ],
         ret: "boolean",
-        example: '-- Set system HTTP proxy (all apps)\nsetSystemProxy("proxy.example.com", 8080)\nlog("All traffic now through proxy")\nsleep(60)\nclearSystemProxy()\nlog("Direct connection restored")\n\n-- Set system SOCKS proxy\nsetSystemProxy("socks.example.com", 1080, "socks")',
+        example: '-- System proxy without auth\nsetSystemProxy("proxy.example.com", 8080)\n\n-- System proxy with auth (IP:Port:User:Pass)\nsetSystemProxy("123.45.67.89", 8080, "http", "myuser", "mypass123")\n\n-- System SOCKS proxy with auth\nsetSystemProxy("socks.example.com", 1080, "socks", "user", "pass")\n\nclearSystemProxy()  -- Turn off when done',
         tags: ["new", "exclusive"],
       },
       {
