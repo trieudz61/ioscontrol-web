@@ -1838,6 +1838,127 @@ const API_SECTIONS = [
     ],
   },
   {
+    id: "proxy",
+    icon: '<i data-lucide="shield" style="width:16px;height:16px;"></i>',
+    title: { en: "Proxy", vi: "Proxy" },
+    desc: {
+      en: "Route HTTP traffic through proxy servers. Supports HTTP and SOCKS5.",
+      vi: "Định tuyến HTTP qua proxy server. Hỗ trợ HTTP và SOCKS5.",
+    },
+    apis: [
+      {
+        name: "setProxy(host, port, type, user, pass)",
+        type: "func",
+        desc: {
+          en: "Set proxy for httpGet/httpPost. Only affects script HTTP calls.",
+          vi: "Đặt proxy cho httpGet/httpPost. Chỉ ảnh hưởng HTTP trong script.",
+        },
+        params: [
+          {
+            n: "host",
+            t: "string",
+            d: { en: "Proxy hostname or IP", vi: "Hostname hoặc IP của proxy" },
+            req: true,
+          },
+          {
+            n: "port",
+            t: "number",
+            d: { en: "Proxy port", vi: "Port proxy" },
+            req: true,
+          },
+          {
+            n: "type",
+            t: "string",
+            d: { en: "'http' (default) or 'socks'", vi: "'http' (mặc định) hoặc 'socks'" },
+            req: false,
+          },
+          {
+            n: "user",
+            t: "string",
+            d: { en: "Username for proxy auth", vi: "Username xác thực proxy" },
+            req: false,
+          },
+          {
+            n: "pass",
+            t: "string",
+            d: { en: "Password for proxy auth", vi: "Password xác thực proxy" },
+            req: false,
+          },
+        ],
+        ret: "boolean",
+        example: '-- HTTP proxy\nsetProxy("proxy.example.com", 8080)\nlocal ip = httpGet("https://api.ipify.org")\nlog("IP via proxy: " .. ip)\n\n-- SOCKS5 with auth\nsetProxy("socks.example.com", 1080, "socks", "user", "pass")\nlocal ip2 = httpGet("https://api.ipify.org")\nlog("IP via SOCKS: " .. ip2)',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "clearProxy()",
+        type: "func",
+        desc: {
+          en: "Remove proxy. httpGet/httpPost go direct.",
+          vi: "Tắt proxy. httpGet/httpPost kết nối trực tiếp.",
+        },
+        params: [],
+        ret: "boolean",
+        example: 'setProxy("proxy.example.com", 8080)\nlocal ip1 = httpGet("https://api.ipify.org")\nlog("Proxy IP: " .. ip1)\n\nclearProxy()\nlocal ip2 = httpGet("https://api.ipify.org")\nlog("Direct IP: " .. ip2)',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "getProxy()",
+        type: "func",
+        desc: {
+          en: "Get current proxy config",
+          vi: "Lấy cấu hình proxy hiện tại",
+        },
+        params: [],
+        ret: "table|nil — {host, port, type, username} or nil if no proxy",
+        example: 'local p = getProxy()\nif p then\n  log("Proxy: " .. p.host .. ":" .. p.port .. " (" .. p.type .. ")")\nelse\n  log("No proxy set")\nend',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "setSystemProxy(host, port, type)",
+        type: "func",
+        desc: {
+          en: "Set device-wide Wi-Fi proxy. Affects ALL apps on the device.",
+          vi: "Đặt proxy thiết bị qua Wi-Fi. Ảnh hưởng TẤT CẢ app trên thiết bị.",
+        },
+        params: [
+          {
+            n: "host",
+            t: "string",
+            d: { en: "Proxy hostname or IP", vi: "Hostname hoặc IP" },
+            req: true,
+          },
+          {
+            n: "port",
+            t: "number",
+            d: { en: "Proxy port", vi: "Port proxy" },
+            req: true,
+          },
+          {
+            n: "type",
+            t: "string",
+            d: { en: "'http' (default) or 'socks'", vi: "'http' (mặc định) hoặc 'socks'" },
+            req: false,
+          },
+        ],
+        ret: "boolean",
+        example: '-- Set system HTTP proxy (all apps)\nsetSystemProxy("proxy.example.com", 8080)\nlog("All traffic now through proxy")\nsleep(60)\nclearSystemProxy()\nlog("Direct connection restored")\n\n-- Set system SOCKS proxy\nsetSystemProxy("socks.example.com", 1080, "socks")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "clearSystemProxy()",
+        type: "func",
+        desc: {
+          en: "Disable device-wide Wi-Fi proxy. Restore direct connection.",
+          vi: "Tắt proxy hệ thống. Khôi phục kết nối trực tiếp.",
+        },
+        params: [],
+        ret: "boolean",
+        example: 'clearSystemProxy()\nlog("System proxy disabled")',
+        tags: ["new", "exclusive"],
+      },
+    ],
+  },
+  {
     id: "file",
     icon: '<i data-lucide="folder" style="width:16px;height:16px;"></i>',
     title: { en: "File & JSON", vi: "Tệp & JSON" },
