@@ -1,11 +1,11 @@
 {
-  "version": "1.6.0",
-  "build": 1773641280000,
+  "version": "1.6.1",
+  "build": 1775919374000,
   "minimum_os": "14.0",
-  "release_date": "2026-03-16",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.0_iphoneos-arm64.deb",
+  "release_date": "2026-04-11",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.1_iphoneos-arm64.deb",
   "changelog": {
-    "en": "🔐 Security Hardening Update\n\n• Enhanced script encryption (.lue v2) with tamper detection\n• Improved license protection with multi-layer verification\n• XOR-encoded sensitive data — harder to reverse engineer\n• Advanced anti-debugging: Frida thread detection + RE tool blocking\n\n📦 File Management\n• Import/Export .lue and .lua files directly\n• Direct file download without JSON wrapping\n• Drag & drop script import support\n\n🛠 Improvements\n• Fixed touch response issues on jailbroken devices\n• Better device-license sync on payment\n• Stability improvements and crash fixes",
-    "vi": "🔐 Cập Nhật Bảo Mật\n\n• Mã hóa script nâng cao (.lue v2) với phát hiện giả mạo\n• Bảo vệ license đa tầng, chống crack hiệu quả hơn\n• Dữ liệu nhạy cảm được mã hóa XOR — khó dịch ngược hơn\n• Chống debug nâng cao: phát hiện Frida + chặn công cụ RE\n\n📦 Quản Lý File\n• Import/Export file .lue và .lua trực tiếp\n• Tải file trực tiếp không qua JSON\n• Hỗ trợ kéo thả file script\n\n🛠 Cải Thiện\n• Sửa lỗi chạm không phản hồi trên thiết bị jailbreak\n• Đồng bộ license-thiết bị nhanh hơn khi thanh toán\n• Cải thiện độ ổn định và sửa lỗi crash"
+    "en": "v1.6.1 release",
+    "vi": "Phiên bản v1.6.1"
   }
 }
