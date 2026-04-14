@@ -7,6 +7,6 @@ Architectures: iphoneos-arm64
 Components: main
 Description: IOSControl - iOS Automation Framework
 SHA256:
- 49a33511ec4abacbbca6ff7e99add8416217bad6aa5d03b2ff495b14b1bc6d6d 1107 Packages
- a8fe481670da37315b5f9e661f5d6c7bfda93e77044e74fdad1ec658f879c3f9 598 Packages.gz
- 7178aa02f4dd32c74423d7ab849ec4ad99389999eddcf9fb88ed170e971edadb 685 Packages.bz2
+ e760cb8e5a4690dcb680b40c37c0cabbdec09f026ef59a4f8ec1e78401f47843 1109 Packages
+ a67a6f881b2de1ea7138311c3cd7814a5c00c07544b07fabf90c3087d3cc2cab 548 Packages.gz
+ cb371c035a56614e7d9f18a97af72e9a56db9f921912c62f8691d26dc208fea4 653 Packages.bz2
