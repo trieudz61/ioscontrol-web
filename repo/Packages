@@ -10,9 +10,9 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.6.2_iphoneos-arm64.deb
-Size: 15035200
+Size: 15034922
 Installed-Size: 14700
-SHA256: 8c2a4410f37409bd57696235e7bf2cb050cf3651bc794a2b81f1717074f14456
+SHA256: 291d8deda16bde6f3cd81f481254e67b5aaafbfba4dfcc40102278d2c729dd21
 
 Package: com.opa334.crane
 Name: Crane
