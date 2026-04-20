@@ -27,3 +27,18 @@ Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
 Size: 15033996
 Installed-Size: 3252
 SHA256: 94479ee71cc8cece8e2dff00baedb6f040538c6fbbcd17ea4302dbc5fb58a14c
+
+
+Package: com.maxclaw.maxidentity
+Name: MaxIdentity
+Version: 1.2.0
+Architecture: iphoneos-arm
+Description: Device fingerprint spoofer by MaxClaw. Reset device identity per-app.
+Maintainer: Manh Vu
+Author: Manh Vu
+Section: Tweaks
+Depends: mobilesubstrate
+Filename: debs/com.maxclaw.maxidentity_1.2.0_iphoneos-arm.deb
+Size: 33452
+Installed-Size: 240
+SHA256: bd8c59e635098c62a9c4532bd1bfde23500120fbdcc44668085fa9d46fd00a2f
