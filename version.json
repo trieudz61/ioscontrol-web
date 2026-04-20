@@ -1,11 +1,11 @@
 {
-  "version": "1.6.1",
+  "version": "1.6.2",
   "build": 1775919374000,
   "minimum_os": "14.0",
-  "release_date": "2026-04-11",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.1_iphoneos-arm64.deb",
+  "release_date": "2026-04-20",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.2_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.1 release",
-    "vi": "Phiên bản v1.6.1"
+    "en": "v1.6.2: License stability improvements, cache fix, performance updates",
+    "vi": "v1.6.2: Cải thiện ổn định license, sửa cache, tối ưu hiệu năng"
   }
 }
