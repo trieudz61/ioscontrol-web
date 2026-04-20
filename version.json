@@ -1,11 +1,11 @@
 {
-  "version": "1.6.2",
-  "build": 1775919374000,
+  "version": "1.6.4",
+  "build": 1745157337000,
   "minimum_os": "14.0",
   "release_date": "2026-04-20",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.2_iphoneos-arm64.deb",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.4_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.2: License stability improvements, cache fix, performance updates",
-    "vi": "v1.6.2: Cải thiện ổn định license, sửa cache, tối ưu hiệu năng"
+    "en": "v1.6.4: Visual red tap/swipe indicator, error log panel, tapText multi-index support",
+    "vi": "v1.6.4: Hiện vòng đỏ cho mọi thao tác, log lỗi chi tiết, tapText hỗ trợ chọn theo thứ tự"
   }
 }
