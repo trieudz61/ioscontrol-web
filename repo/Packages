@@ -32,7 +32,7 @@ SHA256: 94479ee71cc8cece8e2dff00baedb6f040538c6fbbcd17ea4302dbc5fb58a14c
 Package: com.maxclaw.maxidentity
 Name: MaxIdentity
 Version: 1.2.0
-Architecture: iphoneos-arm
+Architecture: iphoneos-arm64
 Description: Device fingerprint spoofer by MaxClaw. Reset device identity per-app.
 Maintainer: Manh Vu
 Author: Manh Vu

@@ -3,10 +3,10 @@ Label: IOSControl Repo
 Suite: stable
 Version: 1.0
 Codename: ios
-Architectures: iphoneos-arm64 iphoneos-arm
+Architectures: iphoneos-arm64
 Components: main
 Description: IOSControl - iOS Automation Framework
 SHA256:
- 7583e42cb5c5bf868945fc1a81efd90ce6f06389d356bcef846853e18114285b 1531 Packages
- bfbfa54b85ece85ffa57695180ebd83441c06454442d53820f8d7ade682063b9 746 Packages.gz
- fc78205f23c42cf77297d2474c18d4b87ad3b24e44915621ca4b1bc4cc0efce7 827 Packages.bz2
+ ad9cc2c0b5c88563cc4eb199036859ea50e4a9bfdedb88403de68ba3e1af74e4 1533 Packages
+ 15f41a6669989547e312092b9c321d6af9355284a5a714a275d5001b6a2d2495 744 Packages.gz
+ d8f348e0cad2d808fb12d5c1c932b48d3a4e82ce9e8a79976d9bb2caa254433f 825 Packages.bz2
