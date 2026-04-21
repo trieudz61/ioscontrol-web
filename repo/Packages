@@ -2,7 +2,7 @@ Package: com.trieudz.ioscontrol
 Name: IOSControl
 Version: 1.6.5
 Architecture: iphoneos-arm64
-Description: iOS automation tweak — touch, OCR, Lua scripting, Web IDE, Proxy-safe license
+Description: iOS automation tweak - touch, OCR, Lua scripting, Web IDE
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
@@ -10,9 +10,9 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.6.5_iphoneos-arm64.deb
-Size: 15027266
+Size: 15028140
 Installed-Size: 14700
-SHA256: ea13fa006b987b6e36c631b1251f03a69d1af8373b9b59c8dbd8ce3368ca1082
+SHA256: 04787081adc227c65fbbf468ff215b5faa4d08eb53f14d6db0bf4d58b74ee51c
 
 Package: com.opa334.crane
 Name: Crane
@@ -24,6 +24,6 @@ Author: opa334
 Section: Tweaks
 Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 11.0)
 Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
-Size: 15027266
+Size: 603704
 Installed-Size: 2154
-SHA256: ea13fa006b987b6e36c631b1251f03a69d1af8373b9b59c8dbd8ce3368ca1082
+SHA256: 1b34d05eb0a8f9fc4e9c96a11e2c641bbb0a392de223ecd19dfa3479a28319b7
