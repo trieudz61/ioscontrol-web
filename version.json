@@ -1,11 +1,12 @@
 {
-  "version": "1.6.4",
+  "version": "1.6.5",
   "build": 1745157337000,
   "minimum_os": "14.0",
   "release_date": "2026-04-20",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.4_iphoneos-arm64.deb",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.5_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.4: Visual red tap/swipe indicator, error log panel, tapText multi-index support",
-    "vi": "v1.6.4: Hiện vòng đỏ cho mọi thao tác, log lỗi chi tiết, tapText hỗ trợ chọn theo thứ tự"
-  }
+    "en": "v1.6.5: System optimization, visual touch indicator, Sileo download fix, Premium counter fix for Proxy/VPN",
+    "vi": "- Tối ưu hệ thống: Hiển thị vòng sáng indicator khi touch màn hình (màu đỏ)\n- Fix lỗi tải Sileo -1 byte\n- Fix bộ đếm Premium bị lỗi khi dùng Proxy/VPN"
+  },
+  "force_update": true
 }
