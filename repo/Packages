@@ -10,6 +10,6 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.6.5_iphoneos-arm64.deb
-Size: 15068016
+Size: 15047600
 Installed-Size: 14700
-SHA256: d2f8023e36f74a741e6440f3a44582010e5341c6d9b87f5bc1c56449e3552be9
+SHA256: 886498d88df2176b9aeacc4ba109d2087bfdc41dc42ae59fb19213fd959c9313
