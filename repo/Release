@@ -1,12 +1,16 @@
 Origin: IOSControl
-Label: IOSControl Repo
+Label: IOSControl
 Suite: stable
 Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl - iOS Automation Framework
+Description: IOSControl - iOS Automation Tweak
+MD5Sum:
+ 2028dea314523ed7636408b0358c74bd 570 Packages
+ 83e4c75323d899ee89ec3a06953e1efc 401 Packages.gz
+ 71898a7ae4dda10c8f0fb0db580f6346 443 Packages.bz2
 SHA256:
- a7549965cefd6a4bf6da66c844432cbe414cceb9b791909a269e2e0f2c9f0a16 947 Packages
- d0db553cb9d8bc8c9b042ccd24a931f3e7d915c2ef597b63a8856f41032e6352 513 Packages.gz
- 514e5c5408449880811cb1869f7149e829752b7f5906100d4062fb8ea42ed299 589 Packages.bz2
+ 3474cc5de3157e096030750d020735d2212185e9f6bc96c46136fa960f26955d 570 Packages
+ 51e5ef5e64da6193dca2715970b26e42dc6979db248053ed6a340711ce754b5b 401 Packages.gz
+ 72da8cf24babc32a8a2cd7e0eef3a6cc757f3da293223d9fca96bae1e45e4ed3 443 Packages.bz2
