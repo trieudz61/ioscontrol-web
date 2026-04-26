@@ -1,8 +1,8 @@
 {
   "version": "1.6.6",
-  "build": 1776928859000,
+  "build": 1777202042000,
   "minimum_os": "14.0",
-  "release_date": "2026-04-23",
+  "release_date": "2026-04-26",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.6_iphoneos-arm64.deb",
   "changelog": {
     "en": "v1.6.6 release",
