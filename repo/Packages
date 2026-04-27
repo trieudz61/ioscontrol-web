@@ -1,6 +1,6 @@
 Package: com.trieudz.ioscontrol
 Name: IOSControl
-Version: 1.6.7
+Version: 1.6.8
 Architecture: iphoneos-arm64
 Description: iOS automation tweak — touch, OCR, Lua scripting, Web IDE, device identity management
 Depiction: https://ioscontrol.com/
@@ -10,6 +10,6 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.6.7_iphoneos-arm64.deb
-Size: 15061930
+Size: 15101916
 Installed-Size: 14700
-SHA256: 95b7673e5ebf81e6cec7521ab4631f985190d305af4b2037c7e022400b5f5a51
+SHA256: 66107139bfc122b008625f2a6326e1bf0fb7507dd43439b428334b2781c16fd4

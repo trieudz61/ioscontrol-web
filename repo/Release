@@ -7,10 +7,10 @@ Architectures: iphoneos-arm64
 Components: main
 Description: IOSControl - iOS Automation Tweak
 MD5Sum:
- 37f169f8b14daf825a30fe58270f447f 570 Packages
- 63312fbfeabe63a576c586a6ba7b9146 401 Packages.gz
- b43a8f6f11b0d0b1e913129fcd324d2b 448 Packages.bz2
+ e7126a8fa6d2daa6761d2d2a1a7f9f70 570 Packages
+ 20024944834c842b730eca04b36a0c0e 402 Packages.gz
+ 242148f10322ff699d88a1857a02a2b4 451 Packages.bz2
 SHA256:
- 706db9955af0dc60508924ae964daba0bbb7700155db5b92be5a171626120fba 570 Packages
- ebf7937730eaffcc6c2ca921456ee86fdb3f67da4e3c9581e7522894fc3b1b59 401 Packages.gz
- 1a605cee533c0703a5507a05aac26f0ca22f0c3cd35e6f427427146d6abadfce 448 Packages.bz2
+ 7eaceac4bcfbd7c5d6c3efedc47cd6033f1085f7774fad7c81669698fb22254e 570 Packages
+ 8b6c0b4c549d1e1f10add2c5b29d667541d86f3ce98f812d908bdd79f9a46b40 402 Packages.gz
+ d91750fba146e466ccc044f0de21d7d68ebee3e96547c549f45d7470db0f2420 451 Packages.bz2

@@ -1,11 +1,11 @@
 {
-  "version": "1.6.7",
-  "build": 1777202694000,
+  "version": "1.6.8",
+  "build": 1777295603000,
   "minimum_os": "14.0",
-  "release_date": "2026-04-26",
+  "release_date": "2026-04-27",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.7_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.7: Run script by name, delete images, console fix",
-    "vi": "v1.6.7: Chạy script theo tên, xoá ảnh, sửa lỗi console"
+    "en": "v1.6.8 release",
+    "vi": "Phiên bản v1.6.8"
   }
 }
