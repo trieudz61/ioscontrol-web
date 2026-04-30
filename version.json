@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777300438000,
+  "build": 1777567005000,
   "minimum_os": "14.0",
-  "release_date": "2026-04-27",
+  "release_date": "2026-04-30",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8 release",
-    "vi": "Phiên bản v1.6.8"
+    "en": "v1.6.8: Fix os.execute/io.popen shell execution in SpringBoard",
+    "vi": "v1.6.8: Sửa os.execute/io.popen chạy shell trong SpringBoard"
   }
 }
