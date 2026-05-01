@@ -13,3 +13,15 @@ Filename: debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb
 Size: 15075398
 Installed-Size: 14700
 SHA256: d14b71dcd9c1275a78aaaf5e5036746cab6c3ee4f5a11eabaec8e24bf9864898
+
+Package: com.opa334.crane
+Name: Crane
+Version: 1.3.17
+Architecture: iphoneos-arm64
+Description: Multiple containers for your applications!
+Maintainer: opa334
+Section: Tweaks
+Depends: firmware (>= 11.0), mobilesubstrate, preferenceloader, com.opa334.altlist (>= 1.0.5), com.opa334.libsandy (>= 1.1.6), com.opa334.libundirect (>= 1.1.4) | firmware (<< 14.0)
+Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
+Size: 603704
+SHA256: 1b34d05eb0a8f9fc4e9c96a11e2c641bbb0a392de223ecd19dfa3479a28319b7
