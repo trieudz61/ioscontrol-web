@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777655291000,
+  "build": 1777801742000,
   "minimum_os": "14.0",
-  "release_date": "2026-05-02",
+  "release_date": "2026-05-03",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8 release",
-    "vi": "Phiên bản v1.6.8"
+    "en": "v1.6.8: Fix Vol Up x2 stop, Toast moved to top",
+    "vi": "v1.6.8: Sửa Vol Up x2 dừng script, Toast hiện phía trên"
   }
 }
