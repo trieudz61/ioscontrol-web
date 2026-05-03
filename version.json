@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777801742000,
+  "build": 1777802440000,
   "minimum_os": "14.0",
   "release_date": "2026-05-03",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8: Fix Vol Up x2 stop, Toast moved to top",
-    "vi": "v1.6.8: Sửa Vol Up x2 dừng script, Toast hiện phía trên"
+    "en": "v1.6.8: Fix screenshot half-screen on iPhone 7, Vol Up x2 stop, Toast top",
+    "vi": "v1.6.8: Sửa screenshot nửa màn hình iPhone 7, Vol Up x2 dừng script, Toast phía trên"
   }
 }
