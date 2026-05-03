@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777803461000,
+  "build": 1777803911000,
   "minimum_os": "14.0",
   "release_date": "2026-05-03",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8: Fixed Vol Up x2 not stopping record script playback",
-    "vi": "v1.6.8: Sửa lỗi Vol Up x2 không dừng khi đang chạy record script"
+    "en": "v1.6.8: Fixed Vol Up x2 not stopping record script playback properly",
+    "vi": "v1.6.8: Sửa lỗi Vol Up x2 không dừng khi đang chạy record script có độ delay cao"
   }
 }
