@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777805282000,
+  "build": 1777873895000,
   "minimum_os": "14.0",
-  "release_date": "2026-05-03",
+  "release_date": "2026-05-04",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8: Fixed Vol Up x2 not stopping record script playback properly",
-    "vi": "v1.6.8: Sửa lỗi Vol Up x2 không dừng khi đang chạy record script có độ delay cao"
+    "en": "v1.6.8: Restore SenderID after respring; keep Vol Up x2 stop, Toast top, and ScreenCapture stable order",
+    "vi": "v1.6.8: Tự khôi phục SenderID sau respring; giữ fix Vol Up x2, Toast phía trên và ScreenCapture ổn định"
   }
 }
