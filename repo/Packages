@@ -25,7 +25,7 @@ Installed-Size: 3252
 Depends: firmware (>= 11.0), mobilesubstrate, preferenceloader, com.opa334.altlist (>= 1.0.5), com.opa334.libsandy (>= 1.1.6), com.opa334.libundirect (>= 1.1.4) | firmware (<< 14.0)
 Conflicts: com.opa334.cranelite, com.opa334.crane13lite, com.opa334.crane13, com.rpgfarm.slices3, com.subdiox.slices2, com.expetelek.slices
 Description: Multiple containers for your applications!
-Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
+Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64_v2.deb
 Size: 603704
 MD5sum: 2b8942eda46de4e5bb7b55ad70a9aff8
 SHA1: 8fb752e5a0227ff8f0210cee2e2070e142ff1666
