@@ -1,11 +1,11 @@
 {
   "version": "1.6.9",
-  "build": 1778086033,
-  "minimum_os": "15.0",
-  "release_date": "2026-05-06",
+  "build": 1778090015000,
+  "minimum_os": "14.0",
+  "release_date": "2026-05-07",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.9_iphoneos-arm64.deb",
   "changelog": {
-    "en": "Update to version 1.6.9",
-    "vi": "Cập nhật phiên bản 1.6.9"
+    "en": "v1.6.9 release",
+    "vi": "Phiên bản v1.6.9"
   }
 }
