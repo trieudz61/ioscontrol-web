@@ -1,11 +1,11 @@
 {
   "version": "1.6.8",
-  "build": 1777874915000,
+  "build": 1778077995000,
   "minimum_os": "14.0",
-  "release_date": "2026-05-04",
+  "release_date": "2026-05-06",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.8_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.8: Fix KEY_POWER keyUp lock behavior and restore SenderID after respring",
-    "vi": "v1.6.8: Sửa keyUp(KEY_POWER) tắt màn ổn định và tự khôi phục SenderID sau respring"
+    "en": "v1.6.8 release",
+    "vi": "Phiên bản v1.6.8"
   }
 }
