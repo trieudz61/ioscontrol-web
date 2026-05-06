@@ -7,10 +7,10 @@ Architectures: iphoneos-arm64
 Components: main
 Description: IOSControl — iOS Automation & Spoofing
 MD5Sum:
- 3a4577c66487afca9a2a590e310ce0ca 1128 Packages
- 41d0387e63d6c4188a4026b6fce5d9fb 688 Packages.bz2
- 9863b26fa1823d6f7dbf50fe17261f3d 626 Packages.gz
+ 9bb035b47067f5c7fc2f7f7afbd94be4 1128 Packages
+ 38b93a2b16ffdc766106bc0f5381baf6 702 Packages.bz2
+ 7cc56a556fdd0070bda92c9ab7356cc2 626 Packages.gz
 SHA256:
- c2f6d38ac387f1bb04501350a8b32a8e155dd7b63b70f8979bd48a8c932a12b0 1128 Packages
- 515aff4b612d011556f4ffc49bebfcb7f5c30ef07300640ea0391286afc0e0d9 688 Packages.bz2
- 6de9c31910192b478396df041676c0e001c9aec6b2602df0c888041d4b9d859f 626 Packages.gz
+ 6127fb71e66471cb21404ccc75a08c1a7b7647d6ab57295b80b3d9dce774bb91 1128 Packages
+ f6d363093ff83fb49b9e2a74533ed4369e247d6900aef35cee9d13d682ea0e38 702 Packages.bz2
+ cc4ae8adaac57b25ba627c2c04e526c1ca0e391727418ae5663b91d8e38bc0a3 626 Packages.gz
