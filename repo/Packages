@@ -5,10 +5,10 @@ Maintainer: opa334
 Installed-Size: 3252
 Conflicts: com.opa334.cranelite, com.opa334.crane13lite, com.opa334.crane13, com.rpgfarm.slices3, com.subdiox.slices2, com.expetelek.slices
 Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
-Size: 603656
-MD5sum: 96bdc6c625f0fc2aa1c75718da93c295
-SHA1: 7a9ea3402d8e4dad2771155732b16fa923c639f0
-SHA256: d17e4ac2cc8510fc70fd5b46aa0f0b831f72e50eb298b6006f9328db7314ddf1
+Size: 603704
+MD5sum: 2b8942eda46de4e5bb7b55ad70a9aff8
+SHA1: 8fb752e5a0227ff8f0210cee2e2070e142ff1666
+SHA256: 1b34d05eb0a8f9fc4e9c96a11e2c641bbb0a392de223ecd19dfa3479a28319b7
 Section: Tweaks
 Description: Multiple containers for your applications!
 Author: opa334
