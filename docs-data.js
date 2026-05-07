@@ -1077,11 +1077,11 @@ const API_SECTIONS = [
         tags: ["exclusive"],
       },
       {
-        name: "tapImage(path, timeout, threshold)",
+        name: "tapImage(path, timeout, threshold, region)",
         type: "func",
         desc: {
-          en: "Find image on screen and tap its center",
-          vi: "Tìm hình trên màn hình và chạm vào giữa",
+          en: "Find image on screen and tap its center. Optional region to limit search area.",
+          vi: "Tìm hình trên màn hình và chạm vào giữa. Tuỳ chọn region để giới hạn vùng tìm.",
         },
         params: [
           {
@@ -1108,18 +1108,27 @@ const API_SECTIONS = [
             },
             req: false,
           },
+          {
+            n: "region",
+            t: "table",
+            d: {
+              en: "{x, y, w, h} search area (POINT). Omit for full screen.",
+              vi: "Vùng tìm {x, y, w, h} (POINT). Bỏ qua = toàn màn hình.",
+            },
+            req: false,
+          },
         ],
         ret: "boolean, x, y",
         example:
-          '-- Find and tap with all params\ntapImage("btn_ok.png", 10, 0.85)\n-- timeout 10s, match 85%\n\n-- Default: timeout=5s, threshold=0.8\ntapImage("next_btn.png")',
+          '-- Find and tap with all params\ntapImage("btn_ok.png", 10, 0.85)\n-- timeout 10s, match 85%\n\n-- Search only bottom half of screen\ntapImage("btn.png", 10, 0.85, {0, 400, 414, 200})\n\n-- Default: timeout=5s, threshold=0.8\ntapImage("next_btn.png")',
         tags: ["new", "exclusive"],
       },
       {
-        name: "tapText(text, timeout)",
+        name: "tapText(text, timeout, index, region)",
         type: "func",
         desc: {
-          en: "Find text on screen (OCR) and tap it",
-          vi: "Tìm chữ trên màn hình (OCR) và chạm vào",
+          en: "Find text on screen (OCR) and tap it. Optional region to limit search area.",
+          vi: "Tìm chữ trên màn hình (OCR) và chạm vào. Tuỳ chọn region để giới hạn vùng tìm.",
         },
         params: [
           {
@@ -1137,10 +1146,28 @@ const API_SECTIONS = [
             },
             req: false,
           },
+          {
+            n: "index",
+            t: "number",
+            d: {
+              en: "Which occurrence to tap (1=first, 2=second...). Default: 1",
+              vi: "Thứ tự kết quả cần chạm (1=đầu tiên, 2=thứ hai...). Mặc định: 1",
+            },
+            req: false,
+          },
+          {
+            n: "region",
+            t: "table",
+            d: {
+              en: "{x, y, w, h} search area (POINT). Omit for full screen.",
+              vi: "Vùng tìm {x, y, w, h} (POINT). Bỏ qua = toàn màn hình.",
+            },
+            req: false,
+          },
         ],
         ret: "boolean, x, y",
         example:
-          '-- Login flow with timeout\ntapText("Login", 10)  -- Wait 10s\nsleep(1)\ntapText("Continue", 5)',
+          '-- Login flow with timeout\ntapText("Login", 10)  -- Wait 10s\nsleep(1)\ntapText("Continue", 5)\n\n-- Search only in header area\ntapText("Back", 5, 1, {0, 0, 200, 80})',
         tags: ["new", "exclusive"],
       },
       {
