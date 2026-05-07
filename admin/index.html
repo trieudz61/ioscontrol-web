@@ -805,11 +805,31 @@ function filterKeys() {
   ));
 }
 
-// Re-render keys preserving current search filter
+// Re-render keys preserving current search filter + sort state
 function refreshKeysView() {
-  const q = document.getElementById('searchBox')?.value;
-  if (q) filterKeys();
-  else renderKeys(allKeys);
+  let keys = [...allKeys];
+  // Apply sort
+  const s = sortState.keys;
+  if (s.col) {
+    keys.sort((a, b) => {
+      let va = a[s.col] ?? '', vb = b[s.col] ?? '';
+      if (s.col === 'days_left') { va = Number(va); vb = Number(vb); }
+      if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+      if (va < vb) return s.asc ? -1 : 1;
+      if (va > vb) return s.asc ? 1 : -1;
+      return 0;
+    });
+  }
+  // Apply filter
+  const q = document.getElementById('searchBox')?.value?.toLowerCase();
+  if (q) {
+    keys = keys.filter(k =>
+      k.license_key.toLowerCase().includes(q) ||
+      (k.udid || '').toLowerCase().includes(q) ||
+      (k.status || '').toLowerCase().includes(q)
+    );
+  }
+  renderKeys(keys);
 }
 
 // Sort keys
@@ -817,17 +837,8 @@ function sortKeys(col) {
   const s = sortState.keys;
   if (s.col === col) s.asc = !s.asc;
   else { s.col = col; s.asc = true; }
-  const sorted = [...allKeys].sort((a, b) => {
-    let va = a[col] ?? '', vb = b[col] ?? '';
-    if (col === 'days_left') { va = Number(va); vb = Number(vb); }
-    if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
-    if (va < vb) return s.asc ? -1 : 1;
-    if (va > vb) return s.asc ? 1 : -1;
-    return 0;
-  });
-  // Update header style
   document.querySelectorAll('#keysSection th').forEach(th => th.classList.remove('sorted'));
-  renderKeys(sorted);
+  refreshKeysView();
 }
 
 // Edit
