@@ -1,16 +1,16 @@
 Origin: IOSControl
-Label: IOSControl Repo
+Label: IOSControl
 Suite: stable
 Version: 1.0
-Codename: ioscontrol
+Codename: ios
 Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl — iOS Automation & Spoofing
+Description: IOSControl - iOS Automation Tweak
 MD5Sum:
- bdb879ab74a795d1bf2252e02867d96a 570 Packages
- 58311e33f5530156ea49fbf3cac6d4a6 441 Packages.bz2
- e4329816134588c897e2e313c65626a9 400 Packages.gz
+ b3b8a8dd5e2cd4e5efc5eb41202a1b92 1335 Packages
+ d0996f0eb6a93726c2d88f05db099e69 708 Packages.gz
+ 1cdd7f009fe55956262b30bcb0945782 806 Packages.bz2
 SHA256:
- 97f65aaceb2399dfeab0a9853067993b003a93d3e6ce4719fdc210b91d36db2d 570 Packages
- d1f2974d13651fe86fc205264c5540528d6bb32e73b586a1d334fff2186459ad 441 Packages.bz2
- 01831e2e39f2f5ad2a38432c18850d7d5e51c8c344bf64e01e45e4669732d20e 400 Packages.gz
+ 2a475d03cbbd848e3932f37c55615c725688207d4e1d6619065c13360246a2a4 1335 Packages
+ 263aef312e385478ceb81e6794c2480c9b72aa79fb5d1549b7fc417532034d14 708 Packages.gz
+ ab325620eabcd96d56cf71c791da15cfaf384a9b5134bdfd2be7d49987dcae22 806 Packages.bz2
