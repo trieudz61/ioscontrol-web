@@ -805,6 +805,13 @@ function filterKeys() {
   ));
 }
 
+// Re-render keys preserving current search filter
+function refreshKeysView() {
+  const q = document.getElementById('searchBox')?.value;
+  if (q) filterKeys();
+  else renderKeys(allKeys);
+}
+
 // Sort keys
 function sortKeys(col) {
   const s = sortState.keys;
@@ -854,7 +861,7 @@ async function saveEdit() {
     }
     toast('Key updated');
     closeModal('editModal');
-    renderKeys(allKeys);
+    refreshKeysView();
     updateStatsFromLocal();
   } else toast(d.error || 'Failed', true);
 }
@@ -881,7 +888,7 @@ async function doExtend() {
     }
     toast(`Extended +${days} days`);
     closeModal('extendModal');
-    renderKeys(allKeys);
+    refreshKeysView();
     updateStatsFromLocal();
   } else toast(d.error || 'Failed', true);
 }
@@ -896,7 +903,7 @@ async function toggleLock(key) {
       allKeys[idx].status = d.locked ? 'locked' : (allKeys[idx].days_left > 0 ? 'active' : 'expired');
     }
     toast(d.locked ? 'Key locked' : 'Key unlocked');
-    renderKeys(allKeys);
+    refreshKeysView();
     updateStatsFromLocal();
   }
 }
@@ -916,7 +923,7 @@ async function confirmDelete() {
     if (d.success) {
       allKeys = allKeys.filter(x => x.license_key !== pendingDeleteKey);
       toast('Key deleted');
-      renderKeys(allKeys);
+      refreshKeysView();
       updateStatsFromLocal();
     } else toast(d.error || 'Delete failed', true);
   } catch(e) { toast('Network error: ' + e.message, true); }
@@ -951,7 +958,7 @@ async function doGenerate() {
     });
     toast(`Generated: ${d.license_key}`);
     closeModal('generateModal');
-    renderKeys(allKeys);
+    refreshKeysView();
     updateStatsFromLocal();
     navigator.clipboard.writeText(d.license_key);
   } else toast(d.error || 'Failed', true);
