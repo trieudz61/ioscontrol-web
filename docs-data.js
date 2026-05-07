@@ -343,64 +343,6 @@ curl -X POST http://device-ip:9999/api/touch \\
 </div>`,
     },
   },
-  {
-    id: "spoof",
-    title: {
-      en: "How to spoof device identity?",
-      vi: "Cách fake thông tin thiết bị?",
-    },
-    icon: '<i data-lucide="smartphone" style="width:16px;height:16px;"></i>',
-    content: {
-      en: `<p>IOSControl includes a powerful <strong>Device Identity Spoof</strong> feature that lets you fake your device info per-app:</p>
-<ol>
-  <li><strong>Open iControlApp</strong> → go to the <strong>Spoof</strong> tab</li>
-  <li><strong>Select target app</strong> from the installed apps list</li>
-  <li><strong>Pick an iPhone model</strong> (30+ models: iPhone 8 → iPhone 16 Pro Max)</li>
-  <li><strong>iOS version</strong> is auto-generated based on the selected model</li>
-  <li><strong>Tap "Fake"</strong> → the app restarts with the new identity</li>
-  <li><strong>Open the app</strong> — it now sees the spoofed device info</li>
-  <li><strong>To restore:</strong> tap "Restore" on the same app</li>
-</ol>
-<div class="guide-note">
-  <strong>Key features:</strong>
-  <ul>
-    <li>✅ <strong>Per-app</strong> — only fakes the app you choose, system stays untouched</li>
-    <li>✅ <strong>No respring</strong> — works instantly, no SpringBoard restart needed</li>
-    <li>✅ <strong>Full identity</strong> — model, iOS version, serial, IMEI, carrier, user agent</li>
-    <li>✅ <strong>Persistent</strong> — survives app restarts until you restore</li>
-    <li>✅ <strong>Batch mode</strong> — select multiple apps and fake them all at once</li>
-  </ul>
-</div>
-<p><strong>Use cases:</strong> Multi-account management, app testing on different models, privacy protection, ban evasion.</p>
-<div class="guide-note">
-  <strong>⭐ Premium feature:</strong> Device Identity Spoof requires a Premium license.
-</div>`,
-      vi: `<p>IOSControl tích hợp tính năng <strong>Fake Thông Tin Thiết Bị</strong> mạnh mẽ, cho phép giả lập thông tin device theo từng app:</p>
-<ol>
-  <li><strong>Mở iControlApp</strong> → vào tab <strong>Spoof</strong></li>
-  <li><strong>Chọn app mục tiêu</strong> từ danh sách các app đã cài</li>
-  <li><strong>Chọn model iPhone</strong> (30+ model: iPhone 8 → iPhone 16 Pro Max)</li>
-  <li><strong>Phiên bản iOS</strong> tự động sinh theo model đã chọn</li>
-  <li><strong>Bấm "Fake"</strong> → app khởi động lại với identity mới</li>
-  <li><strong>Mở app</strong> — giờ app sẽ thấy thông tin thiết bị giả lập</li>
-  <li><strong>Để khôi phục:</strong> bấm "Restore" trên app đó</li>
-</ol>
-<div class="guide-note">
-  <strong>Tính năng chính:</strong>
-  <ul>
-    <li>✅ <strong>Theo từng app</strong> — chỉ fake app bạn chọn, hệ thống không bị ảnh hưởng</li>
-    <li>✅ <strong>Không cần respring</strong> — hoạt động ngay lập tức</li>
-    <li>✅ <strong>Full identity</strong> — model, iOS, serial, IMEI, nhà mạng, user agent</li>
-    <li>✅ <strong>Bền vững</strong> — giữ sau khi tắt/mở app cho đến khi restore</li>
-    <li>✅ <strong>Batch mode</strong> — chọn nhiều app và fake cùng lúc</li>
-  </ul>
-</div>
-<p><strong>Use cases:</strong> Quản lý đa tài khoản, test app trên nhiều model, bảo vệ quyền riêng tư, reset fingerprint.</p>
-<div class="guide-note">
-  <strong>⭐ Tính năng Premium:</strong> Fake Thông Tin Thiết Bị yêu cầu license Premium.
-</div>`,
-    },
-  },
 ];
 
 const API_SECTIONS = [
@@ -736,62 +678,72 @@ const API_SECTIONS = [
           },
         ],
         ret: "table — array of hex colors",
-        example: 'local colors = getColors({{100,200}, {200,300}, {300,400}})\nfor i, c in ipairs(colors) do\n    log("Point " .. i .. ": " .. string.format("0x%06X", c))\nend',
+        example: "local colors = getColors({{100,200}, {150,300}})",
       },
       {
         name: "findColor(color, count, region)",
         type: "func",
         desc: {
-          en: "Find pixels matching a specific color",
-          vi: "Tìm pixel khớp với màu chỉ định",
+          en: "Find pixels matching a specific color. Returns table of {{x,y}, {x,y}, ...} (indexed, not keyed). Uses keepScreen() buffer if active.",
+          vi: "Tìm pixel khớp với màu chỉ định. Trả về bảng {{x,y}, {x,y}, ...} (theo chỉ mục). Dùng buffer keepScreen() nếu đang hoạt động.",
         },
         params: [
           {
             n: "color",
             t: "number",
-            d: { en: "Target color (hex)", vi: "Màu đích (hex)" },
+            d: { en: "Target color (0xRRGGBB)", vi: "Màu đích (0xRRGGBB)" },
             req: true,
           },
           {
             n: "count",
             t: "number",
-            d: { en: "Max results", vi: "Số kết quả tối đa" },
+            d: { en: "Max results (0 = all, default: 0)", vi: "Số kết quả tối đa (0 = tất cả, mặc định: 0)" },
             req: false,
           },
           {
             n: "region",
             t: "table",
-            d: { en: "{x, y, w, h} search area", vi: "Vùng tìm {x, y, w, h}" },
+            d: { en: "{x, y, w, h} search area (POINT)", vi: "Vùng tìm {x, y, w, h} (POINT)" },
             req: false,
           },
         ],
-        ret: "table — array of {x, y} matches",
-        example_py:
-          '# Find and tap all red buttons on screen\npts = find_color(0xFF0000, 10, [0, 0, 428, 926])\nlog(f"Found {len(pts)} red pixels")\nfor p in pts:\n    tap(p["x"], p["y"])\n    sleep(0.3)',
+        ret: { en: "table — array of {x, y} (indexed: p[1]=x, p[2]=y)", vi: "bảng — mảng {x, y} (theo chỉ mục: p[1]=x, p[2]=y)" },
         example:
-          '-- Find and tap all red buttons on screen\nlocal pts = findColor(0xFF0000, 10, {0, 0, 428, 926})\nlog("Found " .. #pts .. " red pixels")\nfor _, p in ipairs(pts) do\n  tap(p.x, p.y)\n  sleep(0.3)\nend',
+          '-- Find all red pixels on screen\nlocal pts = findColor(0xFF0000, 10, {0, 0, 414, 896})\nlog("Found " .. #pts .. " red pixels")\nfor _, p in ipairs(pts) do\n  tap(p[1], p[2])  -- p[1]=x, p[2]=y\n  sleep(0.3)\nend\n\n-- Tìm tất cả pixel đỏ trên màn hình\n-- Kết quả: {{x1,y1}, {x2,y2}, ...}',
       },
       {
-        name: "findColors(params)",
+        name: "findColors(colors, count, region)",
         type: "func",
         desc: {
-          en: "Find multi-color pattern on screen",
-          vi: "Tìm mẫu nhiều màu trên màn hình",
+          en: "Find multi-color pattern on screen. Colors format: {{color, dx, dy}, ...} where dx/dy are POINT offsets from anchor.",
+          vi: "Tìm mẫu nhiều màu trên màn hình. Định dạng: {{color, dx, dy}, ...} trong đó dx/dy là offset POINT từ điểm neo.",
         },
         params: [
           {
-            n: "params",
+            n: "colors",
             t: "table",
             d: {
-              en: "Pattern definition with anchor + offsets",
-              vi: "Mẫu với điểm neo + offset",
+              en: "{{color, dx, dy}, ...} — anchor color first (dx=0,dy=0)",
+              vi: "{{color, dx, dy}, ...} — màu neo đầu tiên (dx=0,dy=0)",
             },
             req: true,
           },
+          {
+            n: "count",
+            t: "number",
+            d: { en: "Max results (0 = all)", vi: "Số kết quả tối đa (0 = tất cả)" },
+            req: false,
+          },
+          {
+            n: "region",
+            t: "table",
+            d: { en: "{x, y, w, h} search area (POINT)", vi: "Vùng tìm {x, y, w, h} (POINT)" },
+            req: false,
+          },
         ],
-        ret: "table — match locations",
+        ret: { en: "table — {{x,y}, {x,y}, ...} (indexed)", vi: "bảng — {{x,y}, {x,y}, ...} (theo chỉ mục)" },
         example:
-          '-- Find pattern: red + green 10px apart\nlocal x, y = findColors({\n    {0, 0, 0xFF0000},\n    {10, 0, 0x00FF00}\n})\nif x then\n    log("Pattern found at " .. x .. "," .. y)\n    tap(x, y)\nend',
+          '-- Find pattern: red pixel, green pixel 10px right\nlocal results = findColors({\n  {0xFF0000, 0, 0},   -- anchor: red\n  {0x00FF00, 10, 0},  -- green 10pt to the right\n}, 1)\nif #results > 0 then\n  tap(results[1][1], results[1][2])\nend',
       },
       {
         name: "waitForColor(x, y, color, timeout)",
@@ -848,28 +800,28 @@ const API_SECTIONS = [
         name: "findImage(path, count, threshold, region)",
         type: "func",
         desc: {
-          en: "Find template image on device screen",
-          vi: "Tìm hình ảnh mẫu trên màn hình",
+          en: "Find template image on screen. When count=1: returns x, y (two values). When count>1: returns table of {{x,y}, ...}",
+          vi: "Tìm hình ảnh mẫu trên màn hình. Khi count=1: trả về x, y (hai giá trị). Khi count>1: trả về bảng {{x,y}, ...}",
         },
         params: [
           {
             n: "path",
             t: "string",
-            d: { en: "Path to template image", vi: "Đường dẫn ảnh mẫu" },
+            d: { en: "Image filename (from images/ or scripts/ dir)", vi: "Tên file ảnh (từ thư mục images/ hoặc scripts/)" },
             req: true,
           },
           {
             n: "count",
             t: "number",
-            d: { en: "Max matches", vi: "Số kết quả tối đa" },
+            d: { en: "Max matches (default: 1)", vi: "Số kết quả tối đa (mặc định: 1)" },
             req: false,
           },
           {
             n: "threshold",
             t: "number",
             d: {
-              en: "Match threshold 0-1 (default: 0.8)",
-              vi: "Ngưỡng khớp 0-1 (mặc định: 0.8)",
+              en: "Match threshold 0-1 (default: 0.9)",
+              vi: "Ngưỡng khớp 0-1 (mặc định: 0.9)",
             },
             req: false,
           },
@@ -877,41 +829,40 @@ const API_SECTIONS = [
             n: "region",
             t: "table",
             d: {
-              en: "{x, y, w, h} search region",
-              vi: "Vùng tìm {x, y, w, h}",
+              en: "{x, y, w, h} search region (POINT)",
+              vi: "Vùng tìm {x, y, w, h} (POINT)",
             },
             req: false,
           },
         ],
-        ret: "table — {x, y, score} matches",
-        example_py:
-          '# Find and tap the play button\nmatches = find_image("/var/mobile/Library/IOSControl/images/play_btn.png", 1, 0.9)\nif len(matches) > 0:\n    btn = matches[0]\n    log(f"Found at {btn[\"x\"]},{btn[\"y\"]} score={btn[\"score\"]}")\n    tap(btn["x"], btn["y"])\nelse:\n    log("Play button not found")',
+        ret: { en: "x, y (when count=1) or table of {{x,y},...} (when count>1). Returns nil if not found.", vi: "x, y (khi count=1) hoặc bảng {{x,y},...} (khi count>1). Trả nil nếu không tìm thấy." },
         example:
-          '-- Find and tap the play button\nlocal matches = findImage("/var/mobile/Library/IOSControl/images/play_btn.png", 1, 0.9)\nif #matches > 0 then\n  local btn = matches[1]\n  log("Found button at " .. btn.x .. "," .. btn.y .. " score=" .. btn.score)\n  tap(btn.x, btn.y)\nelse\n  log("Play button not found")\nend',
+          '-- count=1 (default): returns x, y\nlocal x, y = findImage("play_btn.png")\nif x then\n  tap(x, y)\n  log("Found at " .. x .. "," .. y)\nelse\n  log("Not found")\nend\n\n-- count>1: returns table\nlocal matches = findImage("star.png", 5, 0.85)\nlog("Found " .. #matches .. " matches")\nfor i, m in ipairs(matches) do\n  tap(m[1], m[2])  -- m[1]=x, m[2]=y\n  sleep(0.3)\nend\n\n-- With region (search only bottom half)\nlocal x, y = findImage("btn.png", 1, 0.9, {0, 400, 414, 450})',
       },
       {
         name: "waitForImage(path, timeout)",
         type: "func",
         desc: {
-          en: "Wait for image to appear on screen",
-          vi: "Chờ hình ảnh xuất hiện trên màn hình",
+          en: "Wait for image to appear on screen. Polls every 500ms. Returns table {x=, y=} on success, false on timeout.",
+          vi: "Chờ hình ảnh xuất hiện trên màn hình. Kiểm tra mỗi 500ms. Trả về bảng {x=, y=} nếu thành công, false nếu hết thời gian.",
         },
         params: [
           {
             n: "path",
             t: "string",
-            d: { en: "Template image path", vi: "Đường dẫn ảnh mẫu" },
+            d: { en: "Image filename", vi: "Tên file ảnh" },
             req: true,
           },
           {
             n: "timeout",
             t: "number",
-            d: { en: "Timeout in seconds", vi: "Thời gian chờ (giây)" },
+            d: { en: "Timeout in seconds (default: 10)", vi: "Thời gian chờ giây (mặc định: 10)" },
             req: false,
           },
         ],
-        ret: "table|false — match location or false",
-        example: '-- Wait 30s, match 90%\nlocal m = waitForImage("dialog.png", 30, 0.9)\nif m then\n    tap(m.x, m.y)\n    log("Found dialog!")\nelse\n    log("Timeout — dialog not appeared")\nend',
+        ret: { en: "table {x=, y=} if found, false if timeout", vi: "bảng {x=, y=} nếu tìm thấy, false nếu hết giờ" },
+        example:
+          '-- Wait for dialog to appear, then tap it\nlocal result = waitForImage("dialog.png", 15)\nif result then\n  tap(result.x, result.y)\n  log("Dialog found at " .. result.x .. "," .. result.y)\nelse\n  log("Dialog not found after 15s")\nend',
         tags: ["exclusive"],
       },
       {
@@ -1030,11 +981,11 @@ const API_SECTIONS = [
           '-- Read coin count from game UI\nlocal text = ocrText(50, 10, 150, 40)\nlocal coins = tonumber(text:match("%d+"))\nif coins then\n  log("Current coins: " .. coins)\n  if coins >= 1000 then\n    log("Enough coins! Buying upgrade...")\n    tap(300, 500)\n  end\nend',
       },
       {
-        name: "ocrFind(text)",
+        name: "findText(text, region)",
         type: "func",
         desc: {
-          en: "Find text location on screen using OCR",
-          vi: "Tìm vị trí chữ trên màn hình bằng OCR",
+          en: "Find text on screen using OCR. Returns x, y, text (three values) or nil. Alias: ocrFind()",
+          vi: "Tìm chữ trên màn hình bằng OCR. Trả về x, y, text (ba giá trị) hoặc nil. Bí danh: ocrFind()",
         },
         params: [
           {
@@ -1043,20 +994,24 @@ const API_SECTIONS = [
             d: { en: "Text to search for", vi: "Chữ cần tìm" },
             req: true,
           },
+          {
+            n: "region",
+            t: "table",
+            d: { en: "{x, y, w, h} search area (POINT)", vi: "Vùng tìm {x, y, w, h} (POINT)" },
+            req: false,
+          },
         ],
-        ret: "table — {x, y, w, h} or nil",
-        example_py:
-          '# Auto-login: find and tap the Login button\npos = ocr_find("Login")\nif pos:\n    tap(pos["x"] + pos["w"]//2, pos["y"] + pos["h"]//2)\n    sleep(1)\n    log("Login button tapped")\nelse:\n    log("Login button not found on screen")',
+        ret: { en: "x, y, text — three values. nil if not found.", vi: "x, y, text — ba giá trị. nil nếu không tìm thấy." },
         example:
-          '-- Auto-login: find and tap the Login button\nlocal pos = ocrFind("Login")\nif pos then\n  tap(pos.x + pos.w/2, pos.y + pos.h/2)\n  sleep(1)\n  log("Login button tapped")\nelse\n  log("Login button not found on screen")\nend',
+          '-- Find text and tap it\nlocal x, y, text = findText("Login")\nif x then\n  tap(x, y)\n  log("Found: " .. text .. " at " .. x .. "," .. y)\nelse\n  log("Text not found")\nend\n\n-- Search only in specific region\nlocal x, y = findText("OK", {0, 600, 414, 200})',
         tags: ["exclusive"],
       },
       {
         name: "waitForText(text, timeout)",
         type: "func",
         desc: {
-          en: "Wait for text to appear on screen (OCR)",
-          vi: "Chờ chữ xuất hiện trên màn hình (OCR)",
+          en: "Wait for text to appear on screen (OCR). Polls every 500ms. Returns table {x=, y=, text=} on success, false on timeout.",
+          vi: "Chờ chữ xuất hiện trên màn hình (OCR). Kiểm tra mỗi 500ms. Trả về bảng {x=, y=, text=} nếu tìm thấy, false nếu hết giờ.",
         },
         params: [
           {
@@ -1068,12 +1023,13 @@ const API_SECTIONS = [
           {
             n: "timeout",
             t: "number",
-            d: { en: "Timeout in seconds", vi: "Thời gian chờ (giây)" },
+            d: { en: "Timeout in seconds (default: 10)", vi: "Thời gian chờ giây (mặc định: 10)" },
             req: false,
           },
         ],
-        ret: "table|false",
-        example: 'local pos = waitForText("Welcome", 15)\nif pos then\n    tap(pos.x, pos.y)\n    log("Found Welcome!")\nelse\n    log("Text not found after 15s")\nend',
+        ret: { en: "table {x=, y=, text=} if found, false if timeout", vi: "bảng {x=, y=, text=} nếu tìm thấy, false nếu hết giờ" },
+        example:
+          '-- Wait for welcome screen\nlocal result = waitForText("Welcome", 15)\nif result then\n  tap(result.x, result.y)\n  log("Found: " .. result.text)\nelse\n  log("Welcome not found after 15s")\nend',
         tags: ["exclusive"],
       },
       {
@@ -1120,15 +1076,15 @@ const API_SECTIONS = [
         ],
         ret: "boolean, x, y",
         example:
-          '-- Find and tap with all params\ntapImage("btn_ok.png", 10, 0.85)\n-- timeout 10s, match 85%\n\n-- Search only bottom half of screen\ntapImage("btn.png", 10, 0.85, {0, 400, 414, 200})\n\n-- Default: timeout=5s, threshold=0.8\ntapImage("next_btn.png")',
+          '-- One-liner: find and tap button\nlocal ok, x, y = tapImage("btn_ok.png")\nif ok then log("Tapped at " .. x .. "," .. y) end\n\n-- Search only bottom half of screen\ntapImage("btn.png", 10, 0.85, {0, 400, 414, 200})',
         tags: ["new", "exclusive"],
       },
       {
         name: "tapText(text, timeout, index, region)",
         type: "func",
         desc: {
-          en: "Find text on screen (OCR) and tap it. Optional region to limit search area.",
-          vi: "Tìm chữ trên màn hình (OCR) và chạm vào. Tuỳ chọn region để giới hạn vùng tìm.",
+          en: "Find text on screen (OCR) and tap it. If multiple matches exist, use index to select which one. Optional region to limit search area.",
+          vi: "Tìm chữ trên màn hình (OCR) và chạm vào. Nếu có nhiều kết quả, dùng index để chọn. Tuỳ chọn region để giới hạn vùng tìm.",
         },
         params: [
           {
@@ -1150,8 +1106,8 @@ const API_SECTIONS = [
             n: "index",
             t: "number",
             d: {
-              en: "Which occurrence to tap (1=first, 2=second...). Default: 1",
-              vi: "Thứ tự kết quả cần chạm (1=đầu tiên, 2=thứ hai...). Mặc định: 1",
+              en: "Which occurrence to tap (1=first, 2=second...). Sorted top→bottom, left→right. Default: 1",
+              vi: "Thứ tự kết quả cần chạm (1=đầu tiên, 2=thứ hai...). Sắp xếp trên→dưới, trái→phải. Mặc định: 1",
             },
             req: false,
           },
@@ -1167,11 +1123,11 @@ const API_SECTIONS = [
         ],
         ret: "boolean, x, y",
         example:
-          '-- Login flow with timeout\ntapText("Login", 10)  -- Wait 10s\nsleep(1)\ntapText("Continue", 5)\n\n-- Search only in header area\ntapText("Back", 5, 1, {0, 0, 200, 80})',
+          '-- Tap first occurrence (default)\ntapText("Add")\n\n-- Tap the 2nd "Delete" button on screen\ntapText("Delete", 5, 2)\n\n-- Search only in header area\ntapText("Back", 5, 1, {0, 0, 200, 80})\n\n-- Login flow\ntapText("Login")\nsleep(1)\ntapText("Continue")',
         tags: ["new", "exclusive"],
       },
       {
-        name: "swipeUntilImage(path, direction, maxSwipes)",
+        name: "swipeUntilImage(path, direction, maxSwipes, threshold, speed)",
         type: "func",
         desc: {
           en: "Swipe screen until image is found",
@@ -1202,14 +1158,32 @@ const API_SECTIONS = [
             },
             req: false,
           },
+          {
+            n: "threshold",
+            t: "number",
+            d: {
+              en: "Match threshold 0-1 (default 0.9)",
+              vi: "Ngưỡng khớp 0-1 (mặc định 0.9)",
+            },
+            req: false,
+          },
+          {
+            n: "speed",
+            t: "number",
+            d: {
+              en: "Swipe duration in seconds (default 0.5)",
+              vi: "Tốc độ vuốt tính bằng giây (mặc định 0.5)",
+            },
+            req: false,
+          },
         ],
-        ret: "boolean, swipes, x, y",
+        ret: "boolean, x, y",
         example:
-          '-- Scroll down until we see the target\nlocal ok, n = swipeUntilImage("target.png", "up", 15)\nif ok then log("Found after " .. n .. " swipes") end',
+          '-- Scroll down until we see the target\nlocal ok, x, y = swipeUntilImage("target.png", "up", 15)\nif ok then\n  log("Found at " .. x .. "," .. y)\n  tap(x, y)\nend\n\n-- Fast swipe with custom speed\nswipeUntilImage("btn.png", "up", 10, 0.9, 0.2)',
         tags: ["new", "exclusive"],
       },
       {
-        name: "swipeUntilText(text, direction, maxSwipes)",
+        name: "swipeUntilText(text, direction, maxSwipes, speed)",
         type: "func",
         desc: {
           en: "Swipe screen until text is found (OCR)",
@@ -1234,13 +1208,22 @@ const API_SECTIONS = [
           {
             n: "maxSwipes",
             t: "number",
-            d: { en: "Maximum swipe attempts", vi: "Số lần vuốt tối đa" },
+            d: { en: "Maximum swipe attempts (default 10)", vi: "Số lần vuốt tối đa (mặc định 10)" },
+            req: false,
+          },
+          {
+            n: "speed",
+            t: "number",
+            d: {
+              en: "Swipe duration in seconds (default 0.3)",
+              vi: "Tốc độ vuốt tính bằng giây (mặc định 0.3)",
+            },
             req: false,
           },
         ],
-        ret: "boolean, swipes, x, y",
+        ret: "boolean, x, y",
         example:
-          '-- Scroll Settings to find Wi-Fi\nlocal ok, n, x, y = swipeUntilText("Wi-Fi", "up")\nif ok then tap(x, y) end',
+          '-- Scroll Settings to find Wi-Fi\nlocal ok, x, y = swipeUntilText("Wi-Fi", "up")\nif ok then tap(x, y) end\n\n-- Slow swipe\nswipeUntilText("Privacy", "up", 10, 0.8)',
         tags: ["new", "exclusive"],
       },
     ],
@@ -1457,7 +1440,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'appKill("com.apple.mobilesafari")\nsleep(1)\nlog("Safari killed")',
+        example: 'appKill("com.apple.safari")',
       },
       {
         name: "appState(bundleId)",
@@ -1499,7 +1482,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: '-- Open website\nopenURL("https://google.com")\n\n-- Deep link to Instagram\nopenURL("instagram://user?username=abc")',
+        example: 'openURL("https://google.com")\nopenURL("tel://123456789")',
       },
     ],
   },
@@ -1549,7 +1532,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: '-- Press Home button\nkeyDown("home")\nsleep(0.1)\nkeyUp("home")',
+        example: 'keyDown("home")',
       },
       {
         name: "keyUp(keyType)",
@@ -1639,7 +1622,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'toast("Bước 1 hoàn thành!", 3)\nsleep(2)\ntoast("Đang xử lý bước 2...", 2)',
+        example: 'toast("Script started!", 3)',
       },
       {
         name: "alert(message)",
@@ -1654,7 +1637,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'alert("Nhấn OK để tiếp tục!")',
+        example: 'alert("Are you sure?")',
       },
       {
         name: "vibrate()",
@@ -1662,7 +1645,7 @@ const API_SECTIONS = [
         desc: { en: "Vibrate the device", vi: "Rung thiết bị" },
         params: [],
         ret: "void",
-        example: '-- Rung khi hoàn thành\nvibrate()\nlog("Done!")',
+        example: "vibrate()",
       },
       {
         name: "log(message)",
@@ -1677,7 +1660,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: 'log("Hello!")\nlog("Count: " .. 42)\nlog("Table: " .. jsonEncode({a = 1}))',
+        example: 'log("Step 1 complete ✅")',
       },
     ],
   },
@@ -1754,7 +1737,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "void",
-        example: '-- Anti-detection random delay\nrandomSleep(1.0, 3.0)\nlog("Done waiting")',
+        example: "randomSleep(0.5, 2.0)  -- Anti-detection",
         tags: ["exclusive"],
       },
     ],
@@ -1775,7 +1758,7 @@ const API_SECTIONS = [
         params: [],
         ret: "table — {width, height}",
         example:
-          'local s = screenSize()\nlog("Screen: " .. s.width .. "x" .. s.height)\n-- iPhone 8 Plus: 414x736',
+          'local s = screenSize()\nlog("Screen: " .. s.width .. "x" .. s.height)',
       },
       {
         name: "deviceInfo()",
@@ -1786,7 +1769,7 @@ const API_SECTIONS = [
         },
         params: [],
         ret: "table — device details",
-        example: 'local d = deviceInfo()\nlog("Model: " .. d.model)\nlog("iOS: " .. d.version)\nlog("Name: " .. d.name)',
+        example: 'local d = deviceInfo()\nlog(d.model .. " iOS " .. d.version)',
         tags: ["exclusive"],
       },
     ],
@@ -1859,47 +1842,8 @@ const API_SECTIONS = [
           },
         ],
         ret: "table — {status, body, headers}",
-        example: '-- POST JSON with headers\nlocal body = jsonEncode({\n    username = "admin",\n    password = "123456"\n})\nlocal r = httpPost(\n    "https://api.example.com/login",\n    body,\n    {["Content-Type"] = "application/json"}\n)\nlocal result = jsonDecode(r.body)\nlog("Token: " .. result.token)',
+        example: 'local r = httpPost(url, {key="value"})',
         tags: ["exclusive"],
-      },
-    ],
-  },
-  {
-    id: "proxy",
-    icon: '<i data-lucide="shield" style="width:16px;height:16px;"></i>',
-    title: { en: "Proxy", vi: "Proxy" },
-    desc: {
-      en: "Route HTTP traffic through proxy servers. Supports HTTP and SOCKS5.",
-      vi: "Định tuyến HTTP qua proxy server. Hỗ trợ HTTP và SOCKS5.",
-    },
-    apis: [
-      {
-        name: "setProxySystem(host, port)",
-        type: "func",
-        desc: {
-          en: "Set device-wide Wi-Fi proxy. Only IP:Port supported currently.",
-          vi: "Đặt proxy toàn thiết bị qua Wi-Fi. Hiện tại chỉ hỗ trợ IP:Port.",
-        },
-        params: [
-          { n: "host", t: "string", d: { en: "Proxy IP", vi: "IP Proxy" }, req: true },
-          { n: "port", t: "number", d: { en: "Proxy Port", vi: "Cổng Proxy" }, req: true },
-        ],
-        ret: "void",
-        example:
-          '-- Set system proxy and reset connections\nsetProxySystem("160.25.77.31", 8770)\nsetAirplaneMode(true)\nsleep(1)\nsetAirplaneMode(false)',
-        tags: ["new"],
-      },
-      {
-        name: "clearProxySystem()",
-        type: "func",
-        desc: {
-          en: "Disable device-wide Wi-Fi proxy. Restores direct connection.",
-          vi: "Tắt proxy hệ thống Wi-Fi. Khôi phục kết nối trực tiếp.",
-        },
-        params: [],
-        ret: "void",
-        example: 'clearProxySystem()\nlog("Proxy removed")',
-        tags: ["new"],
       },
     ],
   },
@@ -1998,7 +1942,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "table",
-        example: 'local json = \'{"name":"Trieu","age":25,"items":[1,2,3]}\'\nlocal t = jsonDecode(json)\nlog(t.name)     -- "Trieu"\nlog(t.age)      -- 25\nlog(t.items[1]) -- 1',
+        example: 'local t = jsonDecode(\'{"name":"test"}\')',
         tags: ["exclusive"],
       },
       {
@@ -2017,7 +1961,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "string",
-        example: 'local t = {\n    name = "Trieu",\n    age = 25,\n    items = {1, 2, 3},\n    nested = {key = "value"}\n}\nlocal json = jsonEncode(t)\nlog(json)',
+        example: "local s = jsonEncode({score=100})",
         tags: ["exclusive"],
       },
     ],
@@ -2053,7 +1997,7 @@ const API_SECTIONS = [
           },
         ],
         ret: "number",
-        example: '-- Random tap offset (anti-detection)\nlocal dx = randomInt(-5, 5)\nlocal dy = randomInt(-5, 5)\ntap(207 + dx, 400 + dy)',
+        example: "local x = randomInt(100, 300)",
         tags: ["exclusive"],
       },
       {
@@ -2163,6 +2107,34 @@ const API_SECTIONS = [
         example:
           '-- Check IP before and after airplane mode\nlocal ip1 = getIP()\nlog("Before: " .. ip1)\nsetAirplaneMode(true, 3)\nsleep(5)\nlocal ip2 = getIP()\nlog("After: " .. ip2)',
         tags: ["new", "exclusive"],
+      },
+      {
+        name: "setProxySystem(host, port)",
+        type: "func",
+        desc: {
+          en: "Set device-wide Wi-Fi proxy (all apps). IP and Port only.",
+          vi: "Đặt proxy toàn thiết bị qua Wi-Fi (TẤT CẢ app). Chỉ hỗ trợ IP và Port.",
+        },
+        params: [
+          { n: "host", t: "string", d: { en: "Proxy IP", vi: "IP Proxy" }, req: true },
+          { n: "port", t: "number", d: { en: "Proxy Port", vi: "Cổng Proxy" }, req: true },
+        ],
+        ret: "void",
+        example:
+          '-- Reset connections after setting proxy\nsetProxySystem("160.25.77.31", 8770)\nsetAirplaneMode(true)\nsleep(1)\nsetAirplaneMode(false)',
+        tags: ["new"],
+      },
+      {
+        name: "clearProxySystem()",
+        type: "func",
+        desc: {
+          en: "Disable device-wide Wi-Fi proxy. Restores direct connection.",
+          vi: "Tắt proxy hệ thống Wi-Fi. Khôi phục kết nối trực tiếp.",
+        },
+        params: [],
+        ret: "void",
+        example: 'clearProxySystem()\nlog("Proxy removed")',
+        tags: ["new"],
       },
     ],
   },
@@ -2519,62 +2491,6 @@ const API_SECTIONS = [
         ret: "JSON {status, version, name, ip}",
         example:
           'curl http://{device-ip}:9999/ping\n\n# Response: {"status":"ok","version":"1.0.0","name":"IOSControl","ip":"192.168.1.x"}',
-      },
-    ],
-  },
-  {
-    id: "spoof",
-    icon: '<i data-lucide="smartphone" style="width:16px;height:16px;"></i>',
-    title: { en: "Device Spoofing", vi: "Giả lập thiết bị" },
-    desc: {
-      en: "Fake device model, iOS version, serial number, and carrier for specific apps. Premium feature.",
-      vi: "Fake model thiết bị, phiên bản iOS, số serial, và nhà mạng cho từng app. Tính năng Premium.",
-    },
-    apis: [
-      {
-        name: "ic.spoof.name()",
-        type: "func",
-        desc: { en: "Get current spoofed device name", vi: "Lấy tên thiết bị đang fake" },
-        params: [],
-        ret: "string",
-        example: 'local name = ic.spoof.name()\nlog("Spoofed as: " .. name)',
-        tags: ["new", "exclusive"],
-      },
-      {
-        name: "ic.spoof.model()",
-        type: "func",
-        desc: { en: "Get current spoofed model identifier", vi: "Lấy mã model đang fake" },
-        params: [],
-        ret: "string (e.g. \"iPhone15,3\")",
-        example: 'local m = ic.spoof.model()\nlog("Model: " .. m)  -- iPhone15,3',
-        tags: ["new", "exclusive"],
-      },
-      {
-        name: "ic.spoof.ios()",
-        type: "func",
-        desc: { en: "Get current spoofed iOS version", vi: "Lấy phiên bản iOS đang fake" },
-        params: [],
-        ret: "string (e.g. \"16.5.1\")",
-        example: 'log("iOS: " .. ic.spoof.ios())',
-        tags: ["new", "exclusive"],
-      },
-      {
-        name: "ic.spoof.serial()",
-        type: "func",
-        desc: { en: "Get current spoofed serial number", vi: "Lấy số serial đang fake" },
-        params: [],
-        ret: "string",
-        example: 'log("Serial: " .. ic.spoof.serial())',
-        tags: ["new", "exclusive"],
-      },
-      {
-        name: "ic.spoof.carrier()",
-        type: "func",
-        desc: { en: "Get current spoofed carrier name", vi: "Lấy tên nhà mạng đang fake" },
-        params: [],
-        ret: "string",
-        example: 'log("Carrier: " .. ic.spoof.carrier())',
-        tags: ["new", "exclusive"],
       },
     ],
   },
