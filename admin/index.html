@@ -836,13 +836,27 @@ function showEditModal(key) {
 
 async function saveEdit() {
   const key = document.getElementById('editKey').value;
-  const d = await api(`/admin/api/keys/${key}`, 'PUT', {
+  const updates = {
     udid: document.getElementById('editUdid').value || null,
     expires_at: document.getElementById('editExpires').value,
     days: parseInt(document.getElementById('editDays').value),
-  });
-  if (d.success) { toast('Key updated'); closeModal('editModal'); loadKeys(); loadStats(); }
-  else toast(d.error || 'Failed', true);
+  };
+  const d = await api(`/admin/api/keys/${key}`, 'PUT', updates);
+  if (d.success) {
+    // Update local state
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0) {
+      Object.assign(allKeys[idx], updates);
+      const now = new Date();
+      const exp = new Date(updates.expires_at);
+      allKeys[idx].days_left = Math.max(0, Math.ceil((exp - now) / 86400000));
+      allKeys[idx].status = allKeys[idx].locked ? 'locked' : (allKeys[idx].days_left > 0 ? 'active' : 'expired');
+    }
+    toast('Key updated');
+    closeModal('editModal');
+    renderKeys(allKeys);
+    updateStatsFromLocal();
+  } else toast(d.error || 'Failed', true);
 }
 
 // Extend
@@ -856,16 +870,34 @@ async function doExtend() {
   const key = document.getElementById('extendKey').value;
   const days = parseInt(document.getElementById('extendDays').value);
   const d = await api(`/admin/api/keys/${key}/extend`, 'POST', { days });
-  if (d.success) { toast(`Extended +${days} days`); closeModal('extendModal'); loadKeys(); loadStats(); }
-  else toast(d.error || 'Failed', true);
+  if (d.success) {
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0 && d.data) {
+      allKeys[idx].expires_at = d.data.expires_at;
+      allKeys[idx].days = d.data.days;
+      const now = new Date();
+      allKeys[idx].days_left = Math.max(0, Math.ceil((new Date(d.data.expires_at) - now) / 86400000));
+      allKeys[idx].status = 'active';
+    }
+    toast(`Extended +${days} days`);
+    closeModal('extendModal');
+    renderKeys(allKeys);
+    updateStatsFromLocal();
+  } else toast(d.error || 'Failed', true);
 }
 
 // Lock
 async function toggleLock(key) {
   const d = await api(`/admin/api/keys/${key}/lock`, 'POST');
   if (d.success !== undefined) {
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0) {
+      allKeys[idx].locked = d.locked;
+      allKeys[idx].status = d.locked ? 'locked' : (allKeys[idx].days_left > 0 ? 'active' : 'expired');
+    }
     toast(d.locked ? 'Key locked' : 'Key unlocked');
-    loadKeys(); loadStats();
+    renderKeys(allKeys);
+    updateStatsFromLocal();
   }
 }
 
@@ -881,12 +913,15 @@ async function confirmDelete() {
   if (!pendingDeleteKey) return;
   try {
     const d = await api(`/admin/api/keys/${pendingDeleteKey}`, 'DELETE');
-    if (d.success) toast('Key deleted');
-    else toast(d.error || 'Delete failed', true);
+    if (d.success) {
+      allKeys = allKeys.filter(x => x.license_key !== pendingDeleteKey);
+      toast('Key deleted');
+      renderKeys(allKeys);
+      updateStatsFromLocal();
+    } else toast(d.error || 'Delete failed', true);
   } catch(e) { toast('Network error: ' + e.message, true); }
   closeModal('deleteModal');
   pendingDeleteKey = null;
-  loadKeys(); loadStats();
 }
 
 // Generate
@@ -900,9 +935,24 @@ async function doGenerate() {
   const udid = document.getElementById('genUdid').value.trim() || null;
   const d = await api('/admin/api/keys/generate', 'POST', { days, udid });
   if (d.success) {
+    // Add to local state
+    const now = new Date();
+    const exp = new Date();
+    exp.setDate(exp.getDate() + days);
+    allKeys.unshift({
+      license_key: d.license_key,
+      udid: udid,
+      days: days,
+      days_left: days,
+      expires_at: exp.toISOString().split('T')[0],
+      created_at: now.toISOString(),
+      status: 'active',
+      licensed: true,
+    });
     toast(`Generated: ${d.license_key}`);
     closeModal('generateModal');
-    loadKeys(); loadStats();
+    renderKeys(allKeys);
+    updateStatsFromLocal();
     navigator.clipboard.writeText(d.license_key);
   } else toast(d.error || 'Failed', true);
 }
@@ -917,6 +967,20 @@ function toast(msg, isError = false) {
   setTimeout(() => el.classList.remove('show'), 3000);
 }
 const showToast = (msg) => toast(msg, msg.startsWith('❌'));
+
+// Recalculate stats from local allKeys without API call
+function updateStatsFromLocal() {
+  let total = allKeys.length, active = 0, expired = 0, locked = 0;
+  for (const k of allKeys) {
+    if (k.locked || k.status === 'locked') locked++;
+    else if (k.days_left > 0 || k.status === 'active') active++;
+    else expired++;
+  }
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statExpired').textContent = expired;
+  document.getElementById('statLocked').textContent = locked;
+}
 
 function showSection(s, el) {
   document.querySelectorAll('.sidebar a:not(.sidebar-logo)').forEach(a => a.classList.remove('active'));
@@ -1063,14 +1127,20 @@ async function addAnnouncement() {
     showToast('✅ Announcement published!');
     document.getElementById('annMsgEN').value = '';
     document.getElementById('annMsgVI').value = '';
-    loadAnnouncements();
+    if (r.announcement) allAnnouncements.unshift(r.announcement);
+    else await loadAnnouncements(); // fallback if no data returned
+    renderAnnouncements();
   } else showToast('❌ ' + (r.error || 'Failed'));
 }
 
 async function toggleAnnouncement(id, active) {
   const r = await api(`/admin/api/announcements/${id}`, 'PUT', { active });
-  if (r.success) { showToast(active ? '✅ Activated' : '⏸ Deactivated'); loadAnnouncements(); }
-  else showToast('❌ ' + (r.error || 'Failed'));
+  if (r.success) {
+    const ann = allAnnouncements.find(a => a.id === id);
+    if (ann) ann.active = active;
+    showToast(active ? '✅ Activated' : '⏸ Deactivated');
+    renderAnnouncements();
+  } else showToast('❌ ' + (r.error || 'Failed'));
 }
 
 async function deleteAnnouncement(id, msg) {
@@ -1080,8 +1150,11 @@ async function deleteAnnouncement(id, msg) {
   document.getElementById('confirmBtn').onclick = async function() {
     closeModal('confirmModal');
     const r = await api(`/admin/api/announcements/${id}`, 'DELETE');
-    if (r.success) { showToast('🗑 Deleted'); loadAnnouncements(); }
-    else showToast('❌ ' + (r.error || 'Failed'));
+    if (r.success) {
+      allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+      showToast('🗑 Deleted');
+      renderAnnouncements();
+    } else showToast('❌ ' + (r.error || 'Failed'));
   };
   document.getElementById('confirmModal').classList.remove('hidden');
   lucide.createIcons();
