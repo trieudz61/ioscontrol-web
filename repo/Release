@@ -5,12 +5,12 @@ Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl Sileo Repository
+Description: IOSControl - iOS Automation Tweak
 MD5Sum:
- 1177c76bf3faa00a791ac74c6ac65ecb 545 Packages
- 55f2565e90a5828eefbdaedc78a60550 437 Packages.bz2
- 92b45c4123402534ca84a7f5d73146bf 404 Packages.gz
+ bee5e4861f003b49de12e5dc13fa5150 1335 Packages
+ 2691e2d46655f4977b0ef52920394453 707 Packages.gz
+ 23db81f8b20bb5912e91b09f2afa864b 808 Packages.bz2
 SHA256:
- 21e754d184f317f9461cb4abe4c5a2a3b38935900750cbc274d059f91a8f8042 545 Packages
- 13cd33f244f9825c20daf117ca9cc820f56e46924fd9e5a9ed5a3a9ee304220f 437 Packages.bz2
- 4a6fd546ca2f34bc2ce9fb243cbc76b2e58874210979dd0ec3bf3424063095e8 404 Packages.gz
+ 1f301bbe94d50f0735812c92144c40e16b08029650998dab15110fb9ad835b0e 1335 Packages
+ df8f63bda77677d3abe78495e01df3107d75e2135662f1218cd14c8b214e023f 707 Packages.gz
+ 3374af48c16572555cab675733b61bea3874832b383b82b3f9ae91401ea2fbc4 808 Packages.bz2
