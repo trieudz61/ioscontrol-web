@@ -10,6 +10,23 @@ Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol_1.7.1_iphoneos-arm64.deb
-Size: 15086592
+Size: 15087530
 Installed-Size: 14700
-SHA256: c34b57dec4a723d4f1c15f32fae963bb6543477f72eb4d51e3a47722280cac59
+SHA256: 40b22a9540050252f567615ea71759c7cec4d8ec6d3593990e5cc17b78c575fc
+
+Package: com.opa334.crane
+Name: Crane
+Version: 1.3.17
+Architecture: iphoneos-arm64
+Maintainer: opa334
+Author: opa334
+Section: Tweaks
+Installed-Size: 3252
+Depends: firmware (>= 11.0), mobilesubstrate, preferenceloader, com.opa334.altlist (>= 1.0.5), com.opa334.libsandy (>= 1.1.6), com.opa334.libundirect (>= 1.1.4) | firmware (<< 14.0)
+Conflicts: com.opa334.cranelite, com.opa334.crane13lite, com.opa334.crane13, com.rpgfarm.slices3, com.subdiox.slices2, com.expetelek.slices
+Description: Multiple containers for your applications!
+Filename: debs/com.opa334.crane_1.3.17_iphoneos-arm64.deb
+Size: 603704
+MD5sum: 2b8942eda46de4e5bb7b55ad70a9aff8
+SHA1: 8fb752e5a0227ff8f0210cee2e2070e142ff1666
+SHA256: 1b34d05eb0a8f9fc4e9c96a11e2c641bbb0a392de223ecd19dfa3479a28319b7
