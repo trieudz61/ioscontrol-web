@@ -1443,6 +1443,25 @@ const API_SECTIONS = [
         example: 'appKill("com.apple.safari")',
       },
       {
+        name: "appClear(bundleId)",
+        type: "func",
+        desc: {
+          en: "Clear all app data — kills app, wipes keychain, data container, shared containers, and system caches. App returns to fresh-install state.",
+          vi: "Xóa toàn bộ dữ liệu app — tắt app, xóa keychain, container dữ liệu, shared containers, và cache hệ thống. App trở về trạng thái mới cài.",
+        },
+        params: [
+          {
+            n: "bundleId",
+            t: "string",
+            d: { en: "App bundle identifier", vi: "Bundle ID ứng dụng" },
+            req: true,
+          },
+        ],
+        ret: "boolean — true if success",
+        example: '-- Reset Facebook to fresh state\nappClear("com.facebook.Facebook")\nsleep(2)\nappRun("com.facebook.Facebook")\nlog("Facebook reset done")',
+        tags: ["new", "exclusive"],
+      },
+      {
         name: "appState(bundleId)",
         type: "func",
         desc: {
