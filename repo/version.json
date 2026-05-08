@@ -1,11 +1,11 @@
 {
-  "version": "1.6.2",
-  "build": 1744646400,
-  "minimum_os": "15.0",
-  "release_date": "2026-04-14",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.6.2_iphoneos-arm64.deb",
+  "version": "1.7.1",
+  "build": 1778272861000,
+  "minimum_os": "14.0",
+  "release_date": "2026-05-09",
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.7.1_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.6.2: VNC interactive control from IDE, swipeUntilImage/swipeUntilText speed param, disable VNC notifications, coordinate overlay fix",
-    "vi": "v1.6.2: Điều khiển VNC trực tiếp từ IDE, thêm param tốc độ vuốt swipeUntilImage/swipeUntilText, tắt thông báo VNC, sửa hiển thị tọa độ"
+    "en": "v1.7.1 release",
+    "vi": "Phiên bản v1.7.1"
   }
 }
