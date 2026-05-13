@@ -1803,7 +1803,7 @@ const API_SECTIONS = [
     },
     apis: [
       {
-        name: "httpGet(url, params, headers)",
+        name: "httpGet(url, headers, timeout)",
         type: "func",
         desc: { en: "HTTP GET request", vi: "Gửi yêu cầu HTTP GET" },
         params: [
@@ -1814,30 +1814,25 @@ const API_SECTIONS = [
             req: true,
           },
           {
-            n: "params",
+            n: "headers",
             t: "table",
-            d: {
-              en: "Query parameters dict (will be appended as ?key=val&...)",
-              vi: "Dict tham số query (sẽ nối thành ?key=val&...)",
-            },
+            d: { en: "Optional headers {key=value}", vi: "Headers tuỳ chọn {key=value}" },
             req: false,
           },
           {
-            n: "headers",
-            t: "table",
-            d: { en: "Optional headers", vi: "Headers tuỳ chọn" },
+            n: "timeout",
+            t: "number",
+            d: { en: "Request timeout in seconds (default 15)", vi: "Timeout tính bằng giây (mặc định 15)" },
             req: false,
           },
         ],
-        ret: "table — {status, body, headers}",
-        example_py:
-          '# Fetch game server config\nr = http_get("https://api.example.com/config", {\n    "version": "1.2.0",\n    "platform": "ios"\n})\nif r["status"] == 200:\n    import json\n    config = json.loads(r["body"])\n    log(f"Server version: {config[\"version\"]}")\n    log(f"Maintenance: {config[\"maintenance\"]}")\nelse:\n    log(f"Error: HTTP {r[\"status\"]}")',
+        ret: "body, statusCode",
         example:
-          '-- Fetch game server config\nlocal r = httpGet("https://api.example.com/config", {\n  version = "1.2.0",\n  platform = "ios"\n})\nif r.status == 200 then\n  local config = jsonDecode(r.body)\n  log("Server version: " .. config.version)\n  log("Maintenance: " .. tostring(config.maintenance))\nelse\n  log("Error: HTTP " .. r.status)\nend',
+          '-- Simple GET\nlocal body, status = httpGet("https://api.example.com/data")\nlog(body)\n\n-- With headers\nlocal body = httpGet("https://api.example.com", {\n  ["Authorization"] = "Bearer token123"\n})\n\n-- Custom timeout 30s (for slow APIs)\nlocal body = httpGet("https://slow-api.com/data", nil, 30)',
         tags: ["exclusive"],
       },
       {
-        name: "httpPost(url, body, headers)",
+        name: "httpPost(url, body, headers, timeout)",
         type: "func",
         desc: { en: "HTTP POST request", vi: "Gửi yêu cầu HTTP POST" },
         params: [
@@ -1849,8 +1844,8 @@ const API_SECTIONS = [
           },
           {
             n: "body",
-            t: "table|string",
-            d: { en: "Request body", vi: "Nội dung yêu cầu" },
+            t: "string",
+            d: { en: "Request body (string or jsonEncode())", vi: "Nội dung (chuỗi hoặc jsonEncode())" },
             req: true,
           },
           {
@@ -1859,9 +1854,16 @@ const API_SECTIONS = [
             d: { en: "Optional headers", vi: "Headers tuỳ chọn" },
             req: false,
           },
+          {
+            n: "timeout",
+            t: "number",
+            d: { en: "Request timeout in seconds (default 15)", vi: "Timeout tính bằng giây (mặc định 15)" },
+            req: false,
+          },
         ],
-        ret: "table — {status, body, headers}",
-        example: 'local r = httpPost(url, {key="value"})',
+        ret: "body, statusCode",
+        example:
+          'local body = jsonEncode({username="admin", password="123"})\nlocal resp, status = httpPost(\n  "https://api.example.com/login",\n  body,\n  {["Content-Type"] = "application/json"}\n)\nlog(resp)\n\n-- With 60s timeout for upload\nlocal resp = httpPost(url, largeBody, headers, 60)',
         tags: ["exclusive"],
       },
     ],
