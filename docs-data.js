@@ -2513,6 +2513,171 @@ const API_SECTIONS = [
       },
     ],
   },
+  {
+    id: "crane",
+    icon: '<i data-lucide="box" style="width:16px;height:16px;"></i>',
+    title: { en: "Crane Containers", vi: "Crane Containers" },
+    desc: {
+      en: "Manage Crane app containers — multi-account, backup, clear data while keeping login. Requires Crane tweak by opa334.",
+      vi: "Quản lý container Crane — đa tài khoản, backup, xóa data giữ đăng nhập. Cần cài tweak Crane (opa334).",
+    },
+    apis: [
+      {
+        name: "crane.list(bundleId?)",
+        type: "func",
+        desc: {
+          en: "List Crane containers for an app",
+          vi: "Liệt kê container Crane của app",
+        },
+        params: [
+          {
+            n: "bundleId",
+            t: "string",
+            d: { en: "App bundle ID (optional — omit to list all apps)", vi: "Bundle ID app (tuỳ chọn — bỏ để liệt kê tất cả app)" },
+            req: false,
+          },
+        ],
+        ret: { en: "table — [{name, id, isDefault}] or [{bundleId}]", vi: "bảng — [{name, id, isDefault}] hoặc [{bundleId}]" },
+        example: '-- List containers for Facebook\nlocal containers = crane.list("com.facebook.Facebook")\nfor i, c in ipairs(containers) do\n  log(c.name .. " (" .. c.id .. ") default=" .. tostring(c.isDefault))\nend\n\n-- List all apps with containers\nlocal apps = crane.list()\nfor _, app in ipairs(apps) do log(app.bundleId) end',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.switch(bundleId, name)",
+        type: "func",
+        desc: {
+          en: "Switch active container",
+          vi: "Chuyển container đang hoạt động",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "name", t: "string", d: { en: "Container name or UUID", vi: "Tên container hoặc UUID" }, req: true },
+        ],
+        ret: "boolean",
+        example: 'crane.switch("com.facebook.Facebook", "Account1")\nsleep(2)\nappRun("com.facebook.Facebook")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.create(bundleId, name)",
+        type: "func",
+        desc: {
+          en: "Create a new container",
+          vi: "Tạo container mới",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "name", t: "string", d: { en: "New container name", vi: "Tên container mới" }, req: true },
+        ],
+        ret: "boolean, string?",
+        example: 'local ok, err = crane.create("com.facebook.Facebook", "FB_Account2")\nif ok then log("Created!") else log("Error: " .. err) end',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.delete(bundleId, name)",
+        type: "func",
+        desc: {
+          en: "Delete a container (data lost)",
+          vi: "Xóa container (mất dữ liệu)",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "name", t: "string", d: { en: "Container name or UUID", vi: "Tên container hoặc UUID" }, req: true },
+        ],
+        ret: "boolean",
+        example: 'crane.delete("com.facebook.Facebook", "OldAccount")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.wipe(bundleId, name)",
+        type: "func",
+        desc: {
+          en: "Full wipe — data + keychain",
+          vi: "Xoá toàn bộ — data + keychain",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "name", t: "string", d: { en: "Container name or UUID", vi: "Tên container hoặc UUID" }, req: true },
+        ],
+        ret: "boolean",
+        example: '-- Full wipe: removes all data including login\ncrane.wipe("com.facebook.Facebook", "Account1")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.rename(bundleId, old, new)",
+        type: "func",
+        desc: {
+          en: "Rename a container",
+          vi: "Đổi tên container",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "oldName", t: "string", d: { en: "Current name", vi: "Tên hiện tại" }, req: true },
+          { n: "newName", t: "string", d: { en: "New name", vi: "Tên mới" }, req: true },
+        ],
+        ret: "boolean",
+        example: 'crane.rename("com.facebook.Facebook", "Test1", "MainAccount")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.clearData(bundleId)",
+        type: "func",
+        desc: {
+          en: "Clear caches but KEEP login — reduce storage without logout",
+          vi: "Xóa cache nhưng GIỮ đăng nhập — giảm dung lượng không bị logout",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+        ],
+        ret: { en: "boolean, number — success and count of cleared dirs", vi: "boolean, number — thành công và số thư mục đã xoá" },
+        example: '-- FB grows to 500MB after browsing → clear back to ~15MB, still logged in!\nlocal ok, count = crane.clearData("com.facebook.Facebook")\nlog("Cleared " .. count .. " directories")\n\n-- Clears: Caches, WebKit, SplashBoard, tmp\n-- Keeps: Keychain, Preferences, Cookies',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.backup(bundleId, container?, name?)",
+        type: "func",
+        desc: {
+          en: "Backup container as tar.gz",
+          vi: "Backup container thành tar.gz",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "containerName", t: "string", d: { en: "Container name (optional)", vi: "Tên container (tuỳ chọn)" }, req: false },
+          { n: "backupName", t: "string", d: { en: "Backup filename prefix", vi: "Tiền tố tên file backup" }, req: false },
+        ],
+        ret: "boolean, string — success and backup file path",
+        example: 'local ok, path = crane.backup("com.facebook.Facebook", nil, "fb_main")\nlog("Saved: " .. path)\n-- → /var/mobile/Library/IOSControl/Backups/fb_main_20260513_143000.tar.gz',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.restore(bundleId, path)",
+        type: "func",
+        desc: {
+          en: "Restore from tar.gz backup",
+          vi: "Khôi phục từ backup tar.gz",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+          { n: "backupPath", t: "string", d: { en: "Full path to .tar.gz", vi: "Đường dẫn đầy đủ tới .tar.gz" }, req: true },
+        ],
+        ret: "boolean",
+        example: 'crane.restore("com.facebook.Facebook",\n  "/var/mobile/Library/IOSControl/Backups/fb_main_20260513_143000.tar.gz")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: "crane.size(bundleId)",
+        type: "func",
+        desc: {
+          en: "Get container size breakdown",
+          vi: "Xem chi tiết dung lượng container",
+        },
+        params: [
+          { n: "bundleId", t: "string", d: { en: "App bundle ID", vi: "Bundle ID app" }, req: true },
+        ],
+        ret: { en: "table — {total, caches, documents, webkit, tmp, path} in bytes", vi: "bảng — {total, caches, documents, webkit, tmp, path} tính theo bytes" },
+        example: 'local s = crane.size("com.facebook.Facebook")\nlog("Total: " .. string.format("%.1f", s.total/1024/1024) .. " MB")\nlog("Caches: " .. string.format("%.1f", s.caches/1024/1024) .. " MB")\nlog("WebKit: " .. string.format("%.1f", s.webkit/1024/1024) .. " MB")\n\n-- Auto-clear if cache > 100MB\nif s.caches > 100 * 1024 * 1024 then\n  crane.clearData("com.facebook.Facebook")\nend',
+        tags: ["new", "exclusive"],
+      },
+    ],
+  },
 ];
 
 // UI Translation strings
