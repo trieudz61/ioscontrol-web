@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Success — IOSControl</title>
+    <meta name="description" content="Your IOSControl payment was successful. Your license has been activated." />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+:root {
+    --bg: #050508;
+    --bg-card: #0c0e14;
+    --border: rgba(255,255,255,0.06);
+    --text: #e8eaf0;
+    --text-dim: #7a7e94;
+    --accent: #6366f1;
+    --green: #34d399;
+    --radius: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+.icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(52, 211, 153, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+}
+h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--green);
+}
+.sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+.key-box {
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    word-break: break-all;
+    display: none;
+}
+.steps {
+    text-align: left;
+    margin-bottom: 24px;
+}
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+.step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: transform 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(52,211,153,0.2);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: var(--text-dim); font-size: 13px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="icon">✅</div>
+    <h1>Payment Successful!</h1>
+    <p class="sub" id="statusText">
+        Your license has been activated automatically.<br/>
+        Switch back to the <strong>IOSControl app</strong> — it will show Premium status.
+    </p>
+
+    <div class="key-box" id="keyBox"></div>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <span>Switch back to <strong style="color:var(--text)">IOSControl</strong> on your iPhone</span>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <span>Pull-to-refresh on the <strong style="color:var(--text)">Settings</strong> tab</span>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <span>Your license shows <strong style="color:var(--green)">Premium</strong> ✨</span>
+        </div>
+    </div>
+
+    <a href="/" class="btn">← Back to Home</a>
+</div>
+
+<script>
+// Try to get orderCode from URL and show key if available
+const params = new URLSearchParams(window.location.search);
+const orderCode = params.get('orderCode') || params.get('code');
+if (orderCode) {
+    const keyBox = document.getElementById('keyBox');
+    const statusText = document.getElementById('statusText');
+    
+    // Poll worker for license key
+    async function checkKey() {
+        try {
+            const r = await fetch('https://ioscontrol-worker.ioscontrol.workers.dev/api/check-order?orderCode=' + orderCode);
+            const data = await r.json();
+            if (data.status === 'paid' && data.licenseKey) {
+                keyBox.style.display = 'block';
+                keyBox.textContent = data.licenseKey;
+                statusText.innerHTML = 'Your license key: <strong>' + data.licenseKey + '</strong><br/>It has been activated automatically on your device.';
+            }
+        } catch(e) {}
+    }
+    checkKey();
+    // Retry a few times in case webhook is still processing
+    setTimeout(checkKey, 3000);
+    setTimeout(checkKey, 8000);
+}
+</script>
+</body>
+</html>

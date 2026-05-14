@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Cancelled — IOSControl</title>
+    <meta name="description" content="IOSControl payment was cancelled. You can try again anytime." />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+:root {
+    --bg: #050508;
+    --bg-card: #0c0e14;
+    --border: rgba(255,255,255,0.06);
+    --text: #e8eaf0;
+    --text-dim: #7a7e94;
+    --accent: #6366f1;
+    --amber: #fbbf24;
+    --radius: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+.icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+}
+h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--amber);
+}
+.sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: transform 0.15s;
+    margin: 0 6px;
+}
+.btn:active { transform: scale(0.97); }
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+}
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="icon">⚠️</div>
+    <h1>Payment Cancelled</h1>
+    <p class="sub">
+        No worries — you haven't been charged.<br/>
+        You can try again anytime from the IOSControl app.
+    </p>
+    <a href="/buy.html" class="btn">Try Again</a>
+    <a href="/" class="btn btn-outline">Home</a>
+</div>
+</body>
+</html>
