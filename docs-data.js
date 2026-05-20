@@ -2680,6 +2680,157 @@ const API_SECTIONS = [
       },
     ],
   },
+  {
+    id: "spoof",
+    icon: '<i data-lucide="shield" style="width:16px;height:16px;"></i>',
+    title: { en: "Device Spoofing", vi: "Giả lập thiết bị" },
+    desc: {
+      en: "Spoof device identity per-app — model, iOS version, carrier, timezone. Requires paid license for spoof.app().",
+      vi: "Giả lập danh tính thiết bị theo app — model, iOS, nhà mạng, timezone. spoof.app() yêu cầu license trả phí.",
+    },
+    apis: [
+      {
+        name: 'spoof.app(bundleID)',
+        type: "func",
+        desc: {
+          en: "Quick-spoof: random device profile for target app. Requires paid license.",
+          vi: "Spoof nhanh: random profile thiết bị cho app. Yêu cầu license trả phí.",
+        },
+        params: [
+          { n: "bundleID", t: "string", d: { en: "Target app bundle ID", vi: "Bundle ID app đích" }, req: true },
+        ],
+        ret: { en: "table {model, version, name, target} or nil, error", vi: "bảng {model, version, name, target} hoặc nil, error" },
+        example: '-- Random device for Pokemon GO\\nlocal info = spoof.app("com.nianticlabs.pokemongo")\\nlog("Spoofed as: " .. info.name .. " iOS " .. info.version)\\n-- → iPhone 16 Pro Max iOS 18.3.1\\n\\nappRun("com.nianticlabs.pokemongo")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: 'spoof.app(bundleID, ios, model)',
+        type: "func",
+        desc: {
+          en: "Specific-spoof: set exact iOS version and model for target app. Requires paid license.",
+          vi: "Spoof cụ thể: chọn chính xác iOS và model cho app. Yêu cầu license trả phí.",
+        },
+        params: [
+          { n: "bundleID", t: "string", d: { en: "Target app bundle ID", vi: "Bundle ID app đích" }, req: true },
+          { n: "ios", t: "string", d: { en: "iOS version (e.g. \"18.3.1\")", vi: "Phiên bản iOS (vd \"18.3.1\")" }, req: true },
+          { n: "model", t: "string", d: { en: "ProductType or name (e.g. \"iPhone16,2\" or \"iPhone 15 Pro Max\")", vi: "ProductType hoặc tên (vd \"iPhone16,2\" hoặc \"iPhone 15 Pro Max\")" }, req: true },
+        ],
+        ret: { en: "table {model, version, name, target} or nil, error", vi: "bảng {model, version, name, target} hoặc nil, error" },
+        example: '-- Specific: iPhone 16 Pro Max on iOS 18.3.1\\nlocal info = spoof.app("com.facebook.Facebook", "18.3.1", "iPhone17,2")\\nlog(info.model)   -- "iPhone17,2"\\nlog(info.name)    -- "iPhone 16 Pro Max"\\nlog(info.version) -- "18.3.1"\\n\\n-- Also accepts device name:\\nspoof.app("com.facebook.Facebook", "18.0", "iPhone 15 Pro")',
+        tags: ["new", "exclusive"],
+      },
+      {
+        name: 'spoof.name(name)',
+        type: "func",
+        desc: {
+          en: "Set fake device name (UIDevice.name)",
+          vi: "Đặt tên thiết bị giả (UIDevice.name)",
+        },
+        params: [
+          { n: "name", t: "string|nil", d: { en: "Device name or nil to clear", vi: "Tên thiết bị hoặc nil để xoá" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.name("iPhone 15 Pro")\\n-- Clear:\\nspoof.name(nil)',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.version(ios)',
+        type: "func",
+        desc: {
+          en: "Set fake iOS version",
+          vi: "Đặt phiên bản iOS giả",
+        },
+        params: [
+          { n: "ios", t: "string|nil", d: { en: "iOS version or nil to clear", vi: "Phiên bản iOS hoặc nil để xoá" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.version("18.3.1")',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.carrier(carrier)',
+        type: "func",
+        desc: {
+          en: "Set fake carrier (name or full table with mcc/mnc)",
+          vi: "Đặt nhà mạng giả (tên hoặc bảng đầy đủ mcc/mnc)",
+        },
+        params: [
+          { n: "carrier", t: "string|table", d: { en: "Carrier name or {name, iso, mcc, mnc}", vi: "Tên nhà mạng hoặc {name, iso, mcc, mnc}" }, req: true },
+        ],
+        ret: "void",
+        example: '-- Simple:\\nspoof.carrier("Viettel")\\n\\n-- Full (consistent MCC/MNC):\\nspoof.carrier({name="Viettel", iso="vn", mcc="452", mnc="04"})',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.timezone(tz)',
+        type: "func",
+        desc: {
+          en: "Set fake timezone",
+          vi: "Đặt timezone giả",
+        },
+        params: [
+          { n: "tz", t: "string|nil", d: { en: "IANA timezone (e.g. America/New_York)", vi: "Timezone IANA (vd America/New_York)" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.timezone("America/New_York")',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.target(bundleID)',
+        type: "func",
+        desc: {
+          en: "Add app to spoof target list (only these apps get spoofed)",
+          vi: "Thêm app vào danh sách target (chỉ các app này bị spoof)",
+        },
+        params: [
+          { n: "bundleID", t: "string", d: { en: "App bundle ID to target", vi: "Bundle ID app cần target" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.target("com.facebook.Facebook")\\nspoof.target("com.instagram.Istanbul")',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.webrtc(allow)',
+        type: "func",
+        desc: {
+          en: "Block or allow WebRTC (prevents IP leak)",
+          vi: "Chặn hoặc cho phép WebRTC (chống lộ IP)",
+        },
+        params: [
+          { n: "allow", t: "boolean", d: { en: "false = block, true = allow", vi: "false = chặn, true = cho phép" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.webrtc(false)  -- Block WebRTC leak',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.webgl(allow)',
+        type: "func",
+        desc: {
+          en: "Block or allow WebGL (prevents GPU fingerprint)",
+          vi: "Chặn hoặc cho phép WebGL (chống fingerprint GPU)",
+        },
+        params: [
+          { n: "allow", t: "boolean", d: { en: "false = block, true = allow", vi: "false = chặn, true = cho phép" }, req: true },
+        ],
+        ret: "void",
+        example: 'spoof.webgl(false)  -- Block WebGL fingerprint',
+        tags: ["exclusive"],
+      },
+      {
+        name: 'spoof.reset()',
+        type: "func",
+        desc: {
+          en: "Clear all spoof config — restore original device identity",
+          vi: "Xoá toàn bộ config spoof — khôi phục danh tính gốc",
+        },
+        params: [],
+        ret: "void",
+        example: '-- Done with spoofing, restore original\\nspoof.reset()',
+        tags: ["exclusive"],
+      },
+    ],
+  },
 ];
 
 // UI Translation strings
