@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IOSControl Portal — Quản lý ví và license key</title>
-  <meta name="description" content="Đăng nhập IOSControl Portal để nạp tiền, tạo license key, quản lý UDID kích hoạt và gia hạn key hàng loạt." />
+  <title>IOSControl Login — Quản lý ví và license key</title>
+  <meta name="description" content="Đăng nhập IOSControl để nạp tiền, tạo license key, quản lý UDID kích hoạt và gia hạn key hàng loạt." />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
@@ -18,10 +18,10 @@
 </head>
 <body>
 <div class="orb"></div>
-<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl Portal</a><span class="pill">Wallet · Keys · Bulk renew</span><div class="spacer"></div><a class="btn ghost" href="/">Trang chủ</a><button id="logoutBtn" class="btn ghost hide">Đăng xuất</button></div></nav>
+<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl Account</a><span class="pill">Wallet · Keys · Bulk renew</span><div class="spacer"></div><a class="btn ghost" href="/">Trang chủ</a><button id="logoutBtn" class="btn ghost hide">Đăng xuất</button></div></nav>
 <main class="wrap">
   <section id="landing" class="hero">
-    <div class="card hero-copy"><span class="badge"><i data-lucide="sparkles"></i> Reseller-ready license portal</span><h1>Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1><p>Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả tách biệt với hệ thống production hiện tại để test trước khi deploy.</p><div class="actions"><button class="btn" onclick="document.getElementById('email').focus()">Bắt đầu</button><a class="btn ghost" href="/buy.html">Xem bảng giá</a></div></div>
+    <div class="card hero-copy"><span class="badge"><i data-lucide="sparkles"></i> License dashboard</span><h1>Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1><p>Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.</p><div class="actions"><button class="btn" onclick="document.getElementById('email').focus()">Bắt đầu</button><a class="btn ghost" href="/buy.html">Xem bảng giá</a></div></div>
     <div class="card auth"><div class="tabs"><button id="loginTab" class="tab active">Đăng nhập</button><button id="registerTab" class="tab">Đăng ký</button></div><div class="field"><label>Email</label><input id="email" type="email" placeholder="you@example.com"></div><div class="field"><label>Mật khẩu</label><input id="password" type="password" placeholder="Tối thiểu 8 ký tự"></div><button id="authBtn" class="btn" style="width:100%">Đăng nhập</button><div id="authMsg" class="msg"></div></div>
   </section>
 
