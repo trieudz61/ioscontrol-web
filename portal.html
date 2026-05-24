@@ -35,7 +35,7 @@
 </main>
 <div id="toast" class="toast hide"></div>
 <script>
-const API='';let mode='login';let token=localStorage.getItem('icp_token')||'';const $=id=>document.getElementById(id);const money=n=>(n||0).toLocaleString('vi-VN')+'đ';
+const API='https://ioscontrol-worker.ioscontrol.workers.dev';let mode='login';let token=localStorage.getItem('icp_token')||'';const $=id=>document.getElementById(id);const money=n=>(n||0).toLocaleString('vi-VN')+'đ';
 function toast(s){$('toast').textContent=s;$('toast').classList.remove('hide');setTimeout(()=>$('toast').classList.add('hide'),4200)}
 async function api(path,opts={}){const h={'Content-Type':'application/json'};if(token)h.Authorization='Bearer '+token;const r=await fetch(API+path,{...opts,headers:{...h,...(opts.headers||{})}});const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false)throw new Error(j.error||'Request failed');return j}
 function setMode(m){mode=m;$('loginTab').classList.toggle('active',m==='login');$('registerTab').classList.toggle('active',m==='register');$('authBtn').textContent=m==='login'?'Đăng nhập':'Tạo tài khoản';$('authMsg').textContent=''}
