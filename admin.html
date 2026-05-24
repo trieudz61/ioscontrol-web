@@ -1,1 +1,1534 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IOSControl Admin Console</title><meta name="description" content="Premium IOSControl operations console for users, revenue, transactions, licenses and audit logs."><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script><style>:root{--bg:#050611;--panel:rgba(15,19,35,.78);--panel2:rgba(255,255,255,.055);--line:rgba(255,255,255,.1);--text:#f2f5ff;--muted:#8d95b4;--brand:#8b5cf6;--cyan:#22d3ee;--good:#34d399;--warn:#f59e0b;--bad:#fb7185;--shadow:0 28px 90px rgba(0,0,0,.42)}*{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:radial-gradient(circle at 10% -10%,rgba(139,92,246,.38),transparent 35%),radial-gradient(circle at 90% 0,rgba(34,211,238,.2),transparent 30%),var(--bg);color:var(--text);min-height:100vh}.hide{display:none!important}.shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.side{position:sticky;top:0;height:100vh;padding:22px;border-right:1px solid var(--line);background:rgba(7,9,20,.78);backdrop-filter:blur(22px)}.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;margin-bottom:28px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--cyan));display:grid;place-items:center;box-shadow:0 18px 45px rgba(139,92,246,.3)}.navbtn{width:100%;border:1px solid transparent;background:transparent;color:var(--muted);padding:12px 14px;border-radius:16px;display:flex;align-items:center;gap:10px;font-weight:800;cursor:pointer;margin:6px 0}.navbtn:hover,.navbtn.active{background:rgba(255,255,255,.075);color:var(--text);border-color:var(--line)}.main{padding:24px;min-width:0}.top{display:flex;align-items:center;gap:14px;margin-bottom:20px}.title h1{margin:0;font-size:28px;letter-spacing:-.04em}.title p{margin:4px 0 0;color:var(--muted)}.spacer{flex:1}.btn{border:0;border-radius:14px;padding:11px 14px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--brand),#4f46e5);cursor:pointer}.btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--line)}.btn.good{background:linear-gradient(135deg,#10b981,#22c55e)}.btn.bad{background:linear-gradient(135deg,#fb7185,#f43f5e)}.btn.warn{background:linear-gradient(135deg,#f59e0b,#d97706)}.card{background:linear-gradient(180deg,var(--panel),rgba(10,12,24,.7));border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(20px)}.login{max-width:450px;margin:12vh auto;padding:28px}.login h1{margin:0 0 8px}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.kpi{padding:18px;overflow:hidden}.kpi .k{color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.kpi .v{font-size:28px;font-weight:900;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .sub{color:var(--muted);font-size:12px;margin-top:6px}.panel{padding:18px;margin-top:16px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}input,select{border:1px solid var(--line);background:rgba(255,255,255,.065);color:var(--text);border-radius:14px;padding:12px 13px;outline:none}input{min-width:260px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;margin-top:14px}table{width:max-content;min-width:100%;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}tr:last-child td{border-bottom:0}.pill{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:900;background:rgba(255,255,255,.08)}.active,.paid{color:var(--good)}.disabled,.locked{color:var(--bad)}.pending,.expired{color:var(--warn)}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.muted{color:var(--muted)}.view{display:none}.view.active{display:block}.modal{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;align-items:flex-start;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.drawer{width:min(1100px,100%);padding:20px;max-height:calc(100vh - 36px);overflow:auto}.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}.metricline{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:18px}.msg{min-height:22px;color:var(--muted);font-size:13px}.err{color:var(--bad)}@media(max-width:980px){.shell{grid-template-columns:1fr}.side{position:relative;height:auto}.main{padding:14px}.kpis{grid-template-columns:1fr 1fr}.cols,.metricline{grid-template-columns:1fr}.top{align-items:flex-start}.row>*{width:100%}input,select{width:100%;min-width:0}.side nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.navbtn{margin:0}}@media(max-width:520px){.kpis{grid-template-columns:1fr}.side nav{grid-template-columns:1fr}}</style></head><body><section id="login" class="login card"><div class="brand"><div class="logo"><i data-lucide="shield-check"></i></div><div>IOSControl Admin</div></div><h1>Operations Console</h1><p class="muted">Đăng nhập để quản lý users, doanh thu, ví và license.</p><input id="user" placeholder="admin" style="width:100%;margin:14px 0"><input id="pass" type="password" placeholder="Password" style="width:100%"><button id="loginBtn" class="btn" style="width:100%;margin-top:14px">Login</button><div id="loginMsg" class="msg"></div></section><section id="app" class="shell hide"><aside class="side"><div class="brand"><div class="logo"><i data-lucide="command"></i></div><div>IOSControl<br><span class="muted" style="font-size:12px">Admin OS</span></div></div><nav><button class="navbtn active" data-view="overview"><i data-lucide="layout-dashboard"></i>Overview</button><button class="navbtn" data-view="users"><i data-lucide="users"></i>Users</button><button class="navbtn" data-view="revenue"><i data-lucide="line-chart"></i>Revenue</button><button class="navbtn" data-view="transactions"><i data-lucide="receipt-text"></i>Transactions</button><button class="navbtn" data-view="audit"><i data-lucide="shield"></i>Audit</button></nav></aside><main class="main"><div class="top"><div class="title"><h1 id="pageTitle">Overview</h1><p>Realtime account portal operations</p></div><div class="spacer"></div><button id="refresh" class="btn ghost">Refresh</button><button id="logout" class="btn ghost">Logout</button></div><div id="overview" class="view active"><div id="kpis" class="kpis"></div><div class="cols"><div class="card panel"><h2>Recent transactions</h2><div id="recentTx"></div></div><div class="card panel"><h2>System health</h2><div id="health"></div></div></div></div><div id="users" class="view"><div class="card panel"><div class="row"><input id="userQ" placeholder="Search username, email, name"><button id="userSearch" class="btn">Search</button></div><div class="tablewrap"><table><thead><tr><th>User</th><th>Email</th><th>Name</th><th>Balance</th><th>Keys</th><th>Active</th><th>Status</th><th>Created</th><th></th></tr></thead><tbody id="userRows"></tbody></table></div></div></div><div id="revenue" class="view"><div id="revKpis" class="kpis"></div><div class="card panel"><h2>Revenue ledger</h2><div id="revRows"></div></div></div><div id="transactions" class="view"><div class="card panel"><div class="row"><input id="txQ" placeholder="Search tx, user, order, note"><select id="txType"><option value="">All type</option><option>topup</option><option>spend</option><option>admin_credit</option><option>admin_debit</option></select><select id="txStatus"><option value="">All status</option><option>paid</option><option>pending</option></select><button id="txSearch" class="btn">Filter</button></div><div class="tablewrap"><table><thead><tr><th>Time</th><th>User</th><th>Type</th><th>Amount</th><th>Balance</th><th>Status</th><th>Order</th><th>Note</th></tr></thead><tbody id="txRows"></tbody></table></div></div></div><div id="audit" class="view"><div class="card panel"><div class="row"><input id="auditQ" placeholder="Search audit"><button id="auditSearch" class="btn">Search</button></div><div class="tablewrap"><table><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th><th>Metadata</th></tr></thead><tbody id="auditRows"></tbody></table></div></div></div></main></section><div id="modal" class="modal"><div class="drawer card"><div class="row"><h2 id="mTitle" style="margin:0 auto 0 0">User</h2><button id="close" class="btn ghost" style="width:auto">×</button></div><div id="detail"></div></div></div><script>const API='https://ioscontrol-worker.ioscontrol.workers.dev';let token=localStorage.getItem('admin_token')||'',currentUser=null;const $=id=>document.getElementById(id),fmt=n=>(Number(n)||0).toLocaleString('vi-VN')+'đ',num=n=>(Number(n)||0).toLocaleString('vi-VN');async function api(p,o={}){const h={'Content-Type':'application/json'};if(token)h.Authorization='Bearer '+token;const r=await fetch(API+p,{...o,headers:{...h,...(o.headers||{})}});const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false)throw new Error(j.error||'Request failed');return j}function show(on){$('login').classList.toggle('hide',on);$('app').classList.toggle('hide',!on);setTimeout(()=>lucide.createIcons(),0)}async function login(){try{const j=await api('/portal/api/admin/login',{method:'POST',body:JSON.stringify({username:$('user').value,password:$('pass').value})});token=j.token;localStorage.setItem('admin_token',token);show(true);loadAll()}catch(e){$('loginMsg').className='msg err';$('loginMsg').textContent=e.message}}function kpi(k,v,sub=''){return `<div class="card kpi"><div class="k">${k}</div><div class="v">${v}</div><div class="sub">${sub}</div></div>`}async function loadStats(){const s=await api('/portal/api/admin/stats');const u=s.users||{},r=s.revenue||{},k=s.keys||{};$('kpis').innerHTML=[kpi('Total revenue',fmt(r.revenue_total),'Paid topups'),kpi('Revenue 7d',fmt(r.revenue_7d),'Last 7 days'),kpi('Users',num(u.total_users),`${num(u.active_users)} active · ${num(u.disabled_users)} disabled`),kpi('Active keys',num(k.active_keys),`${num(k.locked_keys)} locked · ${num(k.expired_keys)} expired`),kpi('Wallet liability',fmt(u.wallet_liability),'User balances'),kpi('Today',fmt(r.revenue_today),'Revenue today'),kpi('30 days',fmt(r.revenue_30d),'Rolling month'),kpi('Bound keys',num(k.bound_keys),`${num(k.total_keys)} total keys`)].join('');$('revKpis').innerHTML=[kpi('Today',fmt(r.revenue_today)),kpi('7 days',fmt(r.revenue_7d)),kpi('30 days',fmt(r.revenue_30d)),kpi('Total',fmt(r.revenue_total))].join('');$('health').innerHTML=`<div class="metricline"><div class="mini"><b>${num(r.pending_tx)}</b><br><span class="muted">Pending payments</span></div><div class="mini"><b>${num(k.locked_keys)}</b><br><span class="muted">Locked keys</span></div><div class="mini"><b>${num(u.disabled_users)}</b><br><span class="muted">Disabled users</span></div></div>`}async function loadUsers(){const j=await api('/portal/api/admin/users?limit=50&q='+encodeURIComponent($('userQ')?.value||''));$('userRows').innerHTML=j.rows.map(u=>`<tr><td><b>${u.username||'-'}</b><br><span class="muted mono">${u.id}</span></td><td>${u.email||''}</td><td>${u.last_name||''} ${u.first_name||''}</td><td>${fmt(u.balance_vnd)}</td><td>${u.key_count||0}</td><td>${u.active_keys||0}</td><td><span class="pill ${u.status}">${u.status}</span></td><td>${u.created_at||''}</td><td><button class="btn ghost" onclick="openUser('${u.id}')">Manage</button></td></tr>`).join('')}async function loadTx(){const qs=new URLSearchParams({limit:50,q:$('txQ')?.value||'',type:$('txType')?.value||'',status:$('txStatus')?.value||''});const j=await api('/portal/api/admin/transactions?'+qs);const rows=j.rows.map(t=>`<tr><td>${t.created_at||''}</td><td><b>${t.username||t.email||'-'}</b></td><td>${t.type}</td><td class="${Number(t.amount_vnd)>=0?'paid':'locked'}">${fmt(t.amount_vnd)}</td><td>${fmt(t.balance_after)}</td><td><span class="pill ${t.status}">${t.status}</span></td><td>${t.order_code||''}</td><td>${t.note||''}</td></tr>`).join('');$('txRows').innerHTML=rows;$('recentTx').innerHTML='<div class="tablewrap"><table><tbody>'+rows.split('</tr>').slice(0,6).join('</tr>')+'</tbody></table></div>';$('revRows').innerHTML='<div class="tablewrap"><table><tbody>'+rows+'</tbody></table></div>'}async function loadAudit(){const j=await api('/portal/api/admin/audit?limit=50&q='+encodeURIComponent($('auditQ')?.value||''));$('auditRows').innerHTML=j.rows.map(a=>`<tr><td>${a.created_at||''}</td><td>${a.actor_user_id||''}</td><td>${a.action||''}</td><td>${a.target_type||''} ${a.target_id||''}</td><td class="mono">${a.metadata||''}</td></tr>`).join('')}async function openUser(id){currentUser=id;const j=await api('/portal/api/admin/users/'+encodeURIComponent(id));const u=j.user;$('modal').classList.add('show');$('mTitle').textContent=`${u.username||u.email} · ${fmt(u.balance_vnd)}`;$('detail').innerHTML=`<div class="cols"><div class="card panel"><h3>Wallet & Permissions</h3><input id="amt" type="number" placeholder="Amount VND (+/-)"><input id="note" placeholder="Admin note" style="margin-top:8px"><div class="row" style="margin-top:10px"><button class="btn good" onclick="adjustWallet()">Apply wallet</button><button class="btn ${u.status==='active'?'bad':'good'}" onclick="setStatus('${u.status==='active'?'disabled':'active'}')">${u.status==='active'?'Disable':'Enable'} user</button></div></div><div class="card panel"><h3>Recent user transactions</h3>${(j.transactions||[]).map(t=>`<p class="muted">${t.created_at} · <b>${t.type}</b> · ${fmt(t.amount_vnd)} · ${t.note||''}</p>`).join('')||'<p class="muted">No transactions</p>'}</div></div><h3>Licenses</h3><div class="tablewrap"><table><thead><tr><th>Key</th><th>Label</th><th>UDID</th><th>Expires</th><th>Status</th><th>Controls</th></tr></thead><tbody>${(j.licenses||[]).map(l=>`<tr><td><b>${l.license_key}</b></td><td>${l.label||''}</td><td>${l.udid||'-'}</td><td>${l.expires_at||''}</td><td><span class="pill ${l.status}">${l.status}</span></td><td><button class="btn warn" onclick="lockKey('${l.license_key}',${l.locked?0:1})">${l.locked?'Unlock':'Lock'}</button> <button class="btn ghost" onclick="unbindKey('${l.license_key}')">Unbind</button></td></tr>`).join('')}</tbody></table></div>`}async function adjustWallet(){await api('/portal/api/admin/users/'+encodeURIComponent(currentUser)+'/wallet-adjust',{method:'POST',body:JSON.stringify({amount_vnd:Number($('amt').value),note:$('note').value})});await openUser(currentUser);await loadAll()}async function setStatus(status){await api('/portal/api/admin/users/'+encodeURIComponent(currentUser)+'/status',{method:'POST',body:JSON.stringify({status})});await openUser(currentUser);await loadAll()}async function lockKey(k,locked){await api('/portal/api/admin/licenses/'+encodeURIComponent(k)+'/lock',{method:'POST',body:JSON.stringify({locked:!!locked})});await openUser(currentUser);await loadStats()}async function unbindKey(k){if(confirm('Unbind '+k+'?')){await api('/portal/api/admin/licenses/'+encodeURIComponent(k)+'/unbind',{method:'POST'});await openUser(currentUser);await loadStats()}}async function loadAll(){await Promise.all([loadStats(),loadUsers(),loadTx(),loadAudit()]);lucide.createIcons()}document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(b.dataset.view).classList.add('active');$('pageTitle').textContent=b.textContent.trim()});$('loginBtn').onclick=login;$('logout').onclick=()=>{localStorage.removeItem('admin_token');token='';show(false)};$('refresh').onclick=loadAll;$('userSearch').onclick=loadUsers;$('txSearch').onclick=loadTx;$('auditSearch').onclick=loadAudit;$('close').onclick=()=>$('modal').classList.remove('show');if(token){api('/portal/api/admin/me').then(()=>{show(true);loadAll()}).catch(()=>show(false))}lucide.createIcons();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IOSControl — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface-2: #1a1a26;
+  --border: rgba(255,255,255,0.06);
+  --text: #e8e8f0;
+  --text-dim: rgba(255,255,255,0.45);
+  --accent: #6c5ce7;
+  --accent-glow: rgba(108,92,231,0.3);
+  --green: #00d68f;
+  --red: #ff4757;
+  --orange: #ffa502;
+  --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Login */
+.login-overlay {
+  position:fixed; inset:0; z-index:999;
+  background: var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:24px;
+}
+.login-overlay.hidden { display:none; }
+.login-logo { display:flex; align-items:center; gap:12px; font-size:28px; font-weight:800; }
+.login-logo i { color:var(--accent); }
+.login-logo span { color:var(--accent); }
+.login-box {
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:6px; max-width:90vw;
+}
+.login-box input {
+  background:transparent; border:none; color:var(--text);
+  font-size:15px; padding:12px 16px; outline:none; flex:1; min-width:200px;
+  font-family:inherit;
+}
+.login-box button {
+  background:var(--accent); border:none; color:#fff;
+  padding:12px 24px; border-radius:8px; font-weight:600;
+  cursor:pointer; font-size:14px; font-family:inherit;
+  transition:all .2s; display:flex; align-items:center; gap:6px;
+}
+.login-box button:hover { filter:brightness(1.15); }
+.login-error { color:var(--red); font-size:13px; height:20px; }
+
+/* Layout */
+.app { display:flex; min-height:100vh; }
+.app.hidden { display:none; }
+
+/* Sidebar */
+.sidebar {
+  width:240px; background:var(--surface); border-right:1px solid var(--border);
+  padding:20px 12px; display:flex; flex-direction:column; gap:4px;
+  flex-shrink:0;
+}
+.sidebar-logo {
+  display:flex; align-items:center; gap:10px;
+  font-size:17px; font-weight:800; padding:8px 12px 20px;
+  border-bottom:1px solid var(--border); margin-bottom:8px;
+  cursor:pointer; text-decoration:none; color:var(--text);
+  transition: opacity .15s;
+}
+.sidebar-logo:hover { opacity:.8; }
+.sidebar-logo i { color:var(--accent); }
+.sidebar-logo span { color:var(--accent); }
+.sidebar a {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:8px; color:var(--text-dim);
+  text-decoration:none; font-size:13px; font-weight:500;
+  transition:all .15s;
+}
+.sidebar a i { width:18px; height:18px; }
+.sidebar a:hover { background:rgba(255,255,255,0.04); color:var(--text); }
+.sidebar a.active { background:var(--accent-glow); color:var(--accent); }
+.sidebar-spacer { flex:1; }
+.sidebar-footer { font-size:11px; color:var(--text-dim); padding:12px; }
+
+/* Mobile header */
+.mobile-header {
+  display:none; background:var(--surface); border-bottom:1px solid var(--border);
+  padding:12px 16px; align-items:center; gap:12px;
+}
+.mobile-header .hamburger {
+  background:none; border:none; color:var(--text); cursor:pointer; padding:4px;
+}
+.mobile-header .logo {
+  display:flex; align-items:center; gap:8px; font-weight:800; font-size:16px;
+  cursor:pointer; text-decoration:none; color:var(--text); flex:1;
+}
+.mobile-header .logo span { color:var(--accent); }
+.mobile-nav {
+  display:none; position:fixed; inset:0; z-index:50;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(6px);
+}
+.mobile-nav.open { display:flex; }
+.mobile-nav-inner {
+  width:260px; background:var(--surface); padding:20px 12px;
+  display:flex; flex-direction:column; gap:4px;
+  border-right:1px solid var(--border); animation: slideIn .2s ease;
+}
+.mobile-nav-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 12px; }
+.mobile-nav-header h3 { font-size:16px; font-weight:700; color:var(--text); }
+@keyframes slideIn { from { transform:translateX(-100%); } to { transform:translateX(0); } }
+.mobile-nav-inner a {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px; border-radius:8px; color:var(--text-dim);
+  text-decoration:none; font-size:14px; font-weight:500;
+}
+.mobile-nav-inner a.active { background:var(--accent-glow); color:var(--accent); }
+
+/* Main */
+.main { flex:1; padding:28px 32px; overflow-y:auto; min-width:0; }
+
+.page-wrapper {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Stats */
+.stats-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+  margin-bottom:28px;
+}
+.stat-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:18px 20px;
+  position:relative; overflow:hidden;
+}
+.stat-card::after {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:3px;
+}
+.stat-card:nth-child(1)::after { background:var(--accent); }
+.stat-card:nth-child(2)::after { background:var(--green); }
+.stat-card:nth-child(3)::after { background:var(--red); }
+.stat-card:nth-child(4)::after { background:var(--orange); }
+.stat-label {
+  display:flex; align-items:center; gap:6px;
+  font-size:11px; color:var(--text-dim); text-transform:uppercase;
+  letter-spacing:1px; font-weight:600;
+}
+.stat-label i { width:14px; height:14px; }
+.stat-value { font-size:28px; font-weight:800; margin-top:6px; }
+
+/* Toolbar */
+.toolbar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px; gap:12px; flex-wrap:wrap;
+}
+.toolbar h2 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:8px; }
+.toolbar h2 i { width:20px; height:20px; color:var(--accent); }
+.search-box {
+  flex:1; max-width:320px; min-width:180px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:9px 12px 9px 36px;
+  color:var(--text); font-size:13px; outline:none;
+  font-family:inherit; transition:border .2s;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:12px center;
+}
+.search-box:focus { border-color:var(--accent); }
+.toolbar-actions { display:flex; gap:8px; }
+
+/* Buttons */
+.btn {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:8px 14px; border:none; border-radius:8px;
+  font-size:12px; font-weight:600; cursor:pointer;
+  font-family:inherit; transition:all .15s; white-space:nowrap;
+}
+.btn i { width:14px; height:14px; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { filter:brightness(1.15); }
+.btn-danger { background:rgba(255,71,87,0.12); color:var(--red); }
+.btn-danger:hover { background:rgba(255,71,87,0.25); }
+.btn-warning { background:rgba(255,165,2,0.12); color:var(--orange); }
+.btn-warning:hover { background:rgba(255,165,2,0.25); }
+.btn-success { background:rgba(0,214,143,0.12); color:var(--green); }
+.btn-success:hover { background:rgba(0,214,143,0.25); }
+.btn-ghost { background:rgba(255,255,255,0.04); color:var(--text-dim); }
+.btn-ghost:hover { background:rgba(255,255,255,0.08); color:var(--text); }
+.btn-sm { padding:5px 8px; font-size:11px; }
+
+/* Table */
+.table-wrap {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); overflow-x:auto;
+}
+table { width:100%; border-collapse:collapse; min-width:700px; }
+thead { background:var(--surface-2); }
+th {
+  padding:10px 14px; text-align:left;
+  font-size:11px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.8px; color:var(--text-dim);
+  cursor:pointer; user-select:none; white-space:nowrap;
+  transition: color .15s;
+}
+th:hover { color:var(--text); }
+th .sort-icon { display:inline-flex; margin-left:4px; opacity:.4; transition:opacity .15s; }
+th.sorted .sort-icon { opacity:1; color:var(--accent); }
+td {
+  padding:12px 14px; font-size:13px;
+  border-top:1px solid var(--border);
+}
+tr:hover td { background:rgba(255,255,255,0.02); }
+.key-cell { font-family:'Courier New',monospace; font-size:12px; font-weight:600; color:var(--accent); }
+.udid-cell { font-family:'Courier New',monospace; font-size:11px; color:var(--text-dim); max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* Badges */
+.badge {
+  display:inline-flex; padding:3px 10px; border-radius:20px;
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;
+}
+.badge-active { background:rgba(0,214,143,0.12); color:var(--green); }
+.badge-expired { background:rgba(255,71,87,0.12); color:var(--red); }
+.badge-locked { background:rgba(255,165,2,0.12); color:var(--orange); }
+.badge-free { background:rgba(255,255,255,0.06); color:var(--text-dim); }
+
+/* Modal */
+.modal-overlay {
+  position:fixed; inset:0; z-index:100;
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  padding:16px;
+}
+.modal-overlay.hidden { display:none; }
+.modal {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:24px 28px; width:100%; max-width:440px;
+  max-height:80vh; overflow-y:auto;
+}
+.modal h3 { font-size:17px; font-weight:700; margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+.modal h3 i { width:20px; height:20px; color:var(--accent); }
+.modal label { display:block; font-size:11px; font-weight:600; color:var(--text-dim); margin-bottom:4px; margin-top:14px; text-transform:uppercase; letter-spacing:.5px; }
+.modal input, .modal select {
+  width:100%; background:var(--surface-2); border:1px solid var(--border);
+  border-radius:8px; padding:10px 14px; color:var(--text);
+  font-size:14px; font-family:inherit; outline:none;
+}
+.modal input:focus { border-color:var(--accent); }
+.modal-actions { display:flex; gap:8px; margin-top:20px; justify-content:flex-end; }
+
+/* Toast */
+.toast {
+  position:fixed; bottom:24px; right:24px; z-index:200;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:12px 18px; font-size:13px;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  transform:translateY(100px); opacity:0; transition:all .3s;
+  display:flex; align-items:center; gap:8px;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast-success { border-left:3px solid var(--green); }
+.toast-error { border-left:3px solid var(--red); }
+
+.loading { text-align:center; padding:48px; color:var(--text-dim); }
+.spinner {
+  width:28px; height:28px; border:3px solid var(--border);
+  border-top-color:var(--accent); border-radius:50%;
+  animation:spin .6s linear infinite; margin:0 auto 10px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.empty-state { text-align:center; padding:48px 20px; color:var(--text-dim); }
+
+/* Utility Grids */
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.ann-grid { display:grid; grid-template-columns:1fr auto auto; gap:12px; align-items:end; }
+
+/* Responsive */
+@media (max-width:768px) {
+  .app { flex-direction: column; }
+  .sidebar { display:none; }
+  .mobile-header { display:flex; width: 100%; justify-content: space-between; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .main { padding:16px; width: 100vw; overflow-x: hidden; }
+  .toolbar { flex-direction:column; align-items:stretch; }
+  .toolbar h2 { font-size:16px; }
+  .search-box { max-width:100%; }
+  .toolbar-actions { justify-content:flex-end; }
+  table { min-width:560px; }
+  td, th { padding:10px 10px; font-size:12px; }
+  .stat-value { font-size:22px; }
+  .modal { padding:20px; }
+  /* Override custom grids */
+  .grid-4 { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
+  .grid-3 { grid-template-columns:1fr !important; gap:10px !important; }
+  .form-grid { grid-template-columns:1fr !important; }
+  .ann-grid { grid-template-columns:1fr !important; align-items:start !important; }
+  .ann-grid button { justify-content:center !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-logo"><i data-lucide="shield-check"></i> <span>IOSControl</span> Admin</div>
+  <div class="login-box">
+    <input type="password" id="secretInput" placeholder="Enter admin secret..." autofocus>
+    <button onclick="doLogin()"><i data-lucide="log-in" style="width:16px;height:16px"></i> Login</button>
+  </div>
+  <div class="login-error" id="loginError"></div>
+</div>
+
+<!-- App -->
+<div class="app hidden" id="app">
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <button class="hamburger" onclick="toggleMobileNav()"><i data-lucide="menu"></i></button>
+    <a class="logo" href="https://ioscontrol.com"><span>IOSControl</span></a>
+  </div>
+  <div class="mobile-nav" id="mobileNav" onclick="if(event.target === this) closeMobileNav()">
+    <div class="mobile-nav-inner">
+      <div class="mobile-nav-header">
+        <h3>Menu</h3>
+        <button class="btn btn-ghost" onclick="closeMobileNav()" style="padding:4px"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+      </div>
+      <a href="#" class="active" onclick="showSection('keys',this);closeMobileNav()"><i data-lucide="key-round" style="width:16px;height:16px"></i> License Keys</a>
+      <a href="#" onclick="showSection('devices',this);closeMobileNav()"><i data-lucide="smartphone" style="width:16px;height:16px"></i> Devices</a>
+      <a href="#" onclick="showSection('announcements',this);closeMobileNav()"><i data-lucide="megaphone" style="width:16px;height:16px"></i> Announcements</a>
+      <a href="#" onclick="showSection('releases',this);closeMobileNav()"><i data-lucide="package" style="width:16px;height:16px"></i> Releases</a>
+      <a href="#" onclick="showSection('generate',this);closeMobileNav()"><i data-lucide="plus-circle" style="width:16px;height:16px"></i> Generate Key</a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="https://ioscontrol.com" class="sidebar-logo"><i data-lucide="gamepad-2"></i> <span>IOSControl</span></a>
+    <a href="#" class="active" onclick="showSection('keys', this)"><i data-lucide="key-round"></i> License Keys</a>
+    <a href="#" onclick="showSection('devices', this)"><i data-lucide="smartphone"></i> Devices</a>
+    <a href="#" onclick="showSection('announcements', this)"><i data-lucide="megaphone"></i> Announcements</a>
+    <a href="#" onclick="showSection('releases', this)"><i data-lucide="package"></i> Releases</a>
+    <a href="#" onclick="showSection('generate', this)"><i data-lucide="plus-circle"></i> Generate Key</a>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-footer">IOSControl Admin v1.0</div>
+  </nav>
+
+  <main class="main page-wrapper">
+    <!-- Stats -->
+    <div class="grid-4" id="statsGrid" style="margin-bottom:28px">
+      <div class="stat-card"><div class="stat-label"><i data-lucide="layers"></i> Total Keys</div><div class="stat-value" id="statTotal">-</div></div>
+      <div class="stat-card"><div class="stat-label"><i data-lucide="check-circle"></i> Active</div><div class="stat-value" id="statActive">-</div></div>
+      <div class="stat-card"><div class="stat-label"><i data-lucide="x-circle"></i> Expired</div><div class="stat-value" id="statExpired">-</div></div>
+      <div class="stat-card"><div class="stat-label"><i data-lucide="lock"></i> Locked</div><div class="stat-value" id="statLocked">-</div></div>
+    </div>
+
+    <!-- Chart Section -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:28px" id="chartWrapper">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:8px">
+        <i data-lucide="trending-up" style="width:18px;height:18px;color:var(--accent)"></i> New Licenses (Last 14 Days)
+      </h3>
+      <div style="width:100%;height:220px;position:relative">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Keys Section -->
+    <div id="keysSection">
+      <div class="toolbar">
+        <h2><i data-lucide="key-round"></i> License Keys</h2>
+        <input type="text" class="search-box" placeholder="Search by key, UDID..." id="searchBox" oninput="filterKeys()">
+        <div class="toolbar-actions">
+          <button class="btn btn-ghost" onclick="loadKeys()"><i data-lucide="refresh-cw"></i> Refresh</button>
+          <button class="btn btn-primary" onclick="showGenerateModal()"><i data-lucide="plus"></i> Generate</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortKeys('license_key')">Key <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortKeys('udid')">UDID <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortKeys('status')">Status <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortKeys('expires_at')">Expires <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortKeys('days_left')">Days <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortKeys('created_at')">Created <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="keysBody">
+            <tr><td colspan="7" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Devices Section -->
+    <div id="devicesSection" style="display:none">
+      <div class="grid-3" style="margin-bottom:28px">
+        <div class="stat-card"><div class="stat-label"><i data-lucide="monitor-smartphone"></i> Total Devices</div><div class="stat-value" id="devTotal">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="user"></i> Free</div><div class="stat-value" id="devFree" style="color:var(--text-dim)">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="crown"></i> Premium</div><div class="stat-value" id="devPremium" style="color:var(--green)">-</div></div>
+      </div>
+      <div class="toolbar">
+        <h2><i data-lucide="smartphone"></i> Devices</h2>
+        <input type="text" class="search-box" placeholder="Search UDID, IP..." id="deviceSearchBox" oninput="filterDevices()">
+        <button class="btn btn-ghost" onclick="loadDevices()"><i data-lucide="refresh-cw"></i> Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortDevices('udid')">UDID <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortDevices('plan')">Plan <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortDevices('ip')">IP <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortDevices('country')">Country <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortDevices('license_key')">License Key <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+              <th onclick="sortDevices('last_seen')">Last Seen <span class="sort-icon"><i data-lucide="arrow-up-down" style="width:12px;height:12px"></i></span></th>
+            </tr>
+          </thead>
+          <tbody id="devicesBody">
+            <tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Announcements Section -->
+    <div id="announcementsSection" style="display:none">
+      <div class="toolbar">
+        <h2><i data-lucide="megaphone"></i> Announcements</h2>
+        <button class="btn btn-ghost" onclick="loadAnnouncements()"><i data-lucide="refresh-cw"></i> Refresh</button>
+      </div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px">Manage scrolling ticker messages shown on the tweak. Active announcements appear as a marquee banner in the app.</p>
+
+      <!-- Add new announcement -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="plus-circle" style="width:16px;height:16px;color:var(--accent)"></i> New Announcement</h3>
+        <div class="ann-grid">
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Message (EN)</label>
+            <input type="text" id="annMsgEN" placeholder="🎉 New feature: Device Spoofing is here!" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Type</label>
+            <select id="annType" style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+              <option value="info">ℹ️ Info</option>
+              <option value="promo">🎉 Promo</option>
+              <option value="warning">⚠️ Warning</option>
+              <option value="update">🆕 Update</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="addAnnouncement()"><i data-lucide="send"></i> Publish</button>
+        </div>
+        <div style="margin-top:10px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Message (VI) — optional</label>
+          <input type="text" id="annMsgVI" placeholder="🎉 Tính năng mới: Fake thiết bị đã có!" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+        </div>
+      </div>
+
+      <!-- Active Announcements -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th>Message</th>
+              <th>Type</th>
+              <th>Created</th>
+              <th style="width:60px">Active</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="annBody">
+            <tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Releases Section -->
+    <div id="releasesSection" style="display:none">
+      <div class="toolbar">
+        <h2><i data-lucide="package"></i> Releases</h2>
+        <button class="btn btn-ghost" onclick="loadReleases()"><i data-lucide="refresh-cw"></i> Refresh</button>
+      </div>
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px">Manage tweak versions, Sileo/Cydia repo metadata, and app binary files.</p>
+
+      <!-- Current Version Info -->
+      <div class="grid-3" style="margin-bottom:24px">
+        <div class="stat-card"><div class="stat-label"><i data-lucide="tag"></i> Current Version</div><div class="stat-value" id="relVersion" style="font-size:22px">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="hard-drive"></i> Package Size</div><div class="stat-value" id="relSize" style="font-size:22px">-</div></div>
+        <div class="stat-card"><div class="stat-label"><i data-lucide="calendar"></i> Last Updated</div><div class="stat-value" id="relDate" style="font-size:22px">-</div></div>
+      </div>
+
+      <!-- New Release Form -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px"><i data-lucide="upload" style="width:16px;height:16px;color:var(--accent)"></i> Publish New Release</h3>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Version</label>
+            <input type="text" id="relNewVersion" placeholder="1.2.0" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Min iOS</label>
+            <input type="text" id="relMinIOS" placeholder="14.0" value="14.0" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Max iOS</label>
+            <input type="text" id="relMaxIOS" placeholder="18.2" value="18.2" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit">
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px">Changelog</label>
+          <textarea id="relChangelog" rows="3" placeholder="- Added Device Spoofing&#10;- Fixed premium gate&#10;- Improved performance" style="width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical"></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:6px">.deb Package File</label>
+          <div style="display:flex;gap:10px;align-items:center">
+            <label for="relFile" class="btn btn-ghost" style="cursor:pointer;margin:0">
+              <i data-lucide="file-up"></i> Choose .deb
+            </label>
+            <input type="file" id="relFile" accept=".deb" style="display:none" onchange="onDebSelected(this)">
+            <span id="relFileName" style="font-size:12px;color:var(--text-dim)">No file selected</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <button class="btn btn-primary" onclick="publishRelease()"><i data-lucide="rocket"></i> Publish Release</button>
+          <span style="font-size:12px;color:var(--text-dim)">Uploads .deb + updates Sileo repo metadata</span>
+        </div>
+      </div>
+
+      <!-- Release History -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Changelog</th>
+              <th>iOS Range</th>
+              <th>Package</th>
+              <th>Published</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="relBody">
+            <tr><td colspan="5" class="loading"><div class="spinner"></div>Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay hidden" id="editModal">
+  <div class="modal">
+    <h3><i data-lucide="pencil"></i> Edit License</h3>
+    <label>License Key</label>
+    <input type="text" id="editKey" readonly style="opacity:0.5">
+    <label>UDID (Device)</label>
+    <input type="text" id="editUdid" placeholder="Device UDID">
+    <label>Expires At</label>
+    <input type="date" id="editExpires">
+    <label>Total Days</label>
+    <input type="number" id="editDays">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('editModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEdit()"><i data-lucide="save"></i> Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Extend Modal -->
+<div class="modal-overlay hidden" id="extendModal">
+  <div class="modal">
+    <h3><i data-lucide="calendar-plus"></i> Extend License</h3>
+    <label>License Key</label>
+    <input type="text" id="extendKey" readonly style="opacity:0.5">
+    <label>Add Days</label>
+    <input type="number" id="extendDays" value="7" min="1">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('extendModal')">Cancel</button>
+      <button class="btn btn-success" onclick="doExtend()"><i data-lucide="plus"></i> Extend</button>
+    </div>
+  </div>
+</div>
+
+<!-- Generate Modal -->
+<div class="modal-overlay hidden" id="generateModal">
+  <div class="modal">
+    <h3><i data-lucide="key-round"></i> Generate New Key</h3>
+    <label>Duration (Days)</label>
+    <select id="genDays">
+      <option value="7">7 days</option>
+      <option value="30" selected>30 days</option>
+      <option value="90">90 days</option>
+      <option value="365">365 days</option>
+    </select>
+    <label>UDID (optional — bind to device)</label>
+    <input type="text" id="genUdid" placeholder="Leave empty for unbound key">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('generateModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="doGenerate()"><i data-lucide="sparkles"></i> Generate</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm -->
+<div class="modal-overlay hidden" id="deleteModal">
+  <div class="modal">
+    <h3><i data-lucide="trash-2"></i> Delete License</h3>
+    <p style="color:var(--text-dim);margin-bottom:8px">Are you sure? This cannot be undone.</p>
+    <p class="key-cell" id="deleteKeyDisplay" style="font-size:14px;margin-bottom:16px"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()"><i data-lucide="trash-2"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Generic Confirm Modal -->
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal">
+    <h3><i data-lucide="alert-triangle"></i> <span id="confirmTitle">Confirm</span></h3>
+    <p style="color:var(--text-dim);margin-bottom:8px" id="confirmMsg">Are you sure?</p>
+    <p id="confirmDetail" style="font-size:13px;margin-bottom:16px;color:var(--text);word-break:break-all"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-danger" id="confirmBtn" onclick=""><i data-lucide="trash-2"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_BASE = 'https://ioscontrol-worker.ioscontrol.workers.dev';
+let SECRET = '';
+let allKeys = [];
+let allDevices = [];
+let sortState = { keys: { col: null, asc: true }, devices: { col: null, asc: true } };
+let chartInstance = null;
+
+// Draw Chart
+function renderChart(keysData) {
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+  
+  // Get last 14 days
+  const now = new Date();
+  const days = [];
+  const counts = {};
+  
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const label = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    days.push(label);
+    counts[label] = 0;
+  }
+  
+  keysData.forEach(k => {
+    if (k.created_at) {
+      const d = new Date(k.created_at);
+      const label = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+      if (counts[label] !== undefined) counts[label]++;
+    }
+  });
+  
+  const values = days.map(d => counts[d]);
+  
+  if (chartInstance) chartInstance.destroy();
+  
+  Chart.defaults.color = 'rgba(255,255,255,0.45)';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'New Keys',
+        data: values,
+        borderColor: '#6c5ce7',
+        backgroundColor: 'rgba(108,92,231,0.1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: '#12121a',
+        pointBorderColor: '#6c5ce7',
+        pointHoverBackgroundColor: '#6c5ce7',
+        pointRadius: 3,
+        pointHoverRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display:false }, tooltip: { mode: 'index', intersect: false, backgroundColor: '#1a1a26', titleColor: '#fff', bodyColor: '#00d68f', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1 } },
+      scales: {
+        x: { grid: { display: false, drawBorder: false } },
+        y: { grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false }, beginAtZero: true, ticks: { precision: 0 } }
+      },
+      interaction: { mode: 'nearest', axis: 'x', intersect: false }
+    }
+  });
+}
+
+// Auth
+function doLogin() {
+  SECRET = document.getElementById('secretInput').value.trim();
+  if (!SECRET) return;
+  document.getElementById('loginError').textContent = '';
+  fetch(`${API_BASE}/admin/api/stats`, { headers: { Authorization: `Bearer ${SECRET}` } })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { document.getElementById('loginError').textContent = '❌ Invalid secret'; return; }
+      localStorage.setItem('ioscontrol_admin_secret', SECRET);
+      document.getElementById('loginOverlay').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      loadStats(); loadKeys();
+      lucide.createIcons();
+    })
+    .catch(() => { document.getElementById('loginError').textContent = '❌ Connection failed'; });
+}
+
+(function() {
+  const saved = localStorage.getItem('ioscontrol_admin_secret');
+  if (saved) { SECRET = saved; document.getElementById('secretInput').value = saved; doLogin(); }
+})();
+
+document.getElementById('secretInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// API helper
+async function api(path, method = 'GET', body = null) {
+  const opts = { method, headers: { Authorization: `Bearer ${SECRET}`, 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(`${API_BASE}${path}`, opts);
+  return r.json();
+}
+
+// Stats
+async function loadStats() {
+  const d = await api('/admin/api/stats');
+  document.getElementById('statTotal').textContent = d.total ?? '-';
+  document.getElementById('statActive').textContent = d.active ?? '-';
+  document.getElementById('statExpired').textContent = d.expired ?? '-';
+  document.getElementById('statLocked').textContent = d.locked ?? '-';
+}
+
+// Keys
+async function loadKeys() {
+  const tbody = document.getElementById('keysBody');
+  tbody.innerHTML = '<tr><td colspan="7" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  const d = await api('/admin/api/keys');
+  allKeys = d.keys || [];
+  sortState.keys = { col: null, asc: true };
+  renderKeys(allKeys);
+  renderChart(allKeys);
+}
+
+function renderKeys(keys) {
+  const tbody = document.getElementById('keysBody');
+  if (!keys.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No license keys found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = keys.map(k => {
+    const badge = k.status === 'active' ? 'badge-active' : k.status === 'locked' ? 'badge-locked' : 'badge-expired';
+    const created = k.created_at ? new Date(k.created_at).toLocaleDateString() : '-';
+    return `<tr>
+      <td class="key-cell">${k.license_key}</td>
+      <td class="udid-cell" title="${k.udid || ''}">${k.udid ? k.udid.substring(0,16) + '...' : '<span class="badge badge-free">unbound</span>'}</td>
+      <td><span class="badge ${badge}">${k.status}</span></td>
+      <td>${k.expires_at || '-'}</td>
+      <td>${k.days_left}d</td>
+      <td>${created}</td>
+      <td style="text-align:right;white-space:nowrap">
+        <button class="btn btn-ghost btn-sm" onclick="showEditModal('${k.license_key}')" title="Edit"><i data-lucide="pencil" style="width:13px;height:13px"></i></button>
+        <button class="btn btn-success btn-sm" onclick="showExtendModal('${k.license_key}')" title="Extend"><i data-lucide="calendar-plus" style="width:13px;height:13px"></i></button>
+        <button class="btn btn-warning btn-sm" onclick="toggleLock('${k.license_key}')" title="${k.locked?'Unlock':'Lock'}"><i data-lucide="${k.locked?'lock-open':'lock'}" style="width:13px;height:13px"></i></button>
+        <button class="btn btn-danger btn-sm" onclick="deleteKey('${k.license_key}')" title="Delete"><i data-lucide="trash-2" style="width:13px;height:13px"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function filterKeys() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  renderKeys(allKeys.filter(k =>
+    k.license_key.toLowerCase().includes(q) ||
+    (k.udid || '').toLowerCase().includes(q) ||
+    (k.status || '').toLowerCase().includes(q)
+  ));
+}
+
+// Re-render keys preserving current search filter + sort state
+function refreshKeysView() {
+  let keys = [...allKeys];
+  // Apply sort
+  const s = sortState.keys;
+  if (s.col) {
+    keys.sort((a, b) => {
+      let va = a[s.col] ?? '', vb = b[s.col] ?? '';
+      if (s.col === 'days_left') { va = Number(va); vb = Number(vb); }
+      if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+      if (va < vb) return s.asc ? -1 : 1;
+      if (va > vb) return s.asc ? 1 : -1;
+      return 0;
+    });
+  }
+  // Apply filter
+  const q = document.getElementById('searchBox')?.value?.toLowerCase();
+  if (q) {
+    keys = keys.filter(k =>
+      k.license_key.toLowerCase().includes(q) ||
+      (k.udid || '').toLowerCase().includes(q) ||
+      (k.status || '').toLowerCase().includes(q)
+    );
+  }
+  renderKeys(keys);
+}
+
+// Sort keys
+function sortKeys(col) {
+  const s = sortState.keys;
+  if (s.col === col) s.asc = !s.asc;
+  else { s.col = col; s.asc = true; }
+  document.querySelectorAll('#keysSection th').forEach(th => th.classList.remove('sorted'));
+  refreshKeysView();
+}
+
+// Edit
+function showEditModal(key) {
+  const k = allKeys.find(x => x.license_key === key);
+  if (!k) return;
+  document.getElementById('editKey').value = k.license_key;
+  document.getElementById('editUdid').value = k.udid || '';
+  document.getElementById('editExpires').value = k.expires_at || '';
+  document.getElementById('editDays').value = k.days || 0;
+  document.getElementById('editModal').classList.remove('hidden');
+}
+
+async function saveEdit() {
+  const key = document.getElementById('editKey').value;
+  const updates = {
+    udid: document.getElementById('editUdid').value || null,
+    expires_at: document.getElementById('editExpires').value,
+    days: parseInt(document.getElementById('editDays').value),
+  };
+  const d = await api(`/admin/api/keys/${key}`, 'PUT', updates);
+  if (d.success) {
+    // Update local state
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0) {
+      Object.assign(allKeys[idx], updates);
+      const now = new Date();
+      const exp = new Date(updates.expires_at);
+      allKeys[idx].days_left = Math.max(0, Math.ceil((exp - now) / 86400000));
+      allKeys[idx].status = allKeys[idx].locked ? 'locked' : (allKeys[idx].days_left > 0 ? 'active' : 'expired');
+    }
+    toast('Key updated');
+    closeModal('editModal');
+    refreshKeysView();
+    updateStatsFromLocal();
+  } else toast(d.error || 'Failed', true);
+}
+
+// Extend
+function showExtendModal(key) {
+  document.getElementById('extendKey').value = key;
+  document.getElementById('extendDays').value = 7;
+  document.getElementById('extendModal').classList.remove('hidden');
+}
+
+async function doExtend() {
+  const key = document.getElementById('extendKey').value;
+  const days = parseInt(document.getElementById('extendDays').value);
+  const d = await api(`/admin/api/keys/${key}/extend`, 'POST', { days });
+  if (d.success) {
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0 && d.data) {
+      allKeys[idx].expires_at = d.data.expires_at;
+      allKeys[idx].days = d.data.days;
+      const now = new Date();
+      allKeys[idx].days_left = Math.max(0, Math.ceil((new Date(d.data.expires_at) - now) / 86400000));
+      allKeys[idx].status = 'active';
+    }
+    toast(`Extended +${days} days`);
+    closeModal('extendModal');
+    refreshKeysView();
+    updateStatsFromLocal();
+  } else toast(d.error || 'Failed', true);
+}
+
+// Lock
+async function toggleLock(key) {
+  const d = await api(`/admin/api/keys/${key}/lock`, 'POST');
+  if (d.success !== undefined) {
+    const idx = allKeys.findIndex(x => x.license_key === key);
+    if (idx >= 0) {
+      allKeys[idx].locked = d.locked;
+      allKeys[idx].status = d.locked ? 'locked' : (allKeys[idx].days_left > 0 ? 'active' : 'expired');
+    }
+    toast(d.locked ? 'Key locked' : 'Key unlocked');
+    refreshKeysView();
+    updateStatsFromLocal();
+  }
+}
+
+// Delete
+let pendingDeleteKey = null;
+function deleteKey(key) {
+  pendingDeleteKey = key;
+  document.getElementById('deleteKeyDisplay').textContent = key;
+  document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+async function confirmDelete() {
+  if (!pendingDeleteKey) return;
+  try {
+    const d = await api(`/admin/api/keys/${pendingDeleteKey}`, 'DELETE');
+    if (d.success) {
+      allKeys = allKeys.filter(x => x.license_key !== pendingDeleteKey);
+      toast('Key deleted');
+      refreshKeysView();
+      updateStatsFromLocal();
+    } else toast(d.error || 'Delete failed', true);
+  } catch(e) { toast('Network error: ' + e.message, true); }
+  closeModal('deleteModal');
+  pendingDeleteKey = null;
+}
+
+// Generate
+function showGenerateModal() {
+  document.getElementById('generateModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+async function doGenerate() {
+  const days = parseInt(document.getElementById('genDays').value);
+  const udid = document.getElementById('genUdid').value.trim() || null;
+  const d = await api('/admin/api/keys/generate', 'POST', { days, udid });
+  if (d.success) {
+    // Add to local state
+    const now = new Date();
+    const exp = new Date();
+    exp.setDate(exp.getDate() + days);
+    allKeys.unshift({
+      license_key: d.license_key,
+      udid: udid,
+      days: days,
+      days_left: days,
+      expires_at: exp.toISOString().split('T')[0],
+      created_at: now.toISOString(),
+      status: 'active',
+      licensed: true,
+    });
+    toast(`Generated: ${d.license_key}`);
+    closeModal('generateModal');
+    refreshKeysView();
+    updateStatsFromLocal();
+    navigator.clipboard.writeText(d.license_key);
+  } else toast(d.error || 'Failed', true);
+}
+
+// Helpers
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+function toast(msg, isError = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${isError ? 'toast-error' : 'toast-success'}`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+const showToast = (msg) => toast(msg, msg.startsWith('❌'));
+
+// Recalculate stats from local allKeys without API call
+function updateStatsFromLocal() {
+  let total = allKeys.length, active = 0, expired = 0, locked = 0;
+  for (const k of allKeys) {
+    if (k.locked || k.status === 'locked') locked++;
+    else if (k.days_left > 0 || k.status === 'active') active++;
+    else expired++;
+  }
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statExpired').textContent = expired;
+  document.getElementById('statLocked').textContent = locked;
+}
+
+function showSection(s, el) {
+  document.querySelectorAll('.sidebar a:not(.sidebar-logo)').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-inner a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  ['keysSection','devicesSection','announcementsSection','releasesSection'].forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec) sec.style.display = 'none';
+  });
+  document.getElementById('statsGrid').style.display = s === 'keys' ? '' : 'none';
+  const cw = document.getElementById('chartWrapper');
+  if (cw) cw.style.display = s === 'keys' ? '' : 'none';
+  
+  if (s === 'keys') document.getElementById('keysSection').style.display = '';
+  if (s === 'devices') { document.getElementById('devicesSection').style.display = ''; loadDevices(); }
+  if (s === 'announcements') { document.getElementById('announcementsSection').style.display = ''; loadAnnouncements(); }
+  if (s === 'releases') { document.getElementById('releasesSection').style.display = ''; loadReleases(); }
+  if (s === 'generate') showGenerateModal();
+}
+
+// Mobile nav
+function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+}
+
+// Devices
+async function loadDevices() {
+  const tbody = document.getElementById('devicesBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  const d = await api('/admin/api/devices');
+  allDevices = d.devices || [];
+  document.getElementById('devTotal').textContent = d.total ?? '-';
+  document.getElementById('devFree').textContent = d.free ?? '-';
+  document.getElementById('devPremium').textContent = d.premium ?? '-';
+  sortState.devices = { col: null, asc: true };
+  renderDevices(allDevices);
+}
+
+function renderDevices(devices) {
+  const tbody = document.getElementById('devicesBody');
+  if (!devices.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No devices tracked yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = devices.map(d => {
+    let badge = 'badge-free', label = d.plan || 'free';
+    if (d.plan === 'premium') { badge = 'badge-active'; }
+    else if (d.expired) { badge = 'badge-expired'; label = 'EXPIRED'; }
+    else if (d.locked) { badge = 'badge-expired'; label = 'LOCKED'; }
+    const lastSeen = d.last_seen ? new Date(d.last_seen).toLocaleString() : '-';
+    return `<tr>
+      <td class="udid-cell" title="${d.udid}">${d.udid}</td>
+      <td><span class="badge ${badge}">${label}</span></td>
+      <td style="font-size:12px;color:var(--text-dim)">${d.ip || '-'}</td>
+      <td>${d.country || '-'}</td>
+      <td class="key-cell">${d.license_key || '-'}</td>
+      <td style="font-size:12px">${lastSeen}</td>
+    </tr>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function filterDevices() {
+  const q = document.getElementById('deviceSearchBox').value.toLowerCase();
+  renderDevices(allDevices.filter(d =>
+    (d.udid || '').toLowerCase().includes(q) ||
+    (d.ip || '').includes(q) ||
+    (d.plan || '').includes(q) ||
+    (d.country || '').toLowerCase().includes(q)
+  ));
+}
+
+function sortDevices(col) {
+  const s = sortState.devices;
+  if (s.col === col) s.asc = !s.asc;
+  else { s.col = col; s.asc = true; }
+  const sorted = [...allDevices].sort((a, b) => {
+    let va = a[col] ?? '', vb = b[col] ?? '';
+    if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return s.asc ? -1 : 1;
+    if (va > vb) return s.asc ? 1 : -1;
+    return 0;
+  });
+  renderDevices(sorted);
+}
+
+// ═══ Announcements ═══
+let allAnnouncements = [];
+
+async function loadAnnouncements() {
+  const tbody = document.getElementById('annBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+  try {
+    const d = await api('/admin/api/announcements');
+    allAnnouncements = d.announcements || [];
+    renderAnnouncements();
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load</td></tr>';
+  }
+}
+
+function renderAnnouncements() {
+  const tbody = document.getElementById('annBody');
+  if (!allAnnouncements.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No announcements yet</td></tr>';
+    return;
+  }
+  const typeBadge = { info: 'badge-active', promo: 'badge-active', warning: 'badge-expired', update: 'badge-locked' };
+  tbody.innerHTML = allAnnouncements.map((a, i) => {
+    const badge = typeBadge[a.type] || 'badge-free';
+    const created = a.created_at ? new Date(a.created_at).toLocaleString() : '-';
+    const viMsg = a.message_vi ? `<br><span style="font-size:11px;color:var(--text-dim)">🇻🇳 ${a.message_vi}</span>` : '';
+    return `<tr>
+      <td style="color:var(--text-dim)">${i + 1}</td>
+      <td style="max-width:300px">${a.message}${viMsg}</td>
+      <td><span class="badge ${badge}">${a.type}</span></td>
+      <td style="font-size:12px">${created}</td>
+      <td><span class="badge ${a.active ? 'badge-active' : 'badge-free'}">${a.active ? 'ON' : 'OFF'}</span></td>
+      <td style="text-align:right">
+        <button class="btn btn-ghost btn-sm" onclick="toggleAnnouncement('${a.id}',${!a.active})" title="${a.active ? 'Deactivate' : 'Activate'}">
+          <i data-lucide="${a.active ? 'eye-off' : 'eye'}"></i>
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="deleteAnnouncement('${a.id}', \`${a.message.replace(/`/g,"'")}\`)" title="Delete">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+async function addAnnouncement() {
+  const msg = document.getElementById('annMsgEN').value.trim();
+  if (!msg) { showToast('❌ Message (EN) is required'); return; }
+  const body = {
+    message: msg,
+    message_vi: document.getElementById('annMsgVI').value.trim() || '',
+    type: document.getElementById('annType').value,
+    active: true
+  };
+  const r = await api('/admin/api/announcements', 'POST', body);
+  if (r.success) {
+    showToast('✅ Announcement published!');
+    document.getElementById('annMsgEN').value = '';
+    document.getElementById('annMsgVI').value = '';
+    if (r.announcement) allAnnouncements.unshift(r.announcement);
+    else await loadAnnouncements(); // fallback if no data returned
+    renderAnnouncements();
+  } else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+async function toggleAnnouncement(id, active) {
+  const r = await api(`/admin/api/announcements/${id}`, 'PUT', { active });
+  if (r.success) {
+    const ann = allAnnouncements.find(a => a.id === id);
+    if (ann) ann.active = active;
+    showToast(active ? '✅ Activated' : '⏸ Deactivated');
+    renderAnnouncements();
+  } else showToast('❌ ' + (r.error || 'Failed'));
+}
+
+async function deleteAnnouncement(id, msg) {
+  document.getElementById('confirmTitle').textContent = 'Delete Announcement';
+  document.getElementById('confirmMsg').textContent = 'This announcement will be permanently deleted.';
+  document.getElementById('confirmDetail').textContent = msg || '';
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api(`/admin/api/announcements/${id}`, 'DELETE');
+    if (r.success) {
+      allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+      showToast('🗑 Deleted');
+      renderAnnouncements();
+    } else showToast('❌ ' + (r.error || 'Failed'));
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+// ═══ Releases ═══
+let allReleases = [];
+
+let sileoPackage = null;
+
+async function loadReleases() {
+  const tbody = document.getElementById('relBody');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading"><div class="spinner"></div>Loading...</td></tr>';
+
+  // Fetch current Sileo version from version.json + Packages
+  try {
+    const [vRes, pRes] = await Promise.all([
+      fetch('https://ioscontrol.com/version.json?' + Date.now()),
+      fetch('https://ioscontrol.com/repo/Packages?' + Date.now())
+    ]);
+    const vData = await vRes.json();
+    const pkgText = await pRes.text();
+
+    // Parse Packages file
+    const pkg = {};
+    pkgText.split('\n').forEach(line => {
+      const m = line.match(/^(\S+):\s*(.+)/);
+      if (m) pkg[m[1]] = m[2];
+    });
+
+    // Only show LIVE entry if Packages has a valid package
+    if (pkg.Version && pkg.Filename) {
+      sileoPackage = {
+        id: '_sileo_current',
+        version: pkg.Version,
+        changelog: vData.changelog?.en || pkg.Description || '-',
+        min_ios: vData.minimum_os || '15.0',
+        max_ios: '18.2',
+        size: pkg.Size ? formatBytes(parseInt(pkg.Size)) : '-',
+        deb_filename: pkg.Filename.split('/').pop(),
+        has_deb: true,
+        is_sileo: true,
+        published_at: vData.release_date || '-',
+        download_url: 'https://ioscontrol.com/repo/' + pkg.Filename,
+        package_id: pkg.Package || '-',
+        md5: pkg.MD5sum || '-',
+      };
+
+      document.getElementById('relVersion').textContent = sileoPackage.version;
+      document.getElementById('relSize').textContent = sileoPackage.size;
+      document.getElementById('relDate').textContent = sileoPackage.published_at;
+    } else {
+      sileoPackage = null;
+    }
+  } catch (e) { console.warn('Failed to fetch repo info', e); }
+
+  try {
+    const d = await api('/admin/api/releases');
+    allReleases = d.releases || [];
+    // Override stat cards with latest cloud release if any
+    if (allReleases.length > 0) {
+      const latest = allReleases[0];
+      document.getElementById('relVersion').textContent = latest.version || '-';
+      document.getElementById('relSize').textContent = latest.size || '-';
+      document.getElementById('relDate').textContent = latest.published_at ? new Date(latest.published_at).toLocaleDateString() : '-';
+    }
+    renderReleases();
+  } catch (e) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load</td></tr>';
+  }
+}
+
+function renderReleases() {
+  const tbody = document.getElementById('relBody');
+  let rows = '';
+
+  // Always show current Sileo repo package first
+  if (sileoPackage) {
+    const s = sileoPackage;
+    rows += `<tr style="background:rgba(108,92,231,0.06)">
+      <td><span class="badge badge-active">${s.version}</span> <span style="font-size:9px;color:var(--accent);font-weight:700">LIVE</span></td>
+      <td style="font-size:12px;max-width:300px">${s.changelog}</td>
+      <td style="font-size:12px">${s.min_ios} — ${s.max_ios}</td>
+      <td><span style="font-size:10px;color:var(--green)">📦 ${s.deb_filename} (${s.size})</span><br>
+        <span style="font-size:9px;color:var(--text-dim)">MD5: ${s.md5}</span>
+      </td>
+      <td style="font-size:12px">${s.published_at}</td>
+      <td style="text-align:right">
+        ${s.download_url ? `<a href="${s.download_url}" class="btn btn-ghost btn-sm" title="Download from Sileo repo" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="deleteSileoPackage('${s.deb_filename}')" title="Delete from repo">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
+      </td>
+    </tr>`;
+  }
+
+  // Cloud releases below
+  rows += allReleases.map((r, i) => {
+    const date = r.published_at ? new Date(r.published_at).toLocaleString() : '-';
+    const cl = (r.changelog || '').replace(/\n/g, '<br>');
+    const debInfo = r.has_deb
+      ? `<span style="font-size:10px;color:var(--green)">📦 ${r.deb_filename || '.deb'} (${r.size || '?'})</span>`
+      : `<span style="font-size:10px;color:var(--text-dim)">No file</span>`;
+    const dlBtn = r.has_deb
+      ? `<a href="${API_BASE}/admin/api/releases/download/${r.id}" class="btn btn-ghost btn-sm" title="Download .deb" target="_blank"><i data-lucide="download" style="color:var(--green)"></i></a>`
+      : '';
+    return `<tr>
+      <td><span class="badge badge-free">${r.version}</span></td>
+      <td style="font-size:12px;max-width:300px;white-space:pre-wrap">${cl}</td>
+      <td style="font-size:12px">${r.min_ios || '?'} — ${r.max_ios || '?'}</td>
+      <td>${debInfo}</td>
+      <td style="font-size:12px">${date}</td>
+      <td style="text-align:right">
+        ${dlBtn}
+        <button class="btn btn-ghost btn-sm" onclick="deleteRelease('${r.id}')" title="Delete">
+          <i data-lucide="trash-2" style="color:var(--red)"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  if (!rows) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No releases yet</td></tr>';
+  } else {
+    tbody.innerHTML = rows;
+  }
+  lucide.createIcons();
+}
+
+let selectedDebFile = null;
+
+function onDebSelected(input) {
+  const file = input.files[0];
+  selectedDebFile = file || null;
+  const label = document.getElementById('relFileName');
+  if (file) {
+    label.textContent = `${file.name} (${formatBytes(file.size)})`;
+    label.style.color = 'var(--green)';
+  } else {
+    label.textContent = 'No file selected';
+    label.style.color = 'var(--text-dim)';
+  }
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+async function publishRelease() {
+  const version = document.getElementById('relNewVersion').value.trim();
+  if (!version) { showToast('❌ Version is required'); return; }
+
+  const changelog = document.getElementById('relChangelog').value.trim();
+  const minIOS = document.getElementById('relMinIOS').value.trim() || '15.0';
+  const maxIOS = document.getElementById('relMaxIOS').value.trim() || '18.2';
+
+  if (!selectedDebFile) {
+    showToast('❌ Please select a .deb file'); return;
+  }
+
+  const btn = document.querySelector('#releasesSection .btn-primary');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader"></i> Uploading...';
+
+  try {
+    // Step 1: Get GitHub token
+    showToast('⏳ Step 1/5: Authenticating...');
+    const ghInfo = await api('/admin/api/github-token');
+    if (!ghInfo.token) { showToast('❌ GitHub token not configured'); return; }
+    const ghHeaders = {
+      Authorization: `token ${ghInfo.token}`,
+      'User-Agent': 'ioscontrol-admin',
+      'Content-Type': 'application/json',
+      Accept: 'application/vnd.github.v3+json'
+    };
+    const repo = ghInfo.repo;
+
+    // Step 2: Read file as base64 (chunked)
+    showToast('⏳ Step 2/5: Reading file (' + formatBytes(selectedDebFile.size) + ')...');
+    const arrayBuf = await selectedDebFile.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuf);
+    let binary = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+    }
+    const base64 = btoa(binary);
+
+    // Compute SHA256
+    const sha256Buf = await crypto.subtle.digest('SHA-256', bytes);
+    const sha256 = Array.from(new Uint8Array(sha256Buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    showToast('✅ File read, SHA256: ' + sha256.slice(0, 12) + '...');
+
+    // Step 3: Upload blob to GitHub (direct — no worker memory limit!)
+    showToast('⏳ Step 3/5: Uploading .deb to GitHub (' + formatBytes(bytes.length) + ')...');
+    const blobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: base64, encoding: 'base64' })
+    });
+    if (!blobRes.ok) { const e = await blobRes.json(); throw new Error(e.message || 'Blob upload failed'); }
+    const blobData = await blobRes.json();
+    showToast('✅ .deb uploaded to GitHub!');
+
+    // Step 4: Generate Packages + create tree + commit
+    showToast('⏳ Step 4/5: Updating Sileo repo metadata...');
+    const filename = selectedDebFile.name;
+    const pkgContent = [
+      'Package: com.trieudz.ioscontrol',
+      'Name: IOSControl',
+      `Version: ${version}`,
+      'Architecture: iphoneos-arm64',
+      `Description: ${changelog || 'Ultimate iOS Automation'}`,
+      'Depiction: https://ioscontrol.com/',
+      'Maintainer: IOSControl <support@ioscontrol.com>',
+      'Author: trieudz',
+      'Section: Tweaks',
+      `Depends: mobilesubstrate, firmware (>= ${minIOS})`,
+      'Icon: https://ioscontrol.com/repo/icon.png',
+      `Filename: debs/${filename}`,
+      `Size: ${bytes.length}`,
+      `Installed-Size: ${Math.round(bytes.length / 1024)}`,
+      `SHA256: ${sha256}`,
+      ''
+    ].join('\n');
+
+    // Get HEAD, create Packages blob, tree, commit
+    const refRes = await fetch(`https://api.github.com/repos/${repo}/git/ref/heads/main`, { headers: ghHeaders });
+    const headSha = (await refRes.json()).object.sha;
+
+    const pkgBlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: btoa(pkgContent), encoding: 'base64' })
+    });
+    const pkgBlobSha = (await pkgBlobRes.json()).sha;
+
+    // Gzip Packages for Sileo (reads .gz first)
+    const pkgBytes = new TextEncoder().encode(pkgContent);
+    const cs = new CompressionStream('gzip');
+    const writer = cs.writable.getWriter();
+    writer.write(pkgBytes);
+    writer.close();
+    const gzBuf = await new Response(cs.readable).arrayBuffer();
+    const gzBytes = new Uint8Array(gzBuf);
+    let gzBin = '';
+    for (let i = 0; i < gzBytes.length; i += 8192) {
+      gzBin += String.fromCharCode.apply(null, gzBytes.subarray(i, i + 8192));
+    }
+    const gzBase64 = btoa(gzBin);
+
+    const gzBlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: gzBase64, encoding: 'base64' })
+    });
+    const gzBlobSha = (await gzBlobRes.json()).sha;
+
+    // Also create version.json blob
+    const versionJson = JSON.stringify({
+      version: version,
+      build: Date.now(),
+      minimum_os: minIOS,
+      release_date: new Date().toISOString().slice(0, 10),
+      download_url: `https://ioscontrol.com/repo/debs/${filename}`,
+      changelog: { en: changelog || 'Bug fixes and improvements', vi: changelog || 'Sửa lỗi và cải thiện' }
+    }, null, 2) + '\n';
+
+    const vjBlobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ content: btoa(versionJson), encoding: 'base64' })
+    });
+    const vjBlobSha = (await vjBlobRes.json()).sha;
+
+    const treeRes = await fetch(`https://api.github.com/repos/${repo}/git/trees`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({
+        base_tree: headSha,
+        tree: [
+          { path: `repo/debs/${filename}`, mode: '100644', type: 'blob', sha: blobData.sha },
+          { path: 'repo/Packages', mode: '100644', type: 'blob', sha: pkgBlobSha },
+          { path: 'repo/Packages.gz', mode: '100644', type: 'blob', sha: gzBlobSha },
+          { path: 'version.json', mode: '100644', type: 'blob', sha: vjBlobSha },
+        ]
+      })
+    });
+    const treeSha = (await treeRes.json()).sha;
+
+    const commitRes = await fetch(`https://api.github.com/repos/${repo}/git/commits`, {
+      method: 'POST', headers: ghHeaders,
+      body: JSON.stringify({ message: `release: v${version}`, tree: treeSha, parents: [headSha] })
+    });
+    const commitSha = (await commitRes.json()).sha;
+
+    await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/main`, {
+      method: 'PATCH', headers: ghHeaders,
+      body: JSON.stringify({ sha: commitSha })
+    });
+
+    // Step 5: Save release metadata to cloud
+    showToast('⏳ Step 5/5: Saving release info...');
+    await api('/admin/api/releases', 'POST', {
+      version, min_ios: minIOS, max_ios: maxIOS, changelog,
+      size: formatBytes(bytes.length), deb_filename: filename, has_deb: true
+    });
+
+    showToast('🚀 Release v' + version + ' published to Sileo!');
+    document.getElementById('relNewVersion').value = '';
+    document.getElementById('relChangelog').value = '';
+    document.getElementById('relFile').value = '';
+    selectedDebFile = null;
+    document.getElementById('relFileName').textContent = 'No file selected';
+    document.getElementById('relFileName').style.color = 'var(--text-dim)';
+    loadReleases();
+  } catch (e) {
+    showToast('❌ Error: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="rocket"></i> Publish Release';
+    lucide.createIcons();
+  }
+}
+
+async function deleteRelease(id) {
+  document.getElementById('confirmTitle').textContent = 'Delete Release';
+  document.getElementById('confirmMsg').textContent = 'This release and its .deb file will be permanently deleted.';
+  document.getElementById('confirmDetail').textContent = '';
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api(`/admin/api/releases/${id}`, 'DELETE');
+    if (r.success) { showToast('🗑 Deleted'); loadReleases(); }
+    else showToast('❌ ' + (r.error || 'Failed'));
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+function deleteSileoPackage(filename) {
+  document.getElementById('confirmTitle').textContent = 'Delete Sileo Package';
+  document.getElementById('confirmMsg').textContent = '⚠️ This will remove the .deb file from the Sileo repo. Users will no longer be able to install this version.';
+  document.getElementById('confirmDetail').textContent = '📦 ' + filename;
+  document.getElementById('confirmBtn').onclick = async function() {
+    closeModal('confirmModal');
+    const r = await api('/admin/api/releases/delete-repo', 'POST', { filename });
+    if (r.success) {
+      showToast('🗑 Deleted from repo');
+      sileoPackage = null;
+      loadReleases();
+    } else {
+      showToast('❌ ' + (r.error || 'Failed'));
+    }
+  };
+  document.getElementById('confirmModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+// Init icons
+document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+</script>
+</body>
+</html>
