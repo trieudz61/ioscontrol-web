@@ -1,16 +1,25 @@
 Origin: IOSControl
 Label: IOSControl
 Suite: stable
-Version: 1.0
-Codename: ios
+Version: 1.7.4
+Codename: ioscontrol
 Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl - iOS Automation Tweak
+Description: IOSControl Sileo Repository
+Date: Sun, 24 May 2026 23:21:36 +0000
+
 MD5Sum:
- 7e74d4a2de58a3c2a89a8bc8fd1f673b 570 Packages
- ce90a46e8826a83addf1b0daca0ddf65 401 Packages.gz
- 979ebcdc1378d1a592c2af064e2c8c6f 441 Packages.bz2
+ 4eb9222e5e31a1bcbab9f7bdb2b0c09e 2180 Packages
+ 10700aefc5c790422a730fddd4778425 745 Packages.gz
+ 1c35e433485478d294e543d77164e5f0 852 Packages.bz2
+ 7c24c27a0f790f07ee58aabde6371a90 15279648 debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
+SHA1:
+ aa74946d0e5ae6aed5f05c826215bb45bbe66e99 2180 Packages
+ 8333b048bd7b85672244803ef77796972ddb0adf 745 Packages.gz
+ c6c86d22ab9ae8091cc74229f1c0013fa1bdec78 852 Packages.bz2
+ d4608bbecb0b4c464312aebf4b770db161ee8fc5 15279648 debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
 SHA256:
- ef06b27aed9b4b8f08d45ade224b8720d85ecdf20d9a1a283010ea041d69f798 570 Packages
- fd9e6afbfd1fc3551f67aa04ef0f63a51fa0ef78fe2c44fd36266d76500b25e2 401 Packages.gz
- ffe811e6ee582f2569649eff5fcada1a3bc56d1f223e23768aea79f2206d9355 441 Packages.bz2
+ 3ba2bb71b7150516648e332e1ea46d10114014c0edc03527407121891a76315b 2180 Packages
+ 97e387bb811a72d8038b25efd3ba88e3512507cc70fac236100b63ca0c09542a 745 Packages.gz
+ 4684e62e22f60fd06f895d8ece40a16bd4d309322d5061cbe2aa170060700d5f 852 Packages.bz2
+ 155e0ab2f36bd7aa4cd29da3588127471155dfc38191d1adfa8cfad6cc1cb986 15279648 debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
