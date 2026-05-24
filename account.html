@@ -17,14 +17,14 @@
 
     @media(max-width:700px){
       html,body{width:100%;max-width:100%;overflow-x:hidden}
-      .nav-in{display:grid;grid-template-columns:1fr auto;gap:10px;padding:12px;align-items:center}
+      .nav-in{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px;align-items:center}
       .brand{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px}
       .brand img{width:30px;height:30px;flex:0 0 auto}
       #navPill{display:none!important}
       .spacer{display:none!important}
       #langBtn{justify-self:end;width:auto;min-width:48px;padding:9px 12px}
       #helloUser{grid-column:1/-1;width:100%;max-width:100%;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-      #logoutBtn{grid-column:2/3;grid-row:2;justify-self:end;width:auto!important;min-width:0;padding:8px 11px;font-size:12px;box-shadow:none}#helloUser{grid-column:1/2!important;grid-row:2;text-align:left!important}
+      #logoutBtn{grid-column:3/4;grid-row:1;justify-self:end;width:44px!important;height:44px;min-width:44px;padding:0;font-size:0;box-shadow:none;border-radius:16px;display:grid;place-items:center}.iconbtn svg{width:18px;height:18px}.logoutText{display:none}#helloUser{grid-column:1/-1!important;grid-row:2;text-align:center!important}
       .wrap{width:100%;max-width:100vw;padding:16px 12px 52px}
       .hero{display:block;margin-top:12px}.hero-copy{padding:22px;margin-bottom:14px}.hero h1{font-size:36px;line-height:1.05}.hero p{font-size:15px;line-height:1.6}
       .card{border-radius:22px}.auth,.panel{padding:16px}.tabs{border-radius:14px}.tab{min-height:42px}
@@ -47,7 +47,7 @@
 </head>
 <body>
 <div class="orb"></div>
-<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl Account</a><span id="navPill" class="pill">Ví · Key · Gia hạn</span><div class="spacer"></div><button id="langBtn" class="btn ghost" type="button">EN</button><span id="helloUser" class="pill">Xin chào</span><button id="logoutBtn" class="btn ghost hide">Đăng xuất</button></div></nav>
+<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl Account</a><span id="navPill" class="pill">Ví · Key · Gia hạn</span><div class="spacer"></div><button id="langBtn" class="btn ghost" type="button">EN</button><span id="helloUser" class="pill">Xin chào</span><button id="logoutBtn" class="btn ghost iconbtn hide" aria-label="Đăng xuất" title="Đăng xuất"><i data-lucide="log-out"></i><span class="logoutText">Đăng xuất</span></button></div></nav>
 <main class="wrap">
   <section id="landing" class="hero">
     <div class="card hero-copy"><span class="badge"><i data-lucide="sparkles"></i> <span id="heroBadge">Bảng điều khiển license</span></span><h1 id="heroTitle">Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1><p id="heroDesc">Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.</p><div class="actions"><button id="startBtn" class="btn" onclick="document.getElementById('email').focus()">Bắt đầu</button><a id="pricingLink" class="btn ghost" href="/buy.html">Xem bảng giá</a></div></div>
