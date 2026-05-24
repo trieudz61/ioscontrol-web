@@ -4,7 +4,7 @@ Architecture: iphoneos-arm64
 Maintainer: trieudz
 Installed-Size: 25584
 Depends: mobilesubstrate, firmware (>= 15.0)
-Filename: repo/debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
+Filename: debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
 Size: 16888346
 MD5sum: f7d9b245dca03a69c73b622eda6a5d1c
 SHA1: c031b0322570def37b09bc2a7141666e94e0cb1b
