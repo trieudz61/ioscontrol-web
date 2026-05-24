@@ -45,20 +45,21 @@
 
 
     @media(max-width:700px){
-      .nav-in{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand lang logout" "hello hello hello"!important;align-items:center!important;gap:10px!important}
+      .nav-in{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand lang logout"!important;align-items:center!important;gap:10px!important}
       .nav-in .brand{grid-area:brand!important;grid-column:auto!important;grid-row:auto!important;min-width:0!important;display:flex!important}
       #langBtn{grid-area:lang!important;grid-column:auto!important;grid-row:auto!important;justify-self:end!important;width:auto!important;min-width:56px!important}
       #logoutBtn{grid-area:logout!important;grid-column:auto!important;grid-row:auto!important;justify-self:end!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:grid!important;place-items:center!important;border-radius:16px!important;font-size:20px!important;line-height:1!important}
       #logoutBtn.hide{display:none!important}
       .logoutIcon{display:block!important;transform:rotate(180deg);font-weight:900;line-height:1}.logoutText{display:none!important}
-      #helloUser{grid-area:hello!important;grid-column:auto!important;grid-row:auto!important;width:100%!important;text-align:center!important}
+      #helloUser{display:none!important}
     }
 
+    @media(max-width:700px){#helloUser{display:none!important}.logoutText{display:none!important}}
   </style>
 </head>
 <body>
 <div class="orb"></div>
-<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl Account</a><span id="navPill" class="pill">Ví · Key · Gia hạn</span><div class="spacer"></div><button id="langBtn" class="btn ghost" type="button">EN</button><span id="helloUser" class="pill">Xin chào</span><button id="logoutBtn" class="btn ghost iconbtn hide" aria-label="Đăng xuất" title="Đăng xuất"><span class="logoutIcon">↪</span><span class="logoutText">Đăng xuất</span></button></div></nav>
+<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl</a><span id="navPill" class="pill">Ví · Key · Gia hạn</span><div class="spacer"></div><button id="langBtn" class="btn ghost" type="button">EN</button><span id="helloUser" class="pill">Xin chào</span><button id="logoutBtn" class="btn ghost iconbtn hide" aria-label="Đăng xuất" title="Đăng xuất"><span class="logoutIcon">↪</span><span class="logoutText">Đăng xuất</span></button></div></nav>
 <main class="wrap">
   <section id="landing" class="hero">
     <div class="card hero-copy"><span class="badge"><i data-lucide="sparkles"></i> <span id="heroBadge">Bảng điều khiển license</span></span><h1 id="heroTitle">Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1><p id="heroDesc">Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.</p><div class="actions"><button id="startBtn" class="btn" onclick="document.getElementById('email').focus()">Bắt đầu</button><a id="pricingLink" class="btn ghost" href="/buy.html">Xem bảng giá</a></div></div>
