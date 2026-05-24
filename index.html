@@ -1394,6 +1394,7 @@ html, body { overflow-x: hidden; }
                 <span id="landingThemeIcon"><i data-lucide="moon" style="width:16px;height:16px;"></i></span>
             </button>
             <a href="/docs.html" class="btn-outline">Docs</a>
+            <a href="/portal.html" class="btn-outline" style="border-color:rgba(34,211,238,0.38);color:#67e8f9;"><i data-lucide="wallet-cards" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Portal</a>
             <a href="/buy.html" class="btn-outline" style="border-color:rgba(52,211,153,0.4);color:#34d399;" data-i18n="navPurchase"><i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Buy Key</a>
             <a href="/connect.html" class="btn-primary-lg" data-i18n="navLaunch">Launch IDE →</a>
         </div>
@@ -1413,6 +1414,7 @@ html, body { overflow-x: hidden; }
     <a href="/docs.html"><i data-lucide="book-open" style="width:18px;height:18px;"></i>Documentation</a>
     <div class="mm-divider"></div>
     <div class="mm-cta">
+        <a href="/portal.html"><i data-lucide="wallet-cards" style="width:16px;height:16px;"></i>Account Portal</a>
         <a href="/buy.html"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>Buy Premium Key</a>
         <a href="/connect.html" class="mm-primary"><i data-lucide="play" style="width:16px;height:16px;"></i>Launch Web IDE →</a>
     </div>
@@ -1631,7 +1633,7 @@ function switchDemo(lang) {
                 <tr><td data-i18n="tblRow14">Notification Triggers</td><td class="cross">✗</td><td class="check">✓ Hook Events</td></tr>
                 <tr><td data-i18n="tblRow15">Clipboard Access</td><td class="cross">✗</td><td class="check">✓ Read/Write</td></tr>
                 <tr><td data-i18n="tblRow16">Device Spoofing</td><td class="cross">✗</td><td class="check">✓ Per-app, 30+ models</td></tr>
-                <tr><td data-i18n="tblRow17">Price</td><td class="partial">$4.99 - $9.99</td><td class="check" data-i18n="tblFreeOS">Free + Premium from 6,999₫</td></tr>
+                <tr><td data-i18n="tblRow17">Price</td><td class="partial">$4.99 - $9.99</td><td class="check" data-i18n="tblFreeOS">Free + Premium from 15,000₫</td></tr>
             </tbody>
         </table>
     </div>
@@ -1892,8 +1894,8 @@ function switchDemo(lang) {
             <div class="pricing-card featured fade-in">
                 <div class="pricing-badge" data-i18n="priceBadge">Recommended</div>
                 <h3 data-i18n="price2Name">Premium</h3>
-                <div class="pricing-price gradient-text" data-i18n="priceAmount">6,999₫<span style="font-size:16px;opacity:0.7;">/week</span></div>
-                <div class="pricing-desc" data-i18n="price2Desc">Unlimited. No restrictions. Plans: 7d / 30d / 365d</div>
+                <div class="pricing-price gradient-text" data-i18n="priceAmount">15,000₫<span style="font-size:16px;opacity:0.7;">/15 days</span></div>
+                <div class="pricing-desc" data-i18n="price2Desc">Unlimited. No restrictions. Plans: 15d / 30d / 365d</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✓</span> <span data-i18n="pfAllFree">Everything in Free</span></li>
                     <li><span class="pf-check" style="color:#34d399;">★</span> <span data-i18n="pfUnlimited" style="font-weight:600;">Unlimited script runtime</span></li>
@@ -1903,7 +1905,7 @@ function switchDemo(lang) {
                     <li><span class="pf-check" style="color:#a78bfa;">★</span> <span data-i18n="pfSpoof" style="font-weight:600;color:#a78bfa;">Device Identity Spoof (30+ models)</span></li>
                     <li style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
                         <span class="pf-check" style="color:#34d399;">✓</span> 
-                        <span data-i18n="pfDayCost" style="color:#34d399;font-weight:500;">7d: 6,999₫ · 30d: 29,900₫ · 1yr: 299,000₫</span>
+                        <span data-i18n="pfDayCost" style="color:#34d399;font-weight:500;">15d: 15,000₫ · 30d: 29,900₫ · 1yr: 299,000₫</span>
                     </li>
                 </ul>
                 <a href="#pricing" class="pricing-btn primary" data-i18n="priceBtn2">Buy in App →</a>
@@ -2120,7 +2122,7 @@ const LANDING_I18N = {
     tblRow5: 'Web IDE', tblRow6: 'Live Screen Mirror', tblRow7: 'Visual Flow Builder', tblRow8: 'Python Support',
     tblRow9: 'Python → Lua Converter', tblRow10: 'HTTP Requests', tblRow11: 'Scheduler/Timer', tblRow12: 'Multi-device Control',
     tblRow13: 'AI Code Assist', tblRow14: 'Notification Triggers', tblRow15: 'Clipboard Access', tblRow16: 'Device Spoofing', tblRow17: 'Price',
-    tblFreeOS: 'Free + Premium from 6,999₫ / $0.29',
+    tblFreeOS: 'Free + Premium from 15,000₫ / ~$0.58',
     ftProduct: 'Product', ftFeatures: 'Features', ftAPI: 'API Reference', ftVsAT: 'vs AutoTouch',
     ftResources: 'Resources', ftDocs: 'Documentation', ftExamples: 'Script Examples', ftVideos: 'Video Tutorials',
     ftCommunity: 'Community', ftCopyright: '© 2026 IOSControl. Open Source Software.',
@@ -2143,7 +2145,7 @@ const LANDING_I18N = {
     priceTitle: 'Simple, Fair Pricing', priceDesc: 'Try everything for free. Upgrade when you\'re ready.',
     price1Name: 'Free', price1Desc: 'Full features, time-limited scripts',
     price2Name: 'Premium', price2Desc: 'Unlimited. No restrictions. Plans: 7d / 30d / 365d',
-    priceBadge: 'Recommended', priceAmount: '6,999₫<span style="font-size:14px;opacity:0.5;"> / $0.29</span><span style="font-size:16px;opacity:0.7;">/week</span>',
+    priceBadge: 'Recommended', priceAmount: '15,000₫<span style="font-size:14px;opacity:0.5;"> / ~$0.58</span><span style="font-size:16px;opacity:0.7;">/15 days</span>',
     pf1: 'Touch simulation (tap, swipe, long press)', pf2: 'Color detection & pixel reading', pf3: 'Record & playback', pf4: 'Web IDE with all tabs',
     pfImg: 'Image recognition + OCR', pfFlow: 'Visual Flow Builder',
     pfHelper: 'Helper Tools (Color, Image, Apps)', pfPy2Lua: 'Python → Lua converter',
@@ -2151,7 +2153,7 @@ const LANDING_I18N = {
     pfAllFree: 'Everything in Free', pfUnlimited: 'Unlimited script runtime',
     pfNoAlert: 'No interruptions or alerts', pfPriority: 'Priority support', pfEarly: 'Early access to new features',
     pfSpoof: 'Device Identity Spoof (30+ models)', pfNoSpoof: 'No Device Spoofing',
-    pfDayCost: '7d: 6,999₫/$0.29 · 30d: 29,900₫/$1.19 · 1yr: 299,000₫/$11.99',
+    pfDayCost: '15d: 15,000₫/~$0.58 · 30d: 29,900₫/~$1.15 · 1yr: 299,000₫/~$11.50',
     priceBtn1: 'Get Started Free', priceBtn2: 'Buy in App →',
     navPurchase: '<i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Buy Key',
     helperTitle: 'Built-in Helper Tools', helperDesc: 'Visual tools that generate code for you — click on screen to pick colors, manage apps, crop images.',
@@ -2196,7 +2198,7 @@ const LANDING_I18N = {
     tblRow5: 'Web IDE', tblRow6: 'Phản chiếu màn hình', tblRow7: 'Flow Builder trực quan', tblRow8: 'Hỗ trợ Python',
     tblRow9: 'Chuyển đổi Python → Lua', tblRow10: 'HTTP Requests', tblRow11: 'Lập lịch/Timer', tblRow12: 'Điều khiển nhiều thiết bị',
     tblRow13: 'AI hỗ trợ code', tblRow14: 'Kích hoạt bằng thông báo', tblRow15: 'Truy cập Clipboard', tblRow16: 'Fake thiết bị', tblRow17: 'Giá',
-    tblFreeOS: 'Miễn phí + Premium từ 6,999₫',
+    tblFreeOS: 'Miễn phí + Premium từ 15.000₫',
     ftProduct: 'Sản phẩm', ftFeatures: 'Tính năng', ftAPI: 'Tài liệu API', ftVsAT: 'vs AutoTouch',
     ftResources: 'Tài nguyên', ftDocs: 'Tài liệu', ftExamples: 'Ví dụ Script', ftVideos: 'Video hướng dẫn',
     ftCommunity: 'Cộng đồng', ftCopyright: '© 2026 IOSControl. Phần mềm mã nguồn mở.',
@@ -2218,8 +2220,8 @@ const LANDING_I18N = {
     navPricing: 'Bảng giá',
     priceTitle: 'Giá đơn giản, hợp lý', priceDesc: 'Dùng thử miễn phí. Nâng cấp khi sẵn sàng.',
     price1Name: 'Miễn phí', price1Desc: 'Đầy đủ tính năng, giới hạn thời gian script',
-    price2Name: 'Premium', price2Desc: 'Không giới hạn. Gói: 7 ngày / 30 ngày / 365 ngày',
-    priceBadge: 'Khuyên dùng', priceAmount: '6,999₫<span style="font-size:16px;opacity:0.7;">/tuần</span>',
+    price2Name: 'Premium', price2Desc: 'Không giới hạn. Gói: 15 ngày / 30 ngày / 365 ngày',
+    priceBadge: 'Khuyên dùng', priceAmount: '15.000₫<span style="font-size:16px;opacity:0.7;">/15 ngày</span>',
     pf1: 'Mô phỏng chạm (tap, swipe, nhấn giữ)', pf2: 'Phát hiện màu & đọc pixel', pf3: 'Ghi & phát lại', pf4: 'Web IDE với tất cả tab',
     pfImg: 'Nhận dạng hình ảnh + OCR', pfFlow: 'Flow Builder trực quan',
     pfHelper: 'Công cụ hỗ trợ (Màu, Ảnh, App)', pfPy2Lua: 'Chuyển đổi Python → Lua',
@@ -2227,7 +2229,7 @@ const LANDING_I18N = {
     pfAllFree: 'Tất cả tính năng Miễn phí', pfUnlimited: 'Chạy script không giới hạn thời gian',
     pfNoAlert: 'Không bị gián đoạn hay cảnh báo', pfPriority: 'Hỗ trợ ưu tiên', pfEarly: 'Trải nghiệm tính năng mới sớm',
     pfSpoof: 'Fake Thiết Bị (30+ model)', pfNoSpoof: 'Không fake thiết bị',
-    pfDayCost: '7 ngày: 6,999₫ · 30 ngày: 29,900₫ · 1 năm: 299,000₫',
+    pfDayCost: '15 ngày: 15.000₫ · 30 ngày: 29.900₫ · 1 năm: 299.000₫',
     priceBtn1: 'Bắt đầu miễn phí', priceBtn2: 'Mua trong App →',
     navPurchase: '<i data-lucide="shopping-cart" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;"></i>Mua Key',
     helperTitle: 'Công cụ hỗ trợ tích hợp', helperDesc: 'Công cụ trực quan tự sinh code cho bạn — click trên màn hình để chọn màu, quản lý app, cắt ảnh.',
