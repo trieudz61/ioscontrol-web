@@ -2,120 +2,1250 @@
 <html lang="vi" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IOSControl Login — Quản lý ví và license key</title>
-  <meta name="description" content="Đăng nhập IOSControl để nạp tiền, tạo license key, quản lý UDID kích hoạt và gia hạn key hàng loạt." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IOSControl Account — Quản lý ví và license key</title>
+  <meta name="description" content="Đăng nhập IOSControl để nạp ví, tạo license key, theo dõi UDID và gia hạn key hàng loạt." />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   <style>
-    :root{--bg:#05050b;--panel:rgba(13,16,28,.78);--panel2:rgba(20,24,40,.74);--line:rgba(255,255,255,.09);--text:#eef2ff;--muted:#8b92ad;--brand:#7c3aed;--brand2:#22d3ee;--good:#34d399;--warn:#f59e0b;--bad:#fb7185;--shadow:0 30px 100px rgba(0,0,0,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,sans-serif;background:radial-gradient(circle at 20% -10%,rgba(124,58,237,.35),transparent 35%),radial-gradient(circle at 80% 0,rgba(34,211,238,.2),transparent 30%),var(--bg);color:var(--text);min-height:100vh}a{color:inherit;text-decoration:none}.hide{display:none!important}
-    .orb{position:fixed;inset:auto -160px -160px auto;width:420px;height:420px;background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(34,211,238,.18));filter:blur(60px);border-radius:50%;pointer-events:none}.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(20px);background:rgba(5,5,11,.72);border-bottom:1px solid var(--line)}.nav-in{max-width:1240px;margin:auto;padding:14px 22px;display:flex;align-items:center;gap:16px}.brand{display:flex;align-items:center;gap:10px;font-weight:900}.brand img{width:34px;height:34px}.pill{border:1px solid var(--line);background:rgba(255,255,255,.04);padding:8px 12px;border-radius:999px;color:var(--muted);font-size:13px}.spacer{flex:1}.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;color:white;background:linear-gradient(135deg,var(--brand),#4f46e5);box-shadow:0 12px 30px rgba(124,58,237,.28);cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-1px);box-shadow:0 16px 38px rgba(124,58,237,.38)}.btn.ghost{background:rgba(255,255,255,.055);border:1px solid var(--line);box-shadow:none;color:var(--text)}.btn.good{background:linear-gradient(135deg,#10b981,#22c55e)}.btn.bad{background:linear-gradient(135deg,#fb7185,#f43f5e)}
-    .wrap{max-width:1240px;margin:auto;padding:32px 22px 70px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:stretch;margin-top:20px}.card{background:linear-gradient(180deg,var(--panel),rgba(10,12,22,.68));border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(24px)}.hero-copy{padding:42px}.badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid rgba(34,211,238,.28);background:rgba(34,211,238,.08);color:#a5f3fc;border-radius:999px;font-size:13px;font-weight:800}.hero h1{font-size:clamp(38px,5vw,68px);line-height:1.02;margin:18px 0 14px;letter-spacing:-.055em}.grad{background:linear-gradient(135deg,#fff,#a78bfa 45%,#67e8f9);-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:17px;line-height:1.8;max-width:660px}.auth{padding:26px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(255,255,255,.04);padding:6px;border-radius:16px;margin-bottom:18px}.tab{border:0;background:transparent;color:var(--muted);padding:10px;border-radius:12px;font-weight:800;cursor:pointer}.tab.active{background:rgba(255,255,255,.09);color:var(--text)}.field{margin:12px 0}.field label{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:0 0 7px}.field input,.field select,.searchbox{width:100%;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));color:var(--text);border-radius:16px;padding:13px 15px;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 30px rgba(0,0,0,.16)}.searchbox{max-width:260px;background-image:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));backdrop-filter:blur(14px)}.searchbox::placeholder{color:#69708a}.check{appearance:none;width:24px;height:24px;border-radius:8px;border:1px solid rgba(124,58,237,.55);background:rgba(255,255,255,.055);display:grid;place-content:center;cursor:pointer;box-shadow:0 8px 22px rgba(124,58,237,.12)}.check:checked{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent}.check:checked:after{content:"✓";font-size:16px;font-weight:900;color:white}.field input:focus,.field select:focus{border-color:rgba(124,58,237,.7);box-shadow:0 0 0 4px rgba(124,58,237,.16)}.msg{font-size:13px;color:var(--muted);min-height:20px;margin-top:10px}.msg.err{color:var(--bad)}.msg.ok{color:var(--good)}
-    .dashboard{display:none}.topgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0 22px 378px;width:calc(100% - 378px)}.stat{padding:22px}.stat .k{color:var(--muted);font-size:13px;font-weight:800}.stat .v{font-size:28px;font-weight:900;margin-top:7px}.layout{display:grid;grid-template-columns:360px 1fr;gap:18px}.panel{padding:22px}.panel h2{margin:0 0 14px;font-size:20px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chip{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);border-radius:999px;padding:8px 11px;font-weight:800;cursor:pointer}.chip:hover{border-color:rgba(124,58,237,.6)}.label-cell{cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px}.label-cell:hover{color:#a78bfa}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:18px;-webkit-overflow-scrolling:touch;max-width:100%}table{width:max-content;min-width:100%;border-collapse:collapse}th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap;vertical-align:middle}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.035)}th.sortth{cursor:pointer;user-select:none}th.sortth:hover{color:var(--text)}tr:last-child td{border-bottom:0}.status{display:inline-flex;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900}.active{background:rgba(52,211,153,.12);color:var(--good)}.unactivated{background:rgba(34,211,238,.12);color:#67e8f9}.expired{background:rgba(245,158,11,.12);color:var(--warn)}.locked{background:rgba(251,113,133,.12);color:var(--bad)}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.mini{font-size:12px;color:var(--muted)}.toast{position:fixed;right:18px;bottom:18px;z-index:80;background:rgba(17,24,39,.92);border:1px solid var(--line);padding:14px 16px;border-radius:16px;box-shadow:var(--shadow);max-width:360px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}.modal.show{display:flex}.modal .card{width:min(520px,100%);padding:24px;max-height:calc(100vh - 32px);overflow:auto}#payResult img{max-width:min(260px,72vw);height:auto!important}.cf-turnstile,iframe[src*="turnstile"]{max-width:100%!important}@media(max-width:900px){html,body{width:100%;max-width:100%;overflow-x:hidden}body{overflow-x:hidden}.wrap{padding:22px 14px 56px;max-width:100vw}.nav-in{padding:12px 14px;gap:10px;flex-wrap:wrap}.brand{min-width:0}.brand span{font-size:14px}.pill{font-size:12px;padding:7px 10px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.spacer{flex:1 1 auto}.hero,.layout{grid-template-columns:1fr;gap:16px}.hero{margin-top:14px}.hero-copy{padding:26px}.hero h1{font-size:clamp(34px,12vw,46px)}.hero p{font-size:15px;line-height:1.65}.auth,.panel{padding:18px;border-radius:22px}.topgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0;width:100%;max-width:100%;gap:12px}.stat{padding:16px;min-width:0;overflow:hidden}.stat .v{font-size:23px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.actions .btn,.actions .chip{flex:1 1 140px}.searchbox{max-width:100%}.modal{padding:10px;align-items:flex-start}.modal .card{border-radius:22px;padding:18px;width:100%!important;margin-top:10px}th,td{padding:11px 12px;font-size:12px}.tablewrap{border-radius:14px}}@media(max-width:640px){.nav-in{display:grid;grid-template-columns:1fr auto auto;align-items:center}.nav-in .spacer{display:none}.nav-in .brand{grid-column:1/2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.nav-in #navPill{display:none}.nav-in #helloUser{grid-column:1/-1;justify-self:stretch;text-align:center}.nav-in #logoutBtn{grid-column:auto}.nav-in .btn{padding:9px 11px;font-size:12px}.topgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{border-radius:22px}.auth [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}.field input,.field select,.searchbox{padding:12px 13px;border-radius:14px}.btn{width:auto;min-height:42px}.actions{display:grid;grid-template-columns:1fr}.actions .btn,.actions .chip{width:100%;flex:auto}.toast{left:12px;right:12px;bottom:12px;max-width:none}.check{width:26px;height:26px}#historyModal .card{width:100%!important}.modal .card h2{font-size:18px}}@media(max-width:420px){.topgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.wrap{padding-left:10px;padding-right:10px}.nav-in{padding-left:10px;padding-right:10px}.brand img{width:30px;height:30px}.brand span{font-size:13px}.pill{font-size:11px;padding:6px 8px}.hero-copy{padding:20px}.auth,.panel{padding:14px}.stat{padding:12px;min-width:0}.stat .k{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat .v{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chip{padding:8px 10px;font-size:12px}th,td{padding:10px;font-size:12px}.modal{padding:8px}.modal .card{padding:14px}.tabs{gap:6px;padding:5px}}
-
-    @media(max-width:700px){
-      html,body{width:100%;max-width:100%;overflow-x:hidden}
-      .nav-in{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:12px;align-items:center}
-      .brand{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px}
-      .brand img{width:30px;height:30px;flex:0 0 auto}
-      #navPill{display:none!important}
-      .spacer{display:none!important}
-      #langBtn{justify-self:end;width:auto;min-width:48px;padding:9px 12px}
-      #helloUser{grid-column:1/-1;width:100%;max-width:100%;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-      #logoutBtn{grid-column:3/4;grid-row:1;justify-self:end;width:44px!important;height:44px;min-width:44px;padding:0;font-size:0;box-shadow:none;border-radius:16px;display:grid;place-items:center}.iconbtn svg{width:18px;height:18px}.logoutText{display:none}#helloUser{grid-column:1/-1!important;grid-row:2;text-align:center!important}
-      .wrap{width:100%;max-width:100vw;padding:16px 12px 52px}
-      .hero{display:block;margin-top:12px}.hero-copy{padding:22px;margin-bottom:14px}.hero h1{font-size:36px;line-height:1.05}.hero p{font-size:15px;line-height:1.6}
-      .card{border-radius:22px}.auth,.panel{padding:16px}.tabs{border-radius:14px}.tab{min-height:42px}
-      .field{margin:10px 0}.field input,.field select,.searchbox{height:46px;padding:11px 13px;border-radius:14px;max-width:100%}
-      #signupFields [style*="grid-template-columns"]{display:block!important}
-      #termsRow{align-items:flex-start!important;line-height:1.45}.check{flex:0 0 26px;width:26px;height:26px}
-      #authTurnstile,#payTurnstile{max-width:100%;overflow:hidden;transform:scale(.92);transform-origin:left top;margin-bottom:0!important}
-      #authBtn,#forgotBtn,#topupBtn,#createBtn,#extendBtn,#refreshBtn{width:100%!important;display:block;text-align:center;margin-top:10px}
-      .actions{display:grid!important;grid-template-columns:1fr!important;gap:10px}.actions>*{width:100%!important;min-width:0!important;flex:auto!important;text-align:center}
-      .topgrid{display:grid;grid-template-columns:1fr!important;gap:10px;margin:14px 0!important;width:100%!important;max-width:100%!important}.stat{padding:16px}.stat .v{font-size:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat .k{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      .layout{display:block}.layout>.card{margin-bottom:14px}
-      .panel>div:first-child{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;align-items:stretch!important}.panel h2{margin:0!important}.searchbox{width:100%!important}
-      .tablewrap{width:100%;max-width:100%;overflow-x:auto;border-radius:14px}table{min-width:720px}th,td{padding:10px;font-size:12px}
-      .modal{padding:8px;align-items:flex-start}.modal .card{width:100%!important;max-height:calc(100vh - 16px);overflow:auto;padding:16px;border-radius:20px;margin-top:8px}.modal .actions{display:grid!important;grid-template-columns:1fr!important}
-      #payResult img{width:min(240px,70vw)!important;height:auto!important}.toast{left:10px;right:10px;bottom:10px;max-width:none}
+    /* ─────────────────────────────────────────
+       Tokens
+       ───────────────────────────────────────── */
+    :root {
+      --bg: #050611;
+      --bg-2: #090d1f;
+      --surface: rgba(14, 18, 35, .78);
+      --surface-2: rgba(255, 255, 255, .045);
+      --surface-3: rgba(255, 255, 255, .075);
+      --line: rgba(255, 255, 255, .09);
+      --line-2: rgba(255, 255, 255, .18);
+      --text: #f3f6ff;
+      --muted: #9aa4c3;
+      --muted-2: #6b7194;
+      --brand: #7c3aed;
+      --brand-2: #a78bfa;
+      --cyan: #22d3ee;
+      --good: #10b981;
+      --warn: #f59e0b;
+      --bad: #f43f5e;
+      --shadow-1: 0 12px 32px rgba(0,0,0,.32);
+      --shadow-2: 0 24px 80px rgba(0,0,0,.42);
+      --glow: 0 0 36px rgba(124,58,237,.3);
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 20px;
+      --r-xl: 28px;
     }
-    @media(max-width:380px){.wrap{padding-left:8px;padding-right:8px}.hero h1{font-size:32px}.auth,.panel,.modal .card{padding:12px}.btn{padding:10px 12px}.stat .v{font-size:22px}}
-
-
-    @media(max-width:700px){
-      .nav-in{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand lang logout"!important;align-items:center!important;gap:10px!important}
-      .nav-in .brand{grid-area:brand!important;grid-column:auto!important;grid-row:auto!important;min-width:0!important;display:flex!important}
-      #langBtn{grid-area:lang!important;grid-column:auto!important;grid-row:auto!important;justify-self:end!important;width:auto!important;min-width:56px!important}
-      #logoutBtn{grid-area:logout!important;grid-column:auto!important;grid-row:auto!important;justify-self:end!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:grid!important;place-items:center!important;border-radius:16px!important;font-size:20px!important;line-height:1!important}
-      #logoutBtn.hide{display:none!important}
-      .logoutIcon{display:block!important;transform:rotate(180deg);font-weight:900;line-height:1}.logoutText{display:none!important}
-      #helloUser{display:none!important}
+    /* ─────────────────────────────────────────
+       Base
+       ───────────────────────────────────────── */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 0 -10%, rgba(124,58,237,.32), transparent 34%),
+        radial-gradient(circle at 90% 0, rgba(34,211,238,.18), transparent 30%),
+        linear-gradient(135deg, var(--bg), #07091a 55%, #050611);
+      overflow-x: hidden;
     }
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      z-index: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    .hide { display: none !important; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .muted { color: var(--muted); }
+    .grad {
+      background: linear-gradient(135deg, #fff, var(--brand-2) 45%, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    /* ─────────────────────────────────────────
+       Buttons / Forms
+       ───────────────────────────────────────── */
+    .btn {
+      border: 0;
+      border-radius: var(--r-md);
+      padding: 11px 15px;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--brand), #4f46e5);
+      box-shadow: 0 12px 28px rgba(124,58,237,.24);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, opacity .18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(124,58,237,.34); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(34,211,238,.25); outline-offset: 2px; }
+    .btn.ghost { background: rgba(255,255,255,.06); border: 1px solid var(--line); box-shadow: none; color: var(--text); }
+    .btn.ghost:hover { border-color: var(--line-2); background: rgba(255,255,255,.09); }
+    .btn.good { background: linear-gradient(135deg, #059669, #22c55e); box-shadow: 0 12px 28px rgba(16,185,129,.22); }
+    .btn.bad { background: linear-gradient(135deg, #e11d48, #fb7185); box-shadow: 0 12px 28px rgba(244,63,94,.22); }
+    .btn.warn { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .btn.sm { min-height: 34px; padding: 7px 11px; border-radius: 11px; font-size: 12px; }
+    .btn.icon { width: 42px; min-height: 42px; padding: 0; }
+    .btn.icon.sm { width: 34px; min-height: 34px; }
 
-    @media(max-width:700px){#helloUser{display:none!important}.logoutText{display:none!important}}
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: var(--r-md);
+      background: rgba(255,255,255,.055);
+      padding: 12px 13px;
+      outline: none;
+      min-height: 44px;
+      font: inherit;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    input:focus, select:focus { border-color: rgba(124,58,237,.55); box-shadow: 0 0 0 4px rgba(124,58,237,.16); }
+    select option { color: #111827; }
+    .field { display: grid; gap: 7px; }
+    .field label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .msg { min-height: 22px; color: var(--muted); font-size: 13px; margin-top: 10px; line-height: 1.5; }
+    .err, .msg.err { color: var(--bad); }
+    .ok, .msg.ok { color: var(--good); }
+
+    .check {
+      appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 7px;
+      border: 1px solid rgba(124,58,237,.55);
+      background: rgba(255,255,255,.04);
+      display: grid;
+      place-content: center;
+      cursor: pointer;
+      transition: .18s ease;
+      flex: 0 0 22px;
+    }
+    .check:checked { background: linear-gradient(135deg, var(--brand), var(--cyan)); border-color: transparent; }
+    .check:checked:after { content: "✓"; font-size: 14px; font-weight: 900; color: white; }
+
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--muted); }
+    .badge { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid rgba(34,211,238,.28); background: rgba(34,211,238,.08); color: #a5f3fc; border-radius: 999px; font-size: 12px; font-weight: 700; }
+
+    .chip { border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--text); border-radius: 999px; padding: 8px 12px; font-weight: 700; cursor: pointer; font-size: 13px; transition: .18s ease; }
+    .chip:hover { border-color: rgba(124,58,237,.6); background: rgba(124,58,237,.08); }
+    .chip.active { border-color: var(--brand); background: rgba(124,58,237,.18); }
+
+    /* ─────────────────────────────────────────
+       Cards
+       ───────────────────────────────────────── */
+    .card {
+      background: linear-gradient(180deg, var(--surface), rgba(8,11,24,.72));
+      border: 1px solid var(--line);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-2);
+      backdrop-filter: blur(18px);
+    }
+    .panel { padding: 24px; }
+    .panel h2 { margin: 0 0 14px; font-size: 18px; letter-spacing: -.02em; font-weight: 700; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .panel-head h2 { margin: 0; }
+    .divider { height: 1px; background: var(--line); margin: 18px 0; border: 0; }
+
+    /* ─────────────────────────────────────────
+       Top nav
+       ───────────────────────────────────────── */
+    .nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(20px); background: rgba(5,5,11,.74); border-bottom: 1px solid var(--line); }
+    .nav-in { max-width: 1280px; margin: auto; padding: 13px 22px; display: flex; align-items: center; gap: 14px; }
+    .nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -.02em; min-width: 0; }
+    .nav .brand img { width: 34px; height: 34px; flex: 0 0 auto; }
+    .nav .brand span { font-size: 16px; }
+    .nav-spacer { flex: 1; }
+    .nav-user { display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.04); font-size: 13px; max-width: 220px; }
+    .nav-user b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--cyan)); display: grid; place-items: center; font-size: 12px; font-weight: 800; color: white; flex: 0 0 auto; }
+
+    /* ─────────────────────────────────────────
+       Wrap
+       ───────────────────────────────────────── */
+    .wrap { max-width: 1280px; margin: auto; padding: 28px 22px 70px; position: relative; z-index: 1; }
+
+    /* ─────────────────────────────────────────
+       Landing (login / register)
+       ───────────────────────────────────────── */
+    .landing { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: stretch; margin-top: 16px; }
+    .hero { padding: 44px; position: relative; overflow: hidden; }
+    .hero:before { content: ""; position: absolute; inset: -100px -120px auto auto; width: 320px; height: 320px; border-radius: 999px; background: radial-gradient(circle, rgba(124,58,237,.36), transparent 60%); filter: blur(8px); }
+    .hero h1 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.04; margin: 18px 0 14px; letter-spacing: -.045em; font-weight: 900; }
+    .hero p { color: var(--muted); font-size: 16px; line-height: 1.75; margin: 0 0 22px; max-width: 540px; }
+    .hero-bullets { display: grid; gap: 12px; margin-top: 26px; }
+    .hero-bullets li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .hero-bullets li i { width: 18px; height: 18px; flex: 0 0 18px; color: var(--cyan); margin-top: 1px; }
+    .hero-bullets li b { color: var(--text); display: block; margin-bottom: 2px; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .auth { padding: 28px; }
+    .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; background: rgba(255,255,255,.04); border-radius: 14px; border: 1px solid var(--line); margin-bottom: 18px; }
+    .auth-tab { border: 0; background: transparent; color: var(--muted); padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; transition: .18s ease; }
+    .auth-tab.active { background: rgba(255,255,255,.09); color: var(--text); }
+    .auth .field { margin-top: 14px; }
+    .auth .field:first-child { margin-top: 0; }
+    .auth-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .terms-row { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 6px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+    .terms-row a { color: var(--brand-2); }
+    .turnstile-box { margin: 12px 0; min-height: 60px; }
+    .auth-link { background: none; border: 0; color: var(--brand-2); cursor: pointer; font: inherit; padding: 0; text-decoration: underline; text-underline-offset: 4px; margin-top: 12px; display: inline-block; }
+
+    /* ─────────────────────────────────────────
+       Dashboard
+       ───────────────────────────────────────── */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .stat { padding: 20px; position: relative; overflow: hidden; cursor: default; transition: transform .18s ease, border-color .18s ease; }
+    .stat.clickable { cursor: pointer; }
+    .stat.clickable:hover { transform: translateY(-2px); border-color: var(--line-2); }
+    .stat:after { content: ""; position: absolute; inset: auto -28px -42px auto; width: 110px; height: 110px; border-radius: 999px; background: rgba(124,58,237,.1); filter: blur(20px); }
+    .stat .label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .stat .value { font-size: 28px; font-weight: 800; margin-top: 8px; letter-spacing: -.03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .stat .hint { color: var(--muted-2); font-size: 12px; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+    .stat-icon { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: rgba(124,58,237,.18); color: var(--brand-2); margin-bottom: 14px; }
+    .stat-icon.cyan { background: rgba(34,211,238,.16); color: var(--cyan); }
+    .stat-icon.good { background: rgba(16,185,129,.16); color: var(--good); }
+    .stat-icon.warn { background: rgba(245,158,11,.16); color: var(--warn); }
+
+    .layout { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 18px; margin-top: 18px; }
+    .col-stack { display: grid; gap: 18px; align-content: start; }
+
+    .amount-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 14px; }
+    .cost-preview { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; margin-top: 12px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+    .cost-preview .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .cost-preview .row b { color: var(--text); font-size: 14px; }
+    .cost-preview.bad b.total { color: var(--bad); }
+    .cost-preview.good b.total { color: var(--good); }
+
+    /* ─────────────────────────────────────────
+       Inventory
+       ───────────────────────────────────────── */
+    .inventory-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+    .inventory-toolbar .search { flex: 1 1 220px; min-width: 220px; }
+    .tablewrap { overflow: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: rgba(0,0,0,.16); -webkit-overflow-scrolling: touch; }
+    table { width: max-content; min-width: 100%; border-collapse: collapse; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; font-size: 13px; vertical-align: middle; white-space: nowrap; }
+    th { position: sticky; top: 0; z-index: 1; background: rgba(10,13,28,.96); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; }
+    th.sortth { cursor: pointer; user-select: none; }
+    th.sortth:hover { color: var(--text); }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover td { background: rgba(255,255,255,.025); }
+    .status { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 9px; font-size: 11px; font-weight: 800; border: 1px solid var(--line); }
+    .status.active { background: rgba(16,185,129,.1); color: var(--good); border-color: rgba(16,185,129,.25); }
+    .status.unactivated { background: rgba(34,211,238,.1); color: #67e8f9; border-color: rgba(34,211,238,.25); }
+    .status.expired { background: rgba(245,158,11,.1); color: var(--warn); border-color: rgba(245,158,11,.25); }
+    .status.locked, .status.disabled { background: rgba(244,63,94,.1); color: var(--bad); border-color: rgba(244,63,94,.25); }
+
+    .label-cell { cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
+    .label-cell:hover { color: var(--brand-2); }
+    .row-actions { display: inline-flex; gap: 6px; }
+
+    .empty-state { padding: 50px 30px; text-align: center; color: var(--muted); }
+    .empty-state .empty-icon { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: rgba(124,58,237,.16); color: var(--brand-2); margin: 0 auto 14px; }
+    .empty-state h3 { margin: 0 0 6px; color: var(--text); font-size: 17px; font-weight: 700; }
+    .empty-state p { margin: 0 0 16px; font-size: 14px; line-height: 1.6; }
+
+    /* ─────────────────────────────────────────
+       Modals
+       ───────────────────────────────────────── */
+    .modal { position: fixed; inset: 0; z-index: 60; display: none; align-items: flex-start; justify-content: center; padding: 20px; background: rgba(2,4,12,.7); backdrop-filter: blur(4px); }
+    .modal.show { display: flex; }
+    .modal .card { width: min(540px, 100%); max-height: calc(100vh - 36px); overflow: auto; padding: 24px; }
+    .modal.lg .card { width: min(820px, 100%); }
+    .modal-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .modal-head h2 { margin: 0; font-size: 19px; letter-spacing: -.02em; flex: 1; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .modal-actions .btn { flex: 1 1 140px; }
+
+    .pay-result { margin-top: 16px; }
+    .pay-result img { display: block; margin: 14px auto; max-width: min(260px, 72vw); height: auto !important; background: white; padding: 12px; border-radius: 18px; }
+
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 80; padding: 14px 16px; border-radius: var(--r-lg); background: rgba(11,15,30,.95); border: 1px solid var(--line); box-shadow: var(--shadow-2); max-width: 380px; font-size: 14px; line-height: 1.5; }
+    .toast.err { border-color: rgba(244,63,94,.4); }
+    .toast.ok { border-color: rgba(16,185,129,.4); }
+
+    /* ─────────────────────────────────────────
+       Mobile cards (license inventory fallback)
+       ───────────────────────────────────────── */
+    .key-cards { display: none; flex-direction: column; gap: 12px; }
+    .key-card { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px; display: grid; gap: 10px; }
+    .key-card .top { display: flex; align-items: center; gap: 10px; }
+    .key-card .top .check { margin-right: 4px; }
+    .key-card .key-text { font-family: ui-monospace, Menlo, monospace; font-size: 13px; flex: 1; overflow-wrap: anywhere; }
+    .key-card .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; color: var(--muted); }
+    .key-card .meta b { color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+    .key-card .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ─────────────────────────────────────────
+       Responsive
+       ───────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .landing { grid-template-columns: 1fr; gap: 18px; }
+      .hero { padding: 30px 24px; }
+      .hero h1 { font-size: 36px; line-height: 1.06; }
+      .auth { padding: 22px; }
+      .auth-grid-2 { grid-template-columns: 1fr; }
+      .nav-in { padding: 12px 14px; gap: 10px; flex-wrap: wrap; }
+      .nav-spacer { display: none; }
+      .nav .brand { flex: 1; min-width: 0; overflow: hidden; }
+      .nav .brand span { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .nav-user { max-width: 200px; }
+      .wrap { padding: 18px 14px 60px; }
+      .panel { padding: 18px; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat { padding: 16px; }
+      .stat .value { font-size: 22px; }
+      .stat-icon { width: 32px; height: 32px; margin-bottom: 10px; }
+    }
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .modal { padding: 10px; align-items: flex-start; }
+      .modal .card { padding: 18px; border-radius: 22px; margin-top: 8px; }
+      .toast { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+      .nav-user b { max-width: 90px; }
+      .table-only { display: none; }
+      .key-cards { display: flex; }
+      .modal-actions .btn { flex: 1 1 100%; }
+    }
+    @media (max-width: 420px) {
+      .hero h1 { font-size: 30px; }
+      .hero p { font-size: 14px; }
+      .stat .value { font-size: 19px; }
+      .panel { padding: 16px; }
+    }
   </style>
 </head>
 <body>
-<div class="orb"></div>
-<nav class="nav"><div class="nav-in"><a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl">IOSControl</a><span id="navPill" class="pill">Ví · Key · Gia hạn</span><div class="spacer"></div><button id="langBtn" class="btn ghost" type="button">EN</button><span id="helloUser" class="pill hide">Xin chào</span><button id="logoutBtn" class="btn ghost iconbtn hide" aria-label="Đăng xuất" title="Đăng xuất"><span class="logoutIcon">↪</span><span class="logoutText">Đăng xuất</span></button></div></nav>
+
+<!-- ─── Top nav ─── -->
+<nav class="nav" aria-label="Top">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/assets/logo-dark.png" alt="IOSControl"><span>IOSControl</span></a>
+    <span id="navPill" class="pill">Ví · Key · Gia hạn</span>
+    <div class="nav-spacer"></div>
+    <button id="langBtn" class="btn ghost sm" type="button" aria-label="Toggle language">EN</button>
+    <div id="userBadge" class="nav-user hide"><div id="userAvatar" class="avatar">U</div><b id="userName">User</b></div>
+    <button id="logoutBtn" class="btn ghost icon hide" type="button" aria-label="Logout" title="Logout"><i data-lucide="log-out"></i></button>
+  </div>
+</nav>
+
 <main class="wrap">
-  <section id="landing" class="hero">
-    <div class="card hero-copy"><span class="badge"><i data-lucide="sparkles"></i> <span id="heroBadge">Bảng điều khiển license</span></span><h1 id="heroTitle">Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1><p id="heroDesc">Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.</p><div class="actions"><button id="startBtn" class="btn" onclick="document.getElementById('email').focus()">Bắt đầu</button><a id="pricingLink" class="btn ghost" href="/buy.html">Xem bảng giá</a></div></div>
-    <div class="card auth"><div class="tabs"><button id="loginTab" class="tab active">Đăng nhập</button><button id="registerTab" class="tab">Đăng ký</button></div><div id="signupFields"><div class="field"><label id="usernameLabel">Tài khoản</label><input id="username" placeholder="ioscontrol_user"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label id="lastNameLabel">Họ</label><input id="lastName" placeholder="Nguyễn"></div><div class="field"><label id="firstNameLabel">Tên</label><input id="firstName" placeholder="Văn A"></div></div></div><div class="field"><label id="emailLabel">Email</label><input id="email" type="email" placeholder="you@example.com"></div><div class="field"><label id="passwordLabel">Mật khẩu</label><input id="password" type="password" placeholder="Tối thiểu 8 ký tự"></div><label id="termsRow" class="mini" style="display:flex;gap:10px;align-items:center;margin:10px 0"><input id="terms" class="check" type="checkbox"> <span id="termsText">Tôi đồng ý điều khoản</span></label><div id="authTurnstile" style="margin:12px 0"></div><button id="authBtn" class="btn" style="width:100%">Đăng nhập</button><button id="forgotBtn" class="tab" type="button" style="width:100%;margin-top:10px">Quên mật khẩu?</button><div id="authMsg" class="msg"></div></div>
+
+  <!-- ─── Landing (login/register) ─── -->
+  <section id="landing" class="landing">
+    <article class="card hero">
+      <span class="badge"><i data-lucide="sparkles"></i><span id="heroBadge">Bảng điều khiển license</span></span>
+      <h1 id="heroTitle">Quản lý <span class="grad">key IOSControl</span> khoa học hơn.</h1>
+      <p id="heroDesc">Tạo tài khoản, nạp ví, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.</p>
+      <ul class="hero-bullets" style="list-style:none;padding:0;margin:0">
+        <li><i data-lucide="wallet"></i><div><b id="b1Title">Ví VND minh bạch</b><span id="b1Desc">Mọi giao dịch nạp/trừ đều có lịch sử rõ ràng.</span></div></li>
+        <li><i data-lucide="key"></i><div><b id="b2Title">Tạo key linh hoạt</b><span id="b2Desc">15 / 30 / 365 ngày, mua nhiều key cùng lúc, đặt nhãn quản lý.</span></div></li>
+        <li><i data-lucide="qr-code"></i><div><b id="b3Title">Kích hoạt qua QR</b><span id="b3Desc">Scan deeplink ioscontrol://activate trên app, không cần nhập tay.</span></div></li>
+        <li><i data-lucide="repeat"></i><div><b id="b4Title">Gia hạn hàng loạt</b><span id="b4Desc">Chọn nhiều key + 1 click gia hạn, quản lý fleet dễ hơn.</span></div></li>
+      </ul>
+      <div class="hero-actions" style="margin-top:24px">
+        <button id="startBtn" class="btn" type="button"><i data-lucide="rocket"></i><span id="startText">Bắt đầu</span></button>
+        <a id="pricingLink" class="btn ghost" href="/buy.html"><i data-lucide="tag"></i><span>Xem bảng giá</span></a>
+      </div>
+    </article>
+
+    <article class="card auth">
+      <div class="auth-tabs">
+        <button id="loginTab" class="auth-tab active" type="button">Đăng nhập</button>
+        <button id="registerTab" class="auth-tab" type="button">Đăng ký</button>
+      </div>
+
+      <div id="signupFields" class="hide">
+        <div class="field"><label id="usernameLabel" for="username">Tài khoản</label><input id="username" autocomplete="username" placeholder="ioscontrol_user"></div>
+        <div class="auth-grid-2" style="margin-top:14px">
+          <div class="field"><label id="lastNameLabel" for="lastName">Họ</label><input id="lastName" autocomplete="family-name" placeholder="Nguyễn"></div>
+          <div class="field"><label id="firstNameLabel" for="firstName">Tên</label><input id="firstName" autocomplete="given-name" placeholder="Văn A"></div>
+        </div>
+      </div>
+
+      <div class="field"><label id="emailLabel" for="email">Email</label><input id="email" autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field"><label id="passwordLabel" for="password">Mật khẩu</label><input id="password" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div>
+
+      <label id="termsRow" class="terms-row hide" for="terms">
+        <input id="terms" class="check" type="checkbox">
+        <span id="termsText">Tôi đồng ý điều khoản sử dụng IOSControl.</span>
+      </label>
+
+      <div id="authTurnstile" class="turnstile-box"></div>
+
+      <button id="authBtn" class="btn" type="button" style="width:100%"><i data-lucide="log-in"></i><span id="authBtnText">Đăng nhập</span></button>
+      <button id="forgotBtn" class="auth-link" type="button">Quên mật khẩu?</button>
+      <div id="authMsg" class="msg"></div>
+    </article>
   </section>
 
+  <!-- ─── Dashboard ─── -->
   <section id="dashboard" class="dashboard">
-    <div class="topgrid"><div id="walletCard" class="card stat" style="cursor:pointer"><div id="balanceLabel" class="k">Số dư ví</div><div id="balance" class="v">0đ</div><div id="ledgerHint" class="mini">Mọi cộng/trừ đều có lịch sử.</div></div><div class="card stat"><div id="totalKeysLabel" class="k">Tổng key</div><div id="totalKeys" class="v">0</div></div><div class="card stat"><div id="activeKeysLabel" class="k">Đã kích hoạt</div><div id="activeKeys" class="v">0</div></div><div class="card stat"><div id="freeKeysLabel" class="k">Chưa kích hoạt</div><div id="freeKeys" class="v">0</div></div></div>
+    <div class="stats">
+      <div id="walletCard" class="card stat clickable" role="button" tabindex="0" aria-label="Wallet history">
+        <div class="stat-icon"><i data-lucide="wallet"></i></div>
+        <div id="balanceLabel" class="label">Số dư ví</div>
+        <div id="balance" class="value">0đ</div>
+        <div id="ledgerHint" class="hint"><i data-lucide="history" style="width:12px;height:12px"></i><span>Click để xem lịch sử</span></div>
+      </div>
+      <div class="card stat">
+        <div class="stat-icon cyan"><i data-lucide="key-square"></i></div>
+        <div id="totalKeysLabel" class="label">Tổng key</div>
+        <div id="totalKeys" class="value">0</div>
+      </div>
+      <div class="card stat">
+        <div class="stat-icon good"><i data-lucide="check-circle-2"></i></div>
+        <div id="activeKeysLabel" class="label">Đã kích hoạt</div>
+        <div id="activeKeys" class="value">0</div>
+      </div>
+      <div class="card stat">
+        <div class="stat-icon warn"><i data-lucide="circle-dashed"></i></div>
+        <div id="freeKeysLabel" class="label">Chưa kích hoạt</div>
+        <div id="freeKeys" class="value">0</div>
+      </div>
+    </div>
+
     <div class="layout">
-      <aside class="card panel"><h2 id="topupTitle">Nạp tiền</h2><p id="topupHint" class="mini">Tối thiểu 50.000đ. Thanh toán qua PayOS, sau khi chuyển khoản ví sẽ được cộng tự động.</p><div class="chips"><button class="chip" data-amt="50000">50k</button><button class="chip" data-amt="100000">100k</button><button class="chip" data-amt="200000">200k</button><button class="chip" data-amt="500000">500k</button><button class="chip" data-amt="1000000">1M</button></div><div class="field"><label id="amountLabel">Số tiền</label><input id="topupAmount" type="number" min="50000" value="50000" step="1000"></div><button id="topupBtn" class="btn good" style="width:100%">Tạo lệnh nạp</button><div id="paymentBox"></div><hr style="border-color:var(--line);margin:22px 0"><h2 id="createKeyTitle">Tạo key</h2><div class="field"><label id="daysLabel">Gói ngày</label><select id="createDays"><option value="15">15 ngày — 15.000đ</option><option value="30" selected>30 ngày — 29.900đ</option><option value="365">365 ngày — 299.000đ</option></select></div><div class="field"><label id="qtyLabel">Số lượng</label><input id="createQty" type="number" min="1" max="100" value="1"></div><div class="field"><label id="labelLabel">Nhãn</label><input id="createLabel" placeholder="Farm A / Khách Nguyễn Văn A"></div><button id="createBtn" class="btn" style="width:100%">Tạo key từ ví</button></aside>
-      <section class="card panel"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><h2 id="inventoryTitle" style="margin-right:auto">Danh sách license</h2><input id="licenseSearch" class="searchbox" placeholder="Search key / label / UDID"><button id="extendBtn" class="btn ghost">Gia hạn key đã chọn</button><button id="refreshBtn" class="btn ghost">Refresh</button></div><div class="tablewrap"><table><thead><tr><th><input id="selectAll" class="check" type="checkbox"></th><th class="sortth" data-sort="key">Key</th><th id="thLabel" class="sortth" data-sort="label">Nhãn</th><th class="sortth" data-sort="udid">UDID</th><th id="thExpires" class="sortth" data-sort="expires">Hết hạn</th><th id="thLeft" class="sortth" data-sort="days">Còn</th><th class="sortth" data-sort="status">Status</th><th>QR</th><th></th></tr></thead><tbody id="keysBody"><tr><td id="emptyData" colspan="9" class="mini">Chưa có dữ liệu</td></tr></tbody></table></div></section>
+      <aside class="col-stack">
+        <!-- Topup -->
+        <section class="card panel">
+          <div class="panel-head">
+            <h2 id="topupTitle">Nạp ví</h2>
+            <span class="pill" id="topupMin">Tối thiểu 50.000đ</span>
+          </div>
+          <p id="topupHint" class="muted" style="margin:0 0 6px;font-size:13px;line-height:1.55">Chọn số tiền hoặc nhập tuỳ ý. PayOS cộng ví tự động sau khi chuyển khoản.</p>
+          <div class="amount-chips">
+            <button class="chip" data-amt="50000" type="button">50k</button>
+            <button class="chip" data-amt="100000" type="button">100k</button>
+            <button class="chip" data-amt="200000" type="button">200k</button>
+            <button class="chip" data-amt="500000" type="button">500k</button>
+            <button class="chip" data-amt="1000000" type="button">1M</button>
+          </div>
+          <div class="field"><label id="amountLabel" for="topupAmount">Số tiền</label><input id="topupAmount" type="number" min="50000" value="50000" step="1000"></div>
+          <button id="topupBtn" class="btn good" type="button" style="width:100%;margin-top:14px"><i data-lucide="plus-circle"></i><span id="topupBtnText">Tạo lệnh nạp</span></button>
+        </section>
+
+        <!-- Create key -->
+        <section class="card panel">
+          <h2 id="createKeyTitle">Tạo key mới</h2>
+          <div class="field"><label id="daysLabel" for="createDays">Gói ngày</label>
+            <select id="createDays">
+              <option value="15">15 ngày — 15.000đ</option>
+              <option value="30" selected>30 ngày — 29.900đ</option>
+              <option value="365">365 ngày — 299.000đ</option>
+            </select>
+          </div>
+          <div class="auth-grid-2" style="margin-top:14px">
+            <div class="field"><label id="qtyLabel" for="createQty">Số lượng</label><input id="createQty" type="number" min="1" max="100" value="1"></div>
+            <div class="field"><label id="labelLabel" for="createLabel">Nhãn</label><input id="createLabel" placeholder="Farm A / Khách Văn A"></div>
+          </div>
+          <div id="createCost" class="cost-preview"></div>
+          <button id="createBtn" class="btn" type="button" style="width:100%;margin-top:14px"><i data-lucide="key-round"></i><span id="createBtnText">Tạo key từ ví</span></button>
+        </section>
+      </aside>
+
+      <!-- Inventory -->
+      <section class="card panel">
+        <div class="inventory-toolbar">
+          <h2 id="inventoryTitle" style="margin:0;flex:1;min-width:160px">Danh sách license</h2>
+          <input id="licenseSearch" class="search" placeholder="Tìm key / nhãn / UDID">
+          <button id="extendBtn" class="btn ghost" type="button"><i data-lucide="repeat"></i><span id="extendBtnText">Gia hạn đã chọn</span></button>
+          <button id="refreshBtn" class="btn ghost icon" type="button" aria-label="Refresh"><i data-lucide="refresh-cw"></i></button>
+        </div>
+
+        <!-- Desktop table -->
+        <div class="tablewrap table-only">
+          <table>
+            <thead>
+              <tr>
+                <th><input id="selectAll" class="check" type="checkbox"></th>
+                <th class="sortth" data-sort="key">Key</th>
+                <th id="thLabel" class="sortth" data-sort="label">Nhãn</th>
+                <th class="sortth" data-sort="udid">UDID</th>
+                <th id="thExpires" class="sortth" data-sort="expires">Hết hạn</th>
+                <th id="thLeft" class="sortth" data-sort="days">Còn</th>
+                <th class="sortth" data-sort="status">Status</th>
+                <th>QR</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="keysBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Mobile cards -->
+        <div id="keysCards" class="key-cards"></div>
+      </section>
     </div>
   </section>
+
 </main>
-<div id="qrModal" class="modal" onclick="if(event.target===this)closeModal('qrModal')"><div class="card"><div style="display:flex;align-items:center;gap:10px"><h2 style="margin:0 auto 0 0">Activate QR</h2><button class="chip" type="button" onclick="closeModal('qrModal')">×</button></div><p id="qrKey" class="mono" style="word-break:break-all"></p><div id="qrBox" style="display:grid;place-items:center;background:white;padding:16px;border-radius:18px;margin:14px auto;width:max-content"></div><p class="mini">Quét QR trong app IOSControl hoặc copy key để nhập thủ công.</p><div class="actions"><button id="qrCopyBtn" class="btn good">Copy Key</button><button id="qrLinkCopyBtn" class="btn ghost">Copy Deep Link</button></div></div></div><div id="payModal" class="modal"><div class="card"><div style="display:flex;align-items:center;gap:10px"><h2 id="payTitle" style="margin:0 auto 0 0">Nạp tiền</h2><button id="payCloseBtn" class="chip" type="button">×</button></div><p id="payDesc" class="mini">Chọn phương thức nạp tiền</p><div id="payTurnstile" style="margin:12px 0"></div><div class="actions"><button id="bankBtn" class="btn good" style="flex:1" onclick="createTopup('payos')">Bank / QR</button><button id="cryptoBtn" class="btn ghost" style="flex:1" onclick="createTopup('cryptomus')">Cryptomus</button></div><div id="payResult" style="margin-top:16px"></div></div></div>
-<div id="confirmModal" class="modal"><div class="card"><div style="display:flex;align-items:center;gap:10px"><h2 id="confirmTitle" style="margin:0 auto 0 0">Xác nhận gia hạn</h2><button id="confirmCloseBtn" class="chip" type="button">×</button></div><div id="confirmBody" style="margin-top:14px"></div><div class="actions"><button id="confirmCancelBtn" class="btn ghost" style="flex:1">Hủy</button><button id="confirmOkBtn" class="btn good" style="flex:1">Xác nhận</button></div></div></div>
-<div id="historyModal" class="modal" onclick="if(event.target===this)closeModal('historyModal')"><div class="card" style="width:min(820px,100%)" onclick="event.stopPropagation()"><div style="display:flex;align-items:center;gap:10px"><h2 id="historyTitle" style="margin:0 auto 0 0">Lịch sử ví</h2><button id="historyCloseBtn" class="chip" type="button">×</button></div><div class="field"><input id="historySearch" class="searchbox" placeholder="Search transactions"></div><div id="historyBody" style="margin-top:14px"></div><div id="historyPager" class="actions"></div></div></div>
+
+<!-- ─── Modals ─── -->
+<div id="qrModal" class="modal" data-close="self">
+  <div class="card">
+    <div class="modal-head"><h2 id="qrTitle">Activate QR</h2><button class="btn ghost icon sm" type="button" data-close="qrModal" aria-label="Close">×</button></div>
+    <p id="qrKey" class="mono muted" style="word-break:break-all;margin:0 0 14px"></p>
+    <div id="qrBox" style="display:grid;place-items:center;background:white;padding:16px;border-radius:18px;margin:0 auto;width:max-content"></div>
+    <p class="msg" id="qrHint">Quét QR trong app IOSControl hoặc copy key để nhập thủ công.</p>
+    <div class="modal-actions">
+      <button id="qrCopyBtn" class="btn good" type="button"><i data-lucide="copy"></i><span>Copy Key</span></button>
+      <button id="qrLinkCopyBtn" class="btn ghost" type="button"><i data-lucide="link"></i><span>Copy Deep Link</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="payModal" class="modal">
+  <div class="card">
+    <div class="modal-head"><h2 id="payTitle">Nạp ví</h2><button class="btn ghost icon sm" type="button" data-close="payModal" aria-label="Close">×</button></div>
+    <p id="payDesc" class="muted" style="margin:0 0 8px;font-size:13px">Chọn phương thức nạp tiền</p>
+    <div id="payTurnstile" class="turnstile-box"></div>
+    <div class="modal-actions">
+      <button id="bankBtn" class="btn good" type="button"><i data-lucide="qr-code"></i><span id="bankBtnText">Bank / QR</span></button>
+      <button id="cryptoBtn" class="btn ghost" type="button"><i data-lucide="bitcoin"></i><span id="cryptoBtnText">Cryptomus</span></button>
+    </div>
+    <div id="payResult" class="pay-result"></div>
+  </div>
+</div>
+
+<div id="confirmModal" class="modal">
+  <div class="card">
+    <div class="modal-head"><h2 id="confirmTitle">Xác nhận gia hạn</h2><button class="btn ghost icon sm" type="button" data-close="confirmModal" aria-label="Close">×</button></div>
+    <div id="confirmBody"></div>
+    <div class="modal-actions">
+      <button id="confirmCancelBtn" class="btn ghost" type="button"><span id="confirmCancelText">Hủy</span></button>
+      <button id="confirmOkBtn" class="btn good" type="button"><i data-lucide="check"></i><span id="confirmOkText">Xác nhận</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="historyModal" class="modal lg" data-close="self">
+  <div class="card">
+    <div class="modal-head"><h2 id="historyTitle">Lịch sử ví</h2><button class="btn ghost icon sm" type="button" data-close="historyModal" aria-label="Close">×</button></div>
+    <input id="historySearch" placeholder="Tìm giao dịch" style="margin-bottom:14px">
+    <div id="historyBody"></div>
+    <div id="historyPager" class="modal-actions" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<div id="labelModal" class="modal">
+  <div class="card">
+    <div class="modal-head"><h2 id="labelTitle">Đổi nhãn</h2><button class="btn ghost icon sm" type="button" data-close="labelModal" aria-label="Close">×</button></div>
+    <p class="mono muted" id="labelKeyText" style="margin:0 0 12px;word-break:break-all"></p>
+    <div class="field"><label for="labelInput" id="labelInputLabel">Nhãn mới</label><input id="labelInput" placeholder="Farm A / Khách Văn A"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" data-close="labelModal"><span id="labelCancelText">Hủy</span></button>
+      <button id="labelSaveBtn" class="btn good" type="button"><i data-lucide="check"></i><span id="labelSaveText">Lưu</span></button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast hide"></div>
+
 <script>
-const API='https://ioscontrol-worker.ioscontrol.workers.dev';
-const I18N={vi:{langBtn:'EN',hello:'Xin chào',forgot:'Quên mật khẩu?',contactAdmin:'Vui lòng liên hệ admin để được hỗ trợ lấy lại mật khẩu.',username:'Tài khoản',lastName:'Họ',firstName:'Tên',terms:'Tôi đồng ý điều khoản',logout:'Đăng xuất',pill:'Ví · Key · Gia hạn',heroBadge:'Bảng điều khiển license',heroTitle:'Quản lý <span class="grad">key IOSControl</span> khoa học hơn.',heroDesc:'Tạo tài khoản, nạp ví tối thiểu 50.000đ, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.',start:'Bắt đầu',pricing:'Xem bảng giá',login:'Đăng nhập',register:'Đăng ký',authLogin:'Đăng nhập',authRegister:'Tạo tài khoản',pass:'Mật khẩu',passPH:'Tối thiểu 8 ký tự',balance:'Số dư ví',ledger:'Click vào để xem lịch sử dòng tiền.',total:'Tổng key',active:'Đã kích hoạt',free:'Chưa kích hoạt',topup:'Nạp tiền',topupHint:'Tối thiểu 50.000đ. Thanh toán qua PayOS, sau khi chuyển khoản ví sẽ được cộng tự động.',amount:'Số tiền',topupBtn:'Tạo lệnh nạp',createKey:'Tạo key',days:'Gói ngày',qty:'Số lượng',label:'Nhãn',labelPH:'Farm A / Khách Nguyễn Văn A',createBtn:'Tạo key từ ví',inventory:'Danh sách license',extend:'Gia hạn key đã chọn',refresh:'Refresh',thLabel:'Nhãn',thExpires:'Hết hạn',thLeft:'Còn',empty:'Chưa có dữ liệu',noKeys:'Chưa có key. Hãy nạp ví và tạo key đầu tiên.',copied:'Đã copy key',order:'Đã tạo lệnh nạp',openPay:'Mở PayOS / Quét QR',created:'Đã tạo',charged:'trừ',selectOne:'Chọn ít nhất 1 key',extended:'Đã gia hạn',confirmRenew:'Xác nhận gia hạn',renewCount:'Tổng số key',renewCost:'Tổng số tiền',cancel:'Hủy',confirm:'Xác nhận',searchTx:'Tìm giao dịch',searchLicense:'Tìm key / nhãn / UDID',renewPlan:'Gói gia hạn',walletBalance:'Số dư ví',insufficient:'Số tiền không đủ, vui lòng nạp thêm'},en:{langBtn:'VI',hello:'Hello',forgot:'Forgot password?',contactAdmin:'Please contact admin for password recovery.',username:'Account',lastName:'Last name',firstName:'First name',terms:'I agree to the terms',logout:'Logout',pill:'Wallet · Keys · Renewal',heroBadge:'License dashboard',heroTitle:'Manage <span class="grad">IOSControl keys</span> with clarity.',heroDesc:'Create an account, top up your wallet, buy license keys by plan, track activated UDIDs, and renew keys in bulk — all inside your IOSControl account.',start:'Get started',pricing:'View pricing',login:'Login',register:'Signup',authLogin:'Login',authRegister:'Create account',pass:'Password',passPH:'At least 8 characters',balance:'Wallet balance',ledger:'Every credit and debit is recorded.',total:'Total keys',active:'Activated',free:'Unactivated',topup:'Top up',topupHint:'Minimum 50,000 VND. Pay with PayOS; your wallet is credited automatically after payment.',amount:'Amount',topupBtn:'Create top-up order',createKey:'Create key',days:'Plan duration',qty:'Quantity',label:'Label',labelPH:'Farm A / Customer name',createBtn:'Create key from wallet',inventory:'License inventory',extend:'Renew selected keys',refresh:'Refresh',thLabel:'Label',thExpires:'Expires',thLeft:'Left',empty:'No data yet',noKeys:'No keys yet. Top up your wallet and create your first key.',copied:'Copied key',order:'Created top-up order',openPay:'Open PayOS / Scan QR',created:'Created',charged:'charged',selectOne:'Select at least 1 key',extended:'Renewed',confirmRenew:'Confirm renewal',renewCount:'Total keys',renewCost:'Total amount',cancel:'Cancel',confirm:'Confirm',searchTx:'Search transactions',searchLicense:'Search key / label / UDID',renewPlan:'Renewal plan',walletBalance:'Wallet balance',insufficient:'Insufficient balance, please top up more'}};
-Object.assign(I18N.vi,{payTitle:'Nạp tiền',payDesc:'Chọn phương thức nạp tiền',bank:'Bank / QR',crypto:'Cryptomus',bankReady:'Quét QR ngân hàng để nạp ví',openCheckout:'Mở trang thanh toán',paid:'Cảm ơn quý khách đã nạp {amount} thành công! Chúc quý khách kiếm được thật nhiều tiền.',waiting:'Đang chờ thanh toán...',history:'Lịch sử ví',historyEmpty:'Chưa có giao dịch',type:'Loại',amountCol:'Số tiền',statusCol:'Trạng thái',balanceAfter:'Số dư sau',orderCode:'Mã đơn',time:'Thời gian',note:'Ghi chú',topupType:'Nạp ví',spendType:'Trừ ví'});Object.assign(I18N.en,{payTitle:'Top up wallet',payDesc:'Choose a top-up method',bank:'Bank / QR',crypto:'Cryptomus',bankReady:'Scan bank QR to top up your wallet',openCheckout:'Open checkout page',paid:'Thank you for topping up {amount} successfully! Wishing you lots of profit.',waiting:'Waiting for payment...',history:'Wallet history',historyEmpty:'No transactions yet',type:'Type',amountCol:'Amount',statusCol:'Status',balanceAfter:'Balance after',orderCode:'Order code',time:'Time',note:'Note',topupType:'Top-up',spendType:'Spend'});
-let lang=localStorage.getItem('icp_lang')||'vi';
-const TURNSTILE_SITE_KEY='0x4AAAAAADVkIP1vUZI8V9P6';let authTurnstileId=null,payTurnstileId=null;
-function t(k){return (I18N[lang]&&I18N[lang][k])||I18N.vi[k]||k}
-function renderTurnstile(){if(!window.turnstile)return;if(authTurnstileId===null&&$('authTurnstile'))authTurnstileId=turnstile.render('#authTurnstile',{sitekey:TURNSTILE_SITE_KEY,theme:'dark'});if(payTurnstileId===null&&$('payTurnstile'))payTurnstileId=turnstile.render('#payTurnstile',{sitekey:TURNSTILE_SITE_KEY,theme:'dark'})}
-function turnstileToken(id){return window.turnstile&&id!==null?turnstile.getResponse(id):''}
-function resetTurnstile(id){if(window.turnstile&&id!==null)turnstile.reset(id)}
-function applyLang(){document.documentElement.lang=lang;$('langBtn').textContent=t('langBtn');$('logoutBtn').innerHTML='<span class="logoutIcon">↪</span><span class="logoutText">'+t('logout')+'</span>'; $('logoutBtn').setAttribute('aria-label',t('logout'));$('navPill').textContent=t('pill');$('heroBadge').textContent=t('heroBadge');$('heroTitle').innerHTML=t('heroTitle');$('heroDesc').textContent=t('heroDesc');$('startBtn').textContent=t('start');$('pricingLink').textContent=t('pricing');$('loginTab').textContent=t('login');$('registerTab').textContent=t('register');$('usernameLabel').textContent=t('username');$('lastNameLabel').textContent=t('lastName');$('firstNameLabel').textContent=t('firstName');$('termsText').textContent=t('terms');$('forgotBtn').textContent=t('forgot');$('emailLabel').textContent=mode==='login'?t('username'):'Email';$('passwordLabel').textContent=t('pass');$('password').placeholder=t('passPH');$('authBtn').textContent=mode==='login'?t('authLogin'):t('authRegister');$('balanceLabel').textContent=t('balance');$('ledgerHint').textContent=t('ledger');$('totalKeysLabel').textContent=t('total');$('activeKeysLabel').textContent=t('active');$('freeKeysLabel').textContent=t('free');$('topupTitle').textContent=t('topup');$('topupHint').textContent=t('topupHint');$('amountLabel').textContent=t('amount');$('topupBtn').textContent=t('topupBtn');$('createKeyTitle').textContent=t('createKey');$('daysLabel').textContent=t('days');$('qtyLabel').textContent=t('qty');$('labelLabel').textContent=t('label');$('createLabel').placeholder=t('labelPH');$('createBtn').textContent=t('createBtn');$('inventoryTitle').textContent=t('inventory');$('extendBtn').textContent=t('extend');$('refreshBtn').textContent=t('refresh');$('thLabel').textContent=t('thLabel');$('thExpires').textContent=t('thExpires');$('thLeft').textContent=t('thLeft');let e=$('emptyData');if(e)e.textContent=t('empty');$('payTitle').textContent=t('payTitle');$('payDesc').textContent=t('payDesc');$('bankBtn').textContent=t('bank');$('cryptoBtn').textContent=t('crypto');$('historyTitle').textContent=t('history');$('historySearch').placeholder=t('searchTx');$('licenseSearch').placeholder=t('searchLicense');$('confirmTitle').textContent=t('confirmRenew');$('confirmCancelBtn').textContent=t('cancel');$('confirmOkBtn').textContent=t('confirm');}
-let mode='login';let token=localStorage.getItem('icp_token')||'';let walletBalance=0;let qrPollTimer=null;let qrCurrentKey='';const $=id=>document.getElementById(id);const money=n=>(n||0).toLocaleString('vi-VN')+'đ';
-function qrPayload(k){return 'ioscontrol://activate?key='+encodeURIComponent(k)}function showLicenseQR(k){if(qrPollTimer)clearInterval(qrPollTimer);qrCurrentKey=k;$('qrModal').classList.add('show');$('qrModal').style.display='flex';$('qrKey').textContent=k;$('qrBox').innerHTML='';if(window.QRCode){new QRCode($('qrBox'),{text:qrPayload(k),width:220,height:220,correctLevel:QRCode.CorrectLevel.M})}else{$('qrBox').innerHTML='<a class="btn good" href="'+qrPayload(k)+'">Open IOSControl</a><p class="mini" style="color:#111">QR library failed to load. Copy deeplink instead.</p>'};$('qrCopyBtn').onclick=()=>{navigator.clipboard.writeText(k);toast(t('copied'))};$('qrLinkCopyBtn').onclick=()=>{navigator.clipboard.writeText(qrPayload(k));toast('Đã copy deeplink')};qrPollTimer=setInterval(()=>pollActivation(k),2500)}window.showLicenseQR=showLicenseQR;async function pollActivation(k){try{const j=await api('/portal/api/keys?'+new URLSearchParams({q:k}).toString());const row=(j.keys||[]).find(x=>x.license_key===k);if(row&&row.udid){if(qrPollTimer)clearInterval(qrPollTimer);qrPollTimer=null;updateLicenseRow(row);closeModal('qrModal');toast(lang==='vi'?'Kích hoạt thành công':'Activated successfully')}}catch(e){}}function updateLicenseRow(k){const tr=document.querySelector(`tr[data-key="${k.license_key}"]`);if(!tr)return;tr.querySelector('[data-col=udid]').textContent=k.udid||'';tr.querySelector('[data-col=status]').innerHTML=`<span class="status ${k.status}">${k.status}</span>`;tr.querySelector('[data-col=days]').textContent=`${k.days_left??0} ${lang==='vi'?'ngày':'days'}`;$('activeKeys').textContent=Number($('activeKeys').textContent||0)+1;$('freeKeys').textContent=Math.max(0,Number($('freeKeys').textContent||0)-1)}function toast(s){$('toast').textContent=s;$('toast').classList.remove('hide');setTimeout(()=>$('toast').classList.add('hide'),4200)}
-async function api(path,opts={}){const h={'Content-Type':'application/json'};if(token)h.Authorization='Bearer '+token;const r=await fetch(API+path,{...opts,headers:{...h,...(opts.headers||{})}});const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false)throw new Error(j.error||'Request failed');return j}
-function setMode(m){mode=m;$('loginTab').classList.toggle('active',m==='login');$('registerTab').classList.toggle('active',m==='register');$('signupFields').classList.toggle('hide',m==='login');$('termsRow').classList.toggle('hide',m==='login');$('forgotBtn').classList.toggle('hide',m!=='login');$('emailLabel').textContent=m==='login'?t('username'):'Email';$('email').type=m==='login'?'text':'email';$('email').placeholder=m==='login'?'ioscontrol_user':'you@example.com';$('authBtn').textContent=m==='login'?t('authLogin'):t('authRegister');$('authMsg').textContent=''}
-$('forgotBtn').onclick=()=>{ $('authMsg').className='msg ok'; $('authMsg').textContent=t('contactAdmin')};$('langBtn').onclick=()=>{lang=lang==='vi'?'en':'vi';localStorage.setItem('icp_lang',lang);applyLang();load()};$('loginTab').onclick=()=>setMode('login');$('registerTab').onclick=()=>setMode('register');
-$('authBtn').onclick=async()=>{try{const payload=mode==='login'?{username:$('email').value,password:$('password').value,turnstileToken:turnstileToken(authTurnstileId)}:{email:$('email').value,password:$('password').value,username:$('username').value,last_name:$('lastName').value,first_name:$('firstName').value,terms:$('terms').checked,turnstileToken:turnstileToken(authTurnstileId)};if(mode==='login'){try{const a=await api('/portal/api/admin/login',{method:'POST',body:JSON.stringify({username:payload.username,password:payload.password})});if(a.token){localStorage.setItem('admin_token',a.token);location.href='/adminvip.html'}}catch(_){}}const p=mode==='login'?'/portal/api/auth/login':'/portal/api/auth/register';const j=await api(p,{method:'POST',body:JSON.stringify(payload)});if(j.token){token=j.token;localStorage.setItem('icp_token',token);await load()}else{setMode('login');$('authMsg').className='msg ok';$('authMsg').textContent=lang==='vi'?'Tạo tài khoản thành công, hãy đăng nhập.':'Account created. Please log in.'}}catch(e){resetTurnstile(authTurnstileId);$('authMsg').className='msg err';$('authMsg').textContent=e.message}}
-$('logoutBtn').onclick=async()=>{try{await api('/portal/api/auth/logout',{method:'POST'})}catch{}token='';localStorage.removeItem('icp_token');location.reload()}
-document.querySelectorAll('.chip[data-amt]').forEach(b=>b.onclick=()=>{$('topupAmount').value=b.dataset.amt;validateTopupAmount()});$('topupAmount').addEventListener('input',validateTopupAmount);$('topupAmount').addEventListener('blur',()=>{if(!$('topupAmount').value)$('topupAmount').value=50000;validateTopupAmount()});function validateTopupAmount(){const ok=Number($('topupAmount').value)>=50000;$('topupBtn').disabled=!ok;$('topupBtn').style.opacity=ok?'1':'.45';$('topupBtn').style.cursor=ok?'pointer':'not-allowed';return ok}validateTopupAmount();
-$('topupBtn').onclick=()=>{if(validateTopupAmount())openPaymentModal()};
-function openModal(id){$(id).classList.add('show')}function closeModal(id){const el=$(id);if(el){el.classList.remove('show');el.style.display=''}}window.closeModal=closeModal;document.addEventListener('click',function(e){const b=e.target.closest('.qr-btn');if(!b)return;e.preventDefault();e.stopPropagation();showLicenseQR(b.dataset.key||b.getAttribute('data-key')||'')});$('payCloseBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closeModal('payModal')});$('historyCloseBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closeModal('historyModal')});$('confirmCloseBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closeModal('confirmModal')});$('confirmCancelBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closeModal('confirmModal')});$('payModal').addEventListener('click',e=>{if(e.target===$('payModal'))closeModal('payModal')});$('historyModal').addEventListener('click',e=>{if(e.target===$('historyModal'))closeModal('historyModal')});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('payModal');closeModal('historyModal');closeModal('confirmModal')}})
-function openPaymentModal(){$('payResult').innerHTML='';openModal('payModal');setTimeout(renderTurnstile,50)}
+// ═══════════════════════════════════════════════════════════
+// IOSControl Account Portal
+// API logic preserved 1:1 with prior version
+// ═══════════════════════════════════════════════════════════
 
-async function pollOrder(orderCode,amount){let tries=0;const id=setInterval(async()=>{tries++;try{const r=await fetch(`${API}/api/check-order?orderCode=${orderCode}`);const j=await r.json();if(j.status==='paid'){clearInterval(id);const msg=t('paid').replace('{amount}',money(amount));$('payResult').innerHTML=`<div class="msg ok" style="font-size:16px;line-height:1.7;text-align:center;padding:18px">${msg}</div>`;toast(msg);await load();setTimeout(()=>closeModal('payModal'),5000);return}}catch(e){}if(tries>90){clearInterval(id)}},3000)}
-async function createTopup(provider){if(!validateTopupAmount())return;try{const j=await api('/portal/api/wallet/topup',{method:'POST',body:JSON.stringify({amount_vnd:Number($('topupAmount').value),provider,turnstileToken:turnstileToken(payTurnstileId)})});if(provider==='cryptomus'){if(j.checkoutUrl) window.open(j.checkoutUrl,'_blank');$('payResult').innerHTML=`<div class="msg ok">${t('order')} #${j.orderCode} (${money(j.amount_vnd)})</div><a class="btn good" style="width:100%;margin-top:10px;display:block;text-align:center" target="_blank" href="${j.checkoutUrl}">${t('openCheckout')}</a>`;}else{const qr=encodeURIComponent(j.qrCode||'');$('payResult').innerHTML=`<div class="msg ok">${t('bankReady')}<br>${t('order')} #${j.orderCode} (${money(j.amount_vnd)})</div><div style="display:grid;place-items:center;margin:14px 0"><img alt="PayOS QR" style="width:260px;height:260px;background:white;padding:12px;border-radius:18px" src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${qr}"></div><a class="btn ghost" style="width:100%;display:block;text-align:center" target="_blank" href="${j.checkoutUrl}">${t('openCheckout')}</a>`;}toast(`${t('order')} #${j.orderCode}`);pollOrder(j.orderCode,j.amount_vnd);await load()}catch(e){resetTurnstile(payTurnstileId);$('payResult').innerHTML=`<div class="msg err">${e.message}</div>`;toast(e.message)}};
-$('createBtn').onclick=async()=>{try{const j=await api('/portal/api/keys/create',{method:'POST',body:JSON.stringify({days:$('createDays').value,quantity:$('createQty').value,label:$('createLabel').value})});toast(`${t('created')} ${j.keys.length} key, ${t('charged')} ${money(j.charged_vnd)}`);await load()}catch(e){toast(e.message)}};
-$('extendBtn').onclick=()=>{const keys=[...document.querySelectorAll('.rowcheck:checked')].map(x=>x.value);if(!keys.length)return toast(t('selectOne'));const prices={15:15000,30:29900,365:299000};function renderRenewConfirm(){const days=Number($('renewPlanSelect')?.value||30);const total=(prices[days]||29900)*keys.length;const enough=walletBalance>=total;$('renewCalc').innerHTML=`<p class="mini">${t('renewCount')}: <b>${keys.length}</b></p><p class="mini">${t('walletBalance')}: <b>${money(walletBalance)}</b></p><p class="mini">${t('renewCost')}: <b>${money(total)}</b></p>${!enough?`<p class="msg err">${t('insufficient')}</p>`:''}`;$('confirmOkBtn').disabled=!enough;$('confirmOkBtn').style.opacity=enough?'1':'.45';$('confirmOkBtn').style.cursor=enough?'pointer':'not-allowed'}$('confirmBody').innerHTML=`<div class="field"><label>${t('renewPlan')}</label><select id="renewPlanSelect"><option value="15">15 ngày — 15.000đ / key</option><option value="30" selected>30 ngày — 29.900đ / key</option><option value="365">365 ngày — 299.000đ / key</option></select></div><div id="renewCalc"></div>`;$('renewPlanSelect').onchange=renderRenewConfirm;renderRenewConfirm();$('confirmOkBtn').onclick=async()=>{const days=$('renewPlanSelect').value;const total=(prices[Number(days)]||29900)*keys.length;if(walletBalance<total)return toast(t('insufficient'));try{closeModal('confirmModal');const j=await api('/portal/api/keys/extend',{method:'POST',body:JSON.stringify({keys,days})});toast(`${t('extended')} ${j.keys.length} key, ${t('charged')} ${money(j.charged_vnd)}`);await load()}catch(e){toast(e.message)}};openModal('confirmModal')};
-let licenseSort='created',licenseDir='desc';function updateSortHeaders(){document.querySelectorAll('.sortth').forEach(th=>{const on=th.dataset.sort===licenseSort;th.textContent=th.textContent.replace(/ [↑↓]$/,'')+(on?' '+(licenseDir==='asc'?'↑':'↓'):'')})}document.querySelectorAll('.sortth').forEach(th=>th.onclick=()=>{if(licenseSort===th.dataset.sort){licenseDir=licenseDir==='asc'?'desc':'asc'}else{licenseSort=th.dataset.sort;licenseDir='asc'}updateSortHeaders();load()});$('licenseSearch').addEventListener('input',()=>{clearTimeout(window.__lsTimer);window.__lsTimer=setTimeout(load,300)});$('historySearch').addEventListener('input',()=>{historyPage=1;clearTimeout(window.__hsTimer);window.__hsTimer=setTimeout(loadWalletHistory,300)});$('refreshBtn').onclick=load;$('selectAll').onchange=e=>document.querySelectorAll('.rowcheck').forEach(c=>c.checked=e.target.checked);
-$('walletCard').onclick=showWalletHistory;
-let historyPage=1;
-async function showWalletHistory(){historyPage=1;await loadWalletHistory();openModal('historyModal')}
-async function loadWalletHistory(){try{const q=encodeURIComponent($('historySearch').value||'');const j=await api(`/portal/api/wallet/transactions?page=${historyPage}&q=${q}`);const rows=j.transactions||[];$('historyBody').innerHTML=rows.length?`<div class="tablewrap"><table><thead><tr><th>${t('type')}</th><th>${t('amountCol')}</th><th>${t('statusCol')}</th><th>${t('balanceAfter')}</th><th>${t('orderCode')}</th><th>${t('time')}</th><th>${t('note')}</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.type==='topup'?t('topupType'):t('spendType')}</td><td class="mono" style="color:${x.amount_vnd>=0?'#34d399':'#fb7185'}">${money(x.amount_vnd)}</td><td><span class="status ${x.status}">${x.status}</span></td><td class="mono">${money(x.balance_after)}</td><td class="mono">${x.order_code||'-'}</td><td>${x.created_at||'-'}</td><td>${x.note||'-'}</td></tr>`).join('')}</tbody></table></div>`:`<p class="mini">${t('historyEmpty')}</p>`;const pages=j.pages||1;$('historyPager').innerHTML=`<button class="chip" ${historyPage<=1?'disabled':''} onclick="historyPage--;loadWalletHistory()">‹</button><span class="mini" style="align-self:center">${historyPage} / ${pages}</span><button class="chip" ${historyPage>=pages?'disabled':''} onclick="historyPage++;loadWalletHistory()">›</button>`}catch(e){toast(e.message)}}
+const API = 'https://ioscontrol-worker.ioscontrol.workers.dev';
+const TURNSTILE_SITE_KEY = '0x4AAAAAADVkIP1vUZI8V9P6';
+const PRICES = { 15: 15000, 30: 29900, 365: 299000 };
 
+// ─── i18n ───
+const I18N = {
+  vi: {
+    langBtn: 'EN', hello: 'Xin chào', forgot: 'Quên mật khẩu?',
+    contactAdmin: 'Vui lòng liên hệ admin để được hỗ trợ lấy lại mật khẩu.',
+    username: 'Tài khoản', lastName: 'Họ', firstName: 'Tên',
+    terms: 'Tôi đồng ý điều khoản sử dụng IOSControl.',
+    logout: 'Đăng xuất', pill: 'Ví · Key · Gia hạn',
+    heroBadge: 'Bảng điều khiển license',
+    heroTitle: 'Quản lý <span class="grad">key IOSControl</span> khoa học hơn.',
+    heroDesc: 'Tạo tài khoản, nạp ví, mua key theo gói, theo dõi UDID đã kích hoạt và gia hạn hàng loạt — tất cả trong tài khoản IOSControl của bạn.',
+    b1Title: 'Ví VND minh bạch', b1Desc: 'Mọi giao dịch nạp/trừ đều có lịch sử rõ ràng.',
+    b2Title: 'Tạo key linh hoạt', b2Desc: '15 / 30 / 365 ngày, mua nhiều key cùng lúc, đặt nhãn quản lý.',
+    b3Title: 'Kích hoạt qua QR', b3Desc: 'Scan deeplink ioscontrol://activate trên app, không cần nhập tay.',
+    b4Title: 'Gia hạn hàng loạt', b4Desc: 'Chọn nhiều key + 1 click gia hạn, quản lý fleet dễ hơn.',
+    start: 'Bắt đầu', pricing: 'Xem bảng giá',
+    login: 'Đăng nhập', register: 'Đăng ký', authLogin: 'Đăng nhập', authRegister: 'Tạo tài khoản',
+    pass: 'Mật khẩu', passPH: 'Tối thiểu 8 ký tự',
+    balance: 'Số dư ví', ledger: 'Click để xem lịch sử',
+    total: 'Tổng key', active: 'Đã kích hoạt', free: 'Chưa kích hoạt',
+    topup: 'Nạp ví', topupMin: 'Tối thiểu 50.000đ',
+    topupHint: 'Chọn số tiền hoặc nhập tuỳ ý. PayOS cộng ví tự động sau khi chuyển khoản.',
+    amount: 'Số tiền', topupBtn: 'Tạo lệnh nạp',
+    createKey: 'Tạo key mới', days: 'Gói ngày', qty: 'Số lượng',
+    label: 'Nhãn', labelPH: 'Farm A / Khách Văn A', createBtn: 'Tạo key từ ví',
+    inventory: 'Danh sách license', extend: 'Gia hạn đã chọn', refresh: 'Refresh',
+    thLabel: 'Nhãn', thExpires: 'Hết hạn', thLeft: 'Còn',
+    empty: 'Chưa có dữ liệu',
+    noKeys: 'Chưa có key nào.', noKeysDesc: 'Hãy nạp ví và tạo license đầu tiên của bạn.',
+    copied: 'Đã copy', copiedLink: 'Đã copy deeplink',
+    order: 'Đã tạo lệnh nạp', openCheckout: 'Mở trang thanh toán',
+    bankReady: 'Quét QR ngân hàng để nạp ví',
+    paid: 'Cảm ơn quý khách đã nạp {amount} thành công!',
+    selectOne: 'Chọn ít nhất 1 key', extended: 'Đã gia hạn', created: 'Đã tạo', charged: 'trừ',
+    confirmRenew: 'Xác nhận gia hạn', renewCount: 'Số key', renewCost: 'Tổng số tiền',
+    cancel: 'Hủy', confirm: 'Xác nhận',
+    searchTx: 'Tìm giao dịch', searchLicense: 'Tìm key / nhãn / UDID',
+    renewPlan: 'Gói gia hạn', walletBalance: 'Số dư ví', balanceAfter: 'Số dư sau',
+    insufficient: 'Số dư không đủ, vui lòng nạp thêm',
+    history: 'Lịch sử ví', historyEmpty: 'Chưa có giao dịch',
+    type: 'Loại', amountCol: 'Số tiền', statusCol: 'Trạng thái',
+    orderCode: 'Mã đơn', time: 'Thời gian', note: 'Ghi chú',
+    topupType: 'Nạp ví', spendType: 'Trừ ví',
+    payTitle: 'Nạp ví', payDesc: 'Chọn phương thức nạp tiền', bank: 'Bank / QR', crypto: 'Cryptomus',
+    qrTitle: 'Activate QR', qrHint: 'Quét QR trong app IOSControl hoặc copy key để nhập thủ công.',
+    accountCreated: 'Tạo tài khoản thành công, hãy đăng nhập.',
+    activated: 'Kích hoạt thành công',
+    udidPending: 'Chưa kích hoạt', daysUnit: 'ngày',
+    labelEdit: 'Đổi nhãn', labelSaved: 'Đã cập nhật nhãn', labelSave: 'Lưu',
+    walletCardLabel: 'Lịch sử ví', clickHistory: 'Click để xem lịch sử',
+    keyCol: 'Key', udidCol: 'UDID', actionsCol: 'Thao tác'
+  },
+  en: {
+    langBtn: 'VI', hello: 'Hello', forgot: 'Forgot password?',
+    contactAdmin: 'Please contact admin for password recovery.',
+    username: 'Account', lastName: 'Last name', firstName: 'First name',
+    terms: 'I agree to the IOSControl terms of use.',
+    logout: 'Logout', pill: 'Wallet · Keys · Renewal',
+    heroBadge: 'License dashboard',
+    heroTitle: 'Manage <span class="grad">IOSControl keys</span> with clarity.',
+    heroDesc: 'Create an account, top up your wallet, buy license keys by plan, track activated UDIDs, and renew keys in bulk — all inside your IOSControl account.',
+    b1Title: 'Transparent VND wallet', b1Desc: 'Every credit and debit is recorded.',
+    b2Title: 'Flexible key creation', b2Desc: '15 / 30 / 365 days, batch creation, custom labels.',
+    b3Title: 'QR activation', b3Desc: 'Scan ioscontrol://activate deeplink, no manual input needed.',
+    b4Title: 'Bulk renewal', b4Desc: 'Select many keys, renew with one click. Fleet management made simple.',
+    start: 'Get started', pricing: 'View pricing',
+    login: 'Login', register: 'Signup', authLogin: 'Login', authRegister: 'Create account',
+    pass: 'Password', passPH: 'At least 8 characters',
+    balance: 'Wallet balance', ledger: 'Click to view history',
+    total: 'Total keys', active: 'Activated', free: 'Unactivated',
+    topup: 'Top up', topupMin: 'Min 50,000 VND',
+    topupHint: 'Pick a preset or enter your amount. PayOS credits the wallet automatically after payment.',
+    amount: 'Amount', topupBtn: 'Create top-up',
+    createKey: 'Create key', days: 'Plan duration', qty: 'Quantity',
+    label: 'Label', labelPH: 'Farm A / Customer name', createBtn: 'Create key from wallet',
+    inventory: 'License inventory', extend: 'Renew selected', refresh: 'Refresh',
+    thLabel: 'Label', thExpires: 'Expires', thLeft: 'Left',
+    empty: 'No data yet',
+    noKeys: 'No keys yet.', noKeysDesc: 'Top up your wallet and create your first license key.',
+    copied: 'Copied', copiedLink: 'Copied deeplink',
+    order: 'Created top-up order', openCheckout: 'Open checkout page',
+    bankReady: 'Scan bank QR to top up your wallet',
+    paid: 'Thank you for topping up {amount} successfully!',
+    selectOne: 'Select at least 1 key', extended: 'Renewed', created: 'Created', charged: 'charged',
+    confirmRenew: 'Confirm renewal', renewCount: 'Selected keys', renewCost: 'Total amount',
+    cancel: 'Cancel', confirm: 'Confirm',
+    searchTx: 'Search transactions', searchLicense: 'Search key / label / UDID',
+    renewPlan: 'Renewal plan', walletBalance: 'Wallet balance', balanceAfter: 'Balance after',
+    insufficient: 'Insufficient balance, please top up more',
+    history: 'Wallet history', historyEmpty: 'No transactions yet',
+    type: 'Type', amountCol: 'Amount', statusCol: 'Status',
+    orderCode: 'Order code', time: 'Time', note: 'Note',
+    topupType: 'Top-up', spendType: 'Spend',
+    payTitle: 'Top up wallet', payDesc: 'Choose a top-up method', bank: 'Bank / QR', crypto: 'Cryptomus',
+    qrTitle: 'Activate QR', qrHint: 'Scan QR in IOSControl app or copy the key for manual input.',
+    accountCreated: 'Account created. Please log in.',
+    activated: 'Activated successfully',
+    udidPending: 'Unactivated', daysUnit: 'days',
+    labelEdit: 'Edit label', labelSaved: 'Label updated', labelSave: 'Save',
+    walletCardLabel: 'Wallet history', clickHistory: 'Click to view history',
+    keyCol: 'Key', udidCol: 'UDID', actionsCol: 'Actions'
+  }
+};
 
+// ─── State ───
+let lang = localStorage.getItem('icp_lang') || 'vi';
+let mode = 'login';
+let token = localStorage.getItem('icp_token') || '';
+let walletBalance = 0;
+let licenseSort = 'created', licenseDir = 'desc';
+let historyPage = 1;
+let qrPollTimer = null;
+let authTurnstileId = null, payTurnstileId = null;
+let labelEditingKey = '';
 
-async function editLicenseLabel(key,current){const next=prompt(lang==='vi'?'Nhập nhãn mới':'Enter new label',current||'');if(next===null)return;try{const j=await api('/portal/api/keys/'+encodeURIComponent(key)+'/label',{method:'PATCH',body:JSON.stringify({label:next})});const tr=document.querySelector(`tr[data-key=\"${key}\"]`);if(tr){const cell=tr.querySelector('[data-col=label]');if(cell)cell.textContent=j.license.label||'-'}toast(lang==='vi'?'Đã cập nhật nhãn':'Label updated')}catch(e){toast(e.message)}}
-async function load(){if(!token)return;try{const me=await api('/portal/api/auth/me');const qs=new URLSearchParams({q:$('licenseSearch')?.value||'',sort:licenseSort,dir:licenseDir});const ks=await api('/portal/api/keys?'+qs.toString());$('landing').style.display='none';$('dashboard').style.display='block';$('logoutBtn').classList.remove('hide');walletBalance=Number(me.user.balance_vnd||0);const fullName=`${me.user.last_name||''} ${me.user.first_name||''}`.trim()||me.user.username||me.user.email;$('helloUser').textContent=`${t('hello')}: ${fullName}`;$('balance').textContent=money(walletBalance);const keys=ks.keys||[];$('totalKeys').textContent=keys.length;$('activeKeys').textContent=keys.filter(k=>k.status==='active').length;$('freeKeys').textContent=keys.filter(k=>k.status==='unactivated').length;$('keysBody').innerHTML=keys.length?keys.map(k=>`<tr data-key="${k.license_key}"><td><input class="rowcheck check" type="checkbox" value="${k.license_key}"></td><td class="mono">${k.license_key}</td><td data-col="label" class="label-cell" title="Click để đổi nhãn" onclick="editLicenseLabel(this.closest('tr').dataset.key,this.textContent==='-'?'':this.textContent)">${k.label||'-'}</td><td class="mono mini" data-col="udid">${k.udid||(lang==='vi'?'Chưa kích hoạt':'Unactivated')}</td><td>${k.expires_at||'-'}</td><td data-col="days">${k.days_left??0} ${lang==='vi'?'ngày':'days'}</td><td data-col="status"><span class="status ${k.status}">${k.status}</span></td><td><button class="chip qr-btn" data-key="${k.license_key}" type="button" onclick="event.preventDefault();event.stopPropagation();document.getElementById('qrModal').classList.add('show');document.getElementById('qrModal').style.display='flex';document.getElementById('qrKey').textContent=this.dataset.key;if(window.showLicenseQR)window.showLicenseQR(this.dataset.key);return false">QR</button></td><td><button class="chip" onclick="navigator.clipboard.writeText('${k.license_key}');toast(t('copied'))">Copy</button></td></tr>`).join(''):`<tr><td id="emptyData" colspan="9" class="mini">${t('noKeys')}</td></tr>`;}catch(e){token='';localStorage.removeItem('icp_token')}}
-applyLang();setMode(mode);updateSortHeaders();load();lucide.createIcons();setTimeout(renderTurnstile,800);
+// ─── Helpers ───
+const $ = id => document.getElementById(id);
+const t = key => (I18N[lang] && I18N[lang][key]) || I18N.vi[key] || key;
+const money = n => (Number(n) || 0).toLocaleString('vi-VN') + 'đ';
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function toast(message, kind = '') {
+  const el = $('toast');
+  el.className = 'toast ' + kind;
+  el.textContent = message;
+  el.classList.remove('hide');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => el.classList.add('hide'), 4000);
+}
+
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers.Authorization = 'Bearer ' + token;
+  const r = await fetch(API + path, { ...opts, headers: { ...headers, ...(opts.headers || {}) } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || j.success === false) throw new Error(j.error || 'Request failed');
+  return j;
+}
+
+// ─── Modals ───
+function openModal(id) { $(id).classList.add('show'); if (window.lucide) lucide.createIcons(); }
+function closeModal(id) { const el = $(id); if (el) { el.classList.remove('show'); el.style.display = ''; } }
+window.closeModal = closeModal;
+document.addEventListener('click', e => {
+  const closer = e.target.closest('[data-close]');
+  if (closer) {
+    const target = closer.getAttribute('data-close');
+    if (target === 'self') { if (e.target === closer) closeModal(closer.id); }
+    else closeModal(target);
+  }
+  document.querySelectorAll('.modal[data-close="self"]').forEach(m => { if (e.target === m) closeModal(m.id); });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.show').forEach(m => closeModal(m.id)); });
+
+// ─── Turnstile ───
+function renderTurnstile() {
+  if (!window.turnstile) return;
+  if (authTurnstileId === null && $('authTurnstile')) authTurnstileId = turnstile.render('#authTurnstile', { sitekey: TURNSTILE_SITE_KEY, theme: 'dark' });
+  if (payTurnstileId === null && $('payTurnstile')) payTurnstileId = turnstile.render('#payTurnstile', { sitekey: TURNSTILE_SITE_KEY, theme: 'dark' });
+}
+function turnstileToken(id) { return window.turnstile && id !== null ? turnstile.getResponse(id) : ''; }
+function resetTurnstile(id) { if (window.turnstile && id !== null) turnstile.reset(id); }
+
+// ─── i18n apply ───
+function applyLang() {
+  document.documentElement.lang = lang;
+  $('langBtn').textContent = t('langBtn');
+  $('navPill').textContent = t('pill');
+  $('heroBadge').textContent = t('heroBadge');
+  $('heroTitle').innerHTML = t('heroTitle');
+  $('heroDesc').textContent = t('heroDesc');
+  $('b1Title').textContent = t('b1Title'); $('b1Desc').textContent = t('b1Desc');
+  $('b2Title').textContent = t('b2Title'); $('b2Desc').textContent = t('b2Desc');
+  $('b3Title').textContent = t('b3Title'); $('b3Desc').textContent = t('b3Desc');
+  $('b4Title').textContent = t('b4Title'); $('b4Desc').textContent = t('b4Desc');
+  $('startText').textContent = t('start');
+  $('pricingLink').lastElementChild.textContent = t('pricing');
+  $('loginTab').textContent = t('login');
+  $('registerTab').textContent = t('register');
+  $('usernameLabel').textContent = t('username');
+  $('lastNameLabel').textContent = t('lastName');
+  $('firstNameLabel').textContent = t('firstName');
+  $('passwordLabel').textContent = t('pass');
+  $('password').placeholder = t('passPH');
+  $('emailLabel').textContent = mode === 'login' ? t('username') : 'Email';
+  $('termsText').textContent = t('terms');
+  $('forgotBtn').textContent = t('forgot');
+  $('authBtnText').textContent = mode === 'login' ? t('authLogin') : t('authRegister');
+
+  $('balanceLabel').textContent = t('balance');
+  $('ledgerHint').lastElementChild.textContent = t('clickHistory');
+  $('totalKeysLabel').textContent = t('total');
+  $('activeKeysLabel').textContent = t('active');
+  $('freeKeysLabel').textContent = t('free');
+  $('topupTitle').textContent = t('topup');
+  $('topupMin').textContent = t('topupMin');
+  $('topupHint').textContent = t('topupHint');
+  $('amountLabel').textContent = t('amount');
+  $('topupBtnText').textContent = t('topupBtn');
+  $('createKeyTitle').textContent = t('createKey');
+  $('daysLabel').textContent = t('days');
+  $('qtyLabel').textContent = t('qty');
+  $('labelLabel').textContent = t('label');
+  $('createLabel').placeholder = t('labelPH');
+  $('createBtnText').textContent = t('createBtn');
+  $('inventoryTitle').textContent = t('inventory');
+  $('extendBtnText').textContent = t('extend');
+  $('licenseSearch').placeholder = t('searchLicense');
+  $('thLabel').textContent = t('thLabel');
+  $('thExpires').textContent = t('thExpires');
+  $('thLeft').textContent = t('thLeft');
+
+  $('payTitle').textContent = t('payTitle');
+  $('payDesc').textContent = t('payDesc');
+  $('bankBtnText').textContent = t('bank');
+  $('cryptoBtnText').textContent = t('crypto');
+  $('historyTitle').textContent = t('history');
+  $('historySearch').placeholder = t('searchTx');
+  $('confirmTitle').textContent = t('confirmRenew');
+  $('confirmCancelText').textContent = t('cancel');
+  $('confirmOkText').textContent = t('confirm');
+  $('qrTitle').textContent = t('qrTitle');
+  $('qrHint').textContent = t('qrHint');
+  $('labelTitle').textContent = t('labelEdit');
+  $('labelInputLabel').textContent = t('label');
+  $('labelCancelText').textContent = t('cancel');
+  $('labelSaveText').textContent = t('labelSave');
+
+  if (window.lucide) lucide.createIcons();
+}
+
+// ─── Auth mode ───
+function setMode(m) {
+  mode = m;
+  $('loginTab').classList.toggle('active', m === 'login');
+  $('registerTab').classList.toggle('active', m === 'register');
+  $('signupFields').classList.toggle('hide', m === 'login');
+  $('termsRow').classList.toggle('hide', m === 'login');
+  $('forgotBtn').classList.toggle('hide', m !== 'login');
+  $('emailLabel').textContent = m === 'login' ? t('username') : 'Email';
+  $('email').type = m === 'login' ? 'text' : 'email';
+  $('email').placeholder = m === 'login' ? 'ioscontrol_user' : 'you@example.com';
+  $('authBtnText').textContent = m === 'login' ? t('authLogin') : t('authRegister');
+  $('authMsg').textContent = '';
+}
+
+// ─── Auth submit ───
+async function submitAuth() {
+  $('authBtn').disabled = true;
+  try {
+    const password = $('password').value;
+    if (mode === 'login') {
+      const userInput = $('email').value.trim();
+      // Admin shortcut: if credentials are admin, redirect to /adminvip.html
+      try {
+        const a = await api('/portal/api/admin/login', { method: 'POST', body: JSON.stringify({ username: userInput, password }) });
+        if (a.token) {
+          localStorage.setItem('admin_token', a.token);
+          location.href = '/adminvip.html';
+          return;
+        }
+      } catch (_) { /* not admin, continue user login */ }
+
+      const j = await api('/portal/api/auth/login', { method: 'POST', body: JSON.stringify({ username: userInput, password, turnstileToken: turnstileToken(authTurnstileId) }) });
+      token = j.token;
+      localStorage.setItem('icp_token', token);
+      await load();
+    } else {
+      const payload = {
+        email: $('email').value.trim(),
+        password,
+        username: $('username').value.trim(),
+        last_name: $('lastName').value.trim(),
+        first_name: $('firstName').value.trim(),
+        terms: $('terms').checked,
+        turnstileToken: turnstileToken(authTurnstileId)
+      };
+      const j = await api('/portal/api/auth/register', { method: 'POST', body: JSON.stringify(payload) });
+      if (j.token) {
+        token = j.token;
+        localStorage.setItem('icp_token', token);
+        await load();
+      } else {
+        setMode('login');
+        $('authMsg').className = 'msg ok';
+        $('authMsg').textContent = t('accountCreated');
+      }
+    }
+  } catch (e) {
+    resetTurnstile(authTurnstileId);
+    $('authMsg').className = 'msg err';
+    $('authMsg').textContent = e.message;
+  } finally {
+    $('authBtn').disabled = false;
+  }
+}
+
+// ─── Topup amount validation ───
+function validateTopupAmount() {
+  const ok = Number($('topupAmount').value) >= 50000;
+  $('topupBtn').disabled = !ok;
+  return ok;
+}
+
+function openPaymentModal() {
+  $('payResult').innerHTML = '';
+  openModal('payModal');
+  setTimeout(renderTurnstile, 50);
+}
+
+async function pollOrder(orderCode, amount) {
+  let tries = 0;
+  const id = setInterval(async () => {
+    tries++;
+    try {
+      const r = await fetch(`${API}/api/check-order?orderCode=${orderCode}`);
+      const j = await r.json();
+      if (j.status === 'paid') {
+        clearInterval(id);
+        const msg = t('paid').replace('{amount}', money(amount));
+        $('payResult').innerHTML = `<div class="msg ok" style="font-size:15px;line-height:1.7;text-align:center;padding:18px;border:1px solid rgba(16,185,129,.4);border-radius:14px;background:rgba(16,185,129,.08)">${escapeHtml(msg)}</div>`;
+        toast(msg, 'ok');
+        await load();
+        setTimeout(() => closeModal('payModal'), 5000);
+        return;
+      }
+    } catch (e) { /* ignore */ }
+    if (tries > 90) clearInterval(id);
+  }, 3000);
+}
+
+async function createTopup(provider) {
+  if (!validateTopupAmount()) return;
+  $('bankBtn').disabled = $('cryptoBtn').disabled = true;
+  try {
+    const j = await api('/portal/api/wallet/topup', { method: 'POST', body: JSON.stringify({ amount_vnd: Number($('topupAmount').value), provider, turnstileToken: turnstileToken(payTurnstileId) }) });
+    if (provider === 'cryptomus') {
+      if (j.checkoutUrl) window.open(j.checkoutUrl, '_blank');
+      $('payResult').innerHTML = `<div class="msg ok">${escapeHtml(t('order'))} #${j.orderCode} (${money(j.amount_vnd)})</div><a class="btn good" style="width:100%;margin-top:10px" target="_blank" href="${escapeHtml(j.checkoutUrl)}">${escapeHtml(t('openCheckout'))}</a>`;
+    } else {
+      const qr = encodeURIComponent(j.qrCode || '');
+      $('payResult').innerHTML = `<div class="msg ok">${escapeHtml(t('bankReady'))}<br>${escapeHtml(t('order'))} #${j.orderCode} (${money(j.amount_vnd)})</div><div style="display:grid;place-items:center;margin:14px 0"><img alt="PayOS QR" src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${qr}"></div><a class="btn ghost" style="width:100%" target="_blank" href="${escapeHtml(j.checkoutUrl)}">${escapeHtml(t('openCheckout'))}</a>`;
+    }
+    toast(`${t('order')} #${j.orderCode}`, 'ok');
+    pollOrder(j.orderCode, j.amount_vnd);
+    await load();
+  } catch (e) {
+    resetTurnstile(payTurnstileId);
+    $('payResult').innerHTML = `<div class="msg err">${escapeHtml(e.message)}</div>`;
+    toast(e.message, 'err');
+  } finally {
+    $('bankBtn').disabled = $('cryptoBtn').disabled = false;
+  }
+}
+window.createTopup = createTopup;
+
+// ─── Create key cost preview ───
+function updateCreateCost() {
+  const days = Number($('createDays').value) || 30;
+  const qty = Math.max(1, Math.min(100, Number($('createQty').value) || 1));
+  const total = (PRICES[days] || PRICES[30]) * qty;
+  const enough = walletBalance >= total;
+  const remain = walletBalance - total;
+  $('createCost').className = 'cost-preview ' + (enough ? 'good' : 'bad');
+  $('createCost').innerHTML = `
+    <div class="row"><span>${escapeHtml(t('renewCount'))}</span><b>${qty}</b></div>
+    <div class="row"><span>${escapeHtml(t('renewCost'))}</span><b class="total">${money(total)}</b></div>
+    <div class="row"><span>${escapeHtml(t('balanceAfter'))}</span><b style="color:${enough ? 'var(--good)' : 'var(--bad)'}">${money(Math.max(0, remain))}</b></div>
+    ${!enough ? `<div class="err" style="font-size:12px;margin-top:4px">${escapeHtml(t('insufficient'))}</div>` : ''}
+  `;
+  $('createBtn').disabled = !enough;
+}
+
+async function createKey() {
+  $('createBtn').disabled = true;
+  try {
+    const j = await api('/portal/api/keys/create', { method: 'POST', body: JSON.stringify({ days: $('createDays').value, quantity: $('createQty').value, label: $('createLabel').value }) });
+    toast(`${t('created')} ${j.keys.length} key, ${t('charged')} ${money(j.charged_vnd)}`, 'ok');
+    $('createLabel').value = '';
+    $('createQty').value = 1;
+    await load();
+  } catch (e) {
+    toast(e.message, 'err');
+  } finally {
+    updateCreateCost();
+  }
+}
+
+// ─── Extend selected ───
+function showExtendConfirm() {
+  const keys = [...document.querySelectorAll('.rowcheck:checked')].map(x => x.value);
+  if (!keys.length) return toast(t('selectOne'), 'err');
+
+  function rerender() {
+    const days = Number($('renewPlanSelect')?.value || 30);
+    const total = (PRICES[days] || PRICES[30]) * keys.length;
+    const enough = walletBalance >= total;
+    $('renewCalc').className = 'cost-preview ' + (enough ? 'good' : 'bad');
+    $('renewCalc').innerHTML = `
+      <div class="row"><span>${escapeHtml(t('renewCount'))}</span><b>${keys.length}</b></div>
+      <div class="row"><span>${escapeHtml(t('walletBalance'))}</span><b>${money(walletBalance)}</b></div>
+      <div class="row"><span>${escapeHtml(t('renewCost'))}</span><b class="total">${money(total)}</b></div>
+      ${!enough ? `<div class="err" style="font-size:12px;margin-top:4px">${escapeHtml(t('insufficient'))}</div>` : ''}
+    `;
+    $('confirmOkBtn').disabled = !enough;
+  }
+
+  $('confirmBody').innerHTML = `
+    <div class="field"><label>${escapeHtml(t('renewPlan'))}</label><select id="renewPlanSelect">
+      <option value="15">15 ${escapeHtml(t('daysUnit'))} — 15.000đ / key</option>
+      <option value="30" selected>30 ${escapeHtml(t('daysUnit'))} — 29.900đ / key</option>
+      <option value="365">365 ${escapeHtml(t('daysUnit'))} — 299.000đ / key</option>
+    </select></div>
+    <div id="renewCalc" class="cost-preview" style="margin-top:12px"></div>
+  `;
+  $('renewPlanSelect').onchange = rerender;
+  rerender();
+  $('confirmOkBtn').onclick = async () => {
+    const days = $('renewPlanSelect').value;
+    const total = (PRICES[Number(days)] || PRICES[30]) * keys.length;
+    if (walletBalance < total) return toast(t('insufficient'), 'err');
+    closeModal('confirmModal');
+    try {
+      const j = await api('/portal/api/keys/extend', { method: 'POST', body: JSON.stringify({ keys, days }) });
+      toast(`${t('extended')} ${j.keys.length} key, ${t('charged')} ${money(j.charged_vnd)}`, 'ok');
+      await load();
+    } catch (e) { toast(e.message, 'err'); }
+  };
+  openModal('confirmModal');
+}
+
+// ─── Label edit modal ───
+function openLabelModal(key, current) {
+  labelEditingKey = key;
+  $('labelKeyText').textContent = key;
+  $('labelInput').value = current || '';
+  openModal('labelModal');
+  setTimeout(() => $('labelInput').focus(), 100);
+}
+window.openLabelModal = openLabelModal;
+
+async function saveLabel() {
+  const key = labelEditingKey;
+  const label = $('labelInput').value.trim();
+  $('labelSaveBtn').disabled = true;
+  try {
+    const j = await api('/portal/api/keys/' + encodeURIComponent(key) + '/label', { method: 'PATCH', body: JSON.stringify({ label }) });
+    closeModal('labelModal');
+    const tr = document.querySelector(`tr[data-key="${CSS.escape(key)}"] [data-col=label]`);
+    if (tr) tr.textContent = j.license.label || '-';
+    const cardLabel = document.querySelector(`.key-card[data-key="${CSS.escape(key)}"] [data-col=label]`);
+    if (cardLabel) cardLabel.textContent = j.license.label || '-';
+    toast(t('labelSaved'), 'ok');
+  } catch (e) { toast(e.message, 'err'); }
+  finally { $('labelSaveBtn').disabled = false; }
+}
+
+// ─── QR ───
+function qrPayload(k) { return 'ioscontrol://activate?key=' + encodeURIComponent(k); }
+function showLicenseQR(key) {
+  if (qrPollTimer) clearInterval(qrPollTimer);
+  $('qrKey').textContent = key;
+  $('qrBox').innerHTML = '';
+  if (window.QRCode) new QRCode($('qrBox'), { text: qrPayload(key), width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+  else $('qrBox').innerHTML = `<a class="btn good" href="${qrPayload(key)}">Open IOSControl</a>`;
+  $('qrCopyBtn').onclick = () => navigator.clipboard.writeText(key).then(() => toast(t('copied'), 'ok'));
+  $('qrLinkCopyBtn').onclick = () => navigator.clipboard.writeText(qrPayload(key)).then(() => toast(t('copiedLink'), 'ok'));
+  openModal('qrModal');
+  qrPollTimer = setInterval(() => pollActivation(key), 2500);
+}
+window.showLicenseQR = showLicenseQR;
+
+async function pollActivation(key) {
+  try {
+    const j = await api('/portal/api/keys?' + new URLSearchParams({ q: key }));
+    const row = (j.keys || []).find(x => x.license_key === key);
+    if (row && row.udid) {
+      clearInterval(qrPollTimer); qrPollTimer = null;
+      closeModal('qrModal');
+      toast(t('activated'), 'ok');
+      await load();
+    }
+  } catch (e) { /* ignore */ }
+}
+
+// ─── Sort headers ───
+function updateSortHeaders() {
+  document.querySelectorAll('.sortth').forEach(th => {
+    const labelMap = { key: t('keyCol'), label: t('thLabel'), udid: t('udidCol'), expires: t('thExpires'), days: t('thLeft'), status: t('statusCol') };
+    const base = labelMap[th.dataset.sort] || th.textContent.replace(/ [↑↓]$/, '');
+    th.textContent = base + (th.dataset.sort === licenseSort ? ' ' + (licenseDir === 'asc' ? '↑' : '↓') : '');
+  });
+}
+
+// ─── Wallet history ───
+async function showWalletHistory() {
+  historyPage = 1;
+  await loadWalletHistory();
+  openModal('historyModal');
+}
+
+async function loadWalletHistory() {
+  try {
+    const q = encodeURIComponent($('historySearch').value || '');
+    const j = await api(`/portal/api/wallet/transactions?page=${historyPage}&q=${q}`);
+    const rows = j.transactions || [];
+    if (!rows.length) {
+      $('historyBody').innerHTML = `<div class="empty-state"><div class="empty-icon"><i data-lucide="receipt"></i></div><h3>${escapeHtml(t('historyEmpty'))}</h3></div>`;
+    } else {
+      $('historyBody').innerHTML = `<div class="tablewrap"><table>
+        <thead><tr><th>${escapeHtml(t('time'))}</th><th>${escapeHtml(t('type'))}</th><th>${escapeHtml(t('amountCol'))}</th><th>${escapeHtml(t('balanceAfter'))}</th><th>${escapeHtml(t('statusCol'))}</th><th>${escapeHtml(t('orderCode'))}</th><th>${escapeHtml(t('note'))}</th></tr></thead>
+        <tbody>${rows.map(x => `<tr>
+          <td>${escapeHtml(x.created_at || '-')}</td>
+          <td>${x.type === 'topup' ? escapeHtml(t('topupType')) : escapeHtml(t('spendType'))}</td>
+          <td class="mono" style="color:${x.amount_vnd >= 0 ? 'var(--good)' : 'var(--bad)'}">${money(x.amount_vnd)}</td>
+          <td class="mono">${money(x.balance_after)}</td>
+          <td><span class="status ${escapeHtml(x.status)}">${escapeHtml(x.status)}</span></td>
+          <td class="mono">${escapeHtml(x.order_code || '-')}</td>
+          <td>${escapeHtml(x.note || '-')}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>`;
+    }
+    const pages = j.pages || 1;
+    $('historyPager').innerHTML = `
+      <button class="btn ghost sm" ${historyPage <= 1 ? 'disabled' : ''} onclick="historyPage--;loadWalletHistory()"><i data-lucide="chevron-left"></i></button>
+      <span class="muted" style="align-self:center;font-size:13px">${historyPage} / ${pages}</span>
+      <button class="btn ghost sm" ${historyPage >= pages ? 'disabled' : ''} onclick="historyPage++;loadWalletHistory()"><i data-lucide="chevron-right"></i></button>
+    `;
+    if (window.lucide) lucide.createIcons();
+  } catch (e) { toast(e.message, 'err'); }
+}
+window.loadWalletHistory = loadWalletHistory;
+
+// ─── Render keys ───
+function buildKeyRow(k) {
+  const labelText = k.label || '-';
+  const udidText = k.udid || t('udidPending');
+  return `<tr data-key="${escapeHtml(k.license_key)}">
+    <td><input class="rowcheck check" type="checkbox" value="${escapeHtml(k.license_key)}"></td>
+    <td class="mono">${escapeHtml(k.license_key)}</td>
+    <td data-col="label" class="label-cell" title="${escapeHtml(t('labelEdit'))}" onclick="openLabelModal('${escapeHtml(k.license_key)}', ${JSON.stringify(k.label || '')})">${escapeHtml(labelText)}</td>
+    <td class="mono muted" data-col="udid">${escapeHtml(udidText)}</td>
+    <td>${escapeHtml(k.expires_at || '-')}</td>
+    <td data-col="days">${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</td>
+    <td data-col="status"><span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span></td>
+    <td><button class="btn ghost sm" type="button" onclick="showLicenseQR('${escapeHtml(k.license_key)}')"><i data-lucide="qr-code"></i></button></td>
+    <td><button class="btn ghost sm" type="button" onclick="navigator.clipboard.writeText('${escapeHtml(k.license_key)}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button></td>
+  </tr>`;
+}
+
+function buildKeyCard(k) {
+  return `<div class="key-card" data-key="${escapeHtml(k.license_key)}">
+    <div class="top">
+      <input class="rowcheck check" type="checkbox" value="${escapeHtml(k.license_key)}">
+      <div class="key-text">${escapeHtml(k.license_key)}</div>
+      <span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span>
+    </div>
+    <div class="meta">
+      <span>${escapeHtml(t('thLabel'))}</span><b data-col="label" onclick="openLabelModal('${escapeHtml(k.license_key)}', ${JSON.stringify(k.label || '')})" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${escapeHtml(k.label || '-')}</b>
+      <span>UDID</span><b data-col="udid">${escapeHtml(k.udid || t('udidPending'))}</b>
+      <span>${escapeHtml(t('thExpires'))}</span><b>${escapeHtml(k.expires_at || '-')}</b>
+      <span>${escapeHtml(t('thLeft'))}</span><b>${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</b>
+    </div>
+    <div class="actions">
+      <button class="btn ghost sm" type="button" onclick="showLicenseQR('${escapeHtml(k.license_key)}')"><i data-lucide="qr-code"></i><span>QR</span></button>
+      <button class="btn ghost sm" type="button" onclick="navigator.clipboard.writeText('${escapeHtml(k.license_key)}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i><span>Copy</span></button>
+    </div>
+  </div>`;
+}
+
+function renderKeys(keys) {
+  if (!keys.length) {
+    const empty = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon"><i data-lucide="key-square"></i></div>
+      <h3>${escapeHtml(t('noKeys'))}</h3>
+      <p>${escapeHtml(t('noKeysDesc'))}</p>
+    </div>`;
+    $('keysBody').innerHTML = `<tr><td colspan="9" style="padding:0">${empty}</td></tr>`;
+    $('keysCards').innerHTML = empty;
+  } else {
+    $('keysBody').innerHTML = keys.map(buildKeyRow).join('');
+    $('keysCards').innerHTML = keys.map(buildKeyCard).join('');
+  }
+  if (window.lucide) lucide.createIcons();
+}
+
+// ─── Main load ───
+async function load() {
+  if (!token) return;
+  try {
+    const me = await api('/portal/api/auth/me');
+    const qs = new URLSearchParams({ q: $('licenseSearch')?.value || '', sort: licenseSort, dir: licenseDir });
+    const ks = await api('/portal/api/keys?' + qs);
+
+    $('landing').style.display = 'none';
+    $('dashboard').classList.add('active');
+    $('logoutBtn').classList.remove('hide');
+    $('userBadge').classList.remove('hide');
+
+    walletBalance = Number(me.user.balance_vnd || 0);
+    const fullName = `${me.user.last_name || ''} ${me.user.first_name || ''}`.trim() || me.user.username || me.user.email;
+    $('userName').textContent = fullName;
+    $('userAvatar').textContent = (fullName || 'U').slice(0, 1).toUpperCase();
+    $('balance').textContent = money(walletBalance);
+
+    const keys = ks.keys || [];
+    $('totalKeys').textContent = keys.length;
+    $('activeKeys').textContent = keys.filter(k => k.status === 'active').length;
+    $('freeKeys').textContent = keys.filter(k => k.status === 'unactivated').length;
+    renderKeys(keys);
+    updateCreateCost();
+  } catch (e) {
+    token = '';
+    localStorage.removeItem('icp_token');
+    $('landing').style.display = '';
+    $('dashboard').classList.remove('active');
+  }
+}
+
+// ─── Events ───
+$('langBtn').onclick = () => { lang = lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('icp_lang', lang); applyLang(); updateSortHeaders(); load(); };
+$('startBtn').onclick = () => $('email').focus();
+$('loginTab').onclick = () => setMode('login');
+$('registerTab').onclick = () => setMode('register');
+$('forgotBtn').onclick = () => { $('authMsg').className = 'msg ok'; $('authMsg').textContent = t('contactAdmin'); };
+$('authBtn').onclick = submitAuth;
+$('password').addEventListener('keydown', e => { if (e.key === 'Enter') submitAuth(); });
+$('logoutBtn').onclick = async () => { try { await api('/portal/api/auth/logout', { method: 'POST' }); } catch {} token = ''; localStorage.removeItem('icp_token'); location.reload(); };
+
+document.querySelectorAll('.amount-chips .chip').forEach(b => b.onclick = () => { $('topupAmount').value = b.dataset.amt; validateTopupAmount(); });
+$('topupAmount').addEventListener('input', validateTopupAmount);
+$('topupAmount').addEventListener('blur', () => { if (!$('topupAmount').value) $('topupAmount').value = 50000; validateTopupAmount(); });
+$('topupBtn').onclick = () => { if (validateTopupAmount()) openPaymentModal(); };
+$('bankBtn').onclick = () => createTopup('payos');
+$('cryptoBtn').onclick = () => createTopup('cryptomus');
+
+$('createDays').addEventListener('change', updateCreateCost);
+$('createQty').addEventListener('input', updateCreateCost);
+$('createBtn').onclick = createKey;
+
+$('extendBtn').onclick = showExtendConfirm;
+$('refreshBtn').onclick = load;
+$('selectAll').onchange = e => document.querySelectorAll('.rowcheck').forEach(c => c.checked = e.target.checked);
+$('licenseSearch').addEventListener('input', () => { clearTimeout(window.__lsTimer); window.__lsTimer = setTimeout(load, 300); });
+$('historySearch').addEventListener('input', () => { historyPage = 1; clearTimeout(window.__hsTimer); window.__hsTimer = setTimeout(loadWalletHistory, 300); });
+
+document.querySelectorAll('.sortth').forEach(th => th.onclick = () => {
+  if (licenseSort === th.dataset.sort) licenseDir = licenseDir === 'asc' ? 'desc' : 'asc';
+  else { licenseSort = th.dataset.sort; licenseDir = 'asc'; }
+  updateSortHeaders();
+  load();
+});
+
+$('walletCard').onclick = showWalletHistory;
+$('walletCard').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showWalletHistory(); } });
+$('labelSaveBtn').onclick = saveLabel;
+$('labelInput').addEventListener('keydown', e => { if (e.key === 'Enter') saveLabel(); });
+
+// ─── Init ───
+applyLang();
+setMode(mode);
+updateSortHeaders();
+validateTopupAmount();
+updateCreateCost();
+load();
+if (window.lucide) lucide.createIcons();
+setTimeout(renderTurnstile, 800);
 </script>
 </body>
 </html>
