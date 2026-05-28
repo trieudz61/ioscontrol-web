@@ -146,6 +146,8 @@
             <button class="chip" data-kfilter="expired">Expired</button>
             <button class="chip" data-kfilter="locked">Locked</button>
           </div>
+          <span id="keysCount" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+          <button class="btn btn-ghost btn-sm" id="keysRefresh" title="Reload licenses"><i data-lucide="refresh-cw"></i>Reload</button>
         </div>
         <div class="tablewrap"><table><thead><tr><th>Key</th><th>Owner</th><th>UDID</th><th>Expires</th><th>Days Left</th><th>Status</th><th style="text-align:right">Actions</th></tr></thead><tbody id="keysBody"></tbody></table></div>
       </div>

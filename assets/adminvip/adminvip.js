@@ -13,6 +13,9 @@ let state = {
   transactions: [],
   audit: [],
   licenses: [],
+  licenseCache: new Map(),     // userId -> { licenses, fetchedAt }
+  licensesLoading: false,
+  licensesLoadedAt: 0,
   selectedUsers: new Set(),
   currentUser: null,
   cmdSelected: 0,
@@ -254,13 +257,73 @@ function switchView(v) {
   $('pageTitle').textContent = titles[v] || v;
   if (window.lucide) lucide.createIcons();
   if (v === 'users') renderUsers();
-  if (v === 'licenses') renderLicensesView();
+  if (v === 'licenses') loadLicensesView();
+}
+
+// Lazy-fetch licenses for all users with key_count > 0.
+// Backend doesn't have a list-all-licenses endpoint, so we aggregate via per-user detail.
+async function loadLicensesView(force = false) {
+  // If users haven't been loaded yet, do that first
+  if (!state.users.length) {
+    try { await loadUsers(); } catch (e) { toast(e.message, 'error'); return; }
+  }
+
+  const targets = state.users.filter(u => Number(u.key_count) > 0);
+  const cacheAge = Date.now() - state.licensesLoadedAt;
+  const cacheValid = !force && state.licensesLoadedAt > 0 && cacheAge < 60_000
+    && targets.every(u => state.licenseCache.has(u.id));
+
+  if (cacheValid) { renderLicensesView(); return; }
+  if (state.licensesLoading) return;
+
+  state.licensesLoading = true;
+  renderLicensesLoading(0, targets.length);
+
+  // Parallel fetch with concurrency 6 to be gentle on the worker
+  const concurrency = 6;
+  let done = 0;
+  const queue = [...targets];
+  async function worker() {
+    while (queue.length) {
+      const u = queue.shift();
+      try {
+        const j = await api('/portal/api/admin/users/' + encodeURIComponent(u.id));
+        state.licenseCache.set(u.id, { licenses: j.licenses || [], user: j.user || u });
+      } catch { state.licenseCache.set(u.id, { licenses: [], user: u }); }
+      done++;
+      renderLicensesLoading(done, targets.length);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(concurrency, targets.length) }, worker));
+
+  state.licensesLoading = false;
+  state.licensesLoadedAt = Date.now();
+  renderLicensesView();
+}
+
+function renderLicensesLoading(done, total) {
+  if (!total) {
+    $('keysBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">No customers with licenses yet.</td></tr>';
+    return;
+  }
+  const pct = Math.floor((done / total) * 100);
+  $('keysBody').innerHTML = `<tr><td colspan="7" style="padding:30px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted)">
+      <div style="display:flex;align-items:center;gap:10px"><div class="spin" style="width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:999px;animation:spin .8s linear infinite"></div><span>Loading licenses ${done}/${total} customers · ${pct}%</span></div>
+      <div style="width:240px;height:4px;background:var(--surface-2);border-radius:999px;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#7c3aed,#22d3ee);transition:width .25s"></div></div>
+    </div>
+  </td></tr>`;
 }
 
 function renderLicensesView() {
-  // Aggregate licenses from users data (no separate endpoint)
+  // Aggregate from cache
   const all = [];
-  state.users.forEach(u => { (u.licenses || []).forEach(l => all.push({ ...l, _user: u.username || u.email })); });
+  state.licenseCache.forEach((entry, uid) => {
+    const userMeta = state.users.find(u => u.id === uid) || entry.user || {};
+    const display = userMeta.username || userMeta.email || uid;
+    (entry.licenses || []).forEach(l => all.push({ ...l, _user: display, _uid: uid }));
+  });
+
   const q = state.filters.key.toLowerCase();
   const chip = state.filters.keyChip;
   const rows = all.filter(l => {
@@ -270,10 +333,20 @@ function renderLicensesView() {
     if (chip === 'locked' && !l.locked) return false;
     return true;
   });
-  if (!rows.length) { $('keysBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">No licenses found. Open a customer to view their licenses.</td></tr>'; return; }
+
+  // Update counter (if element exists)
+  const counter = $('keysCount');
+  if (counter) counter.textContent = `${rows.length} of ${all.length}`;
+
+  if (!rows.length) {
+    const empty = all.length ? 'No licenses match the current filter.' : 'No licenses found across all customers.';
+    $('keysBody').innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">${empty}</td></tr>`;
+    return;
+  }
+
   $('keysBody').innerHTML = rows.map(l => `<tr>
     <td class="mono" style="font-size:11px;font-weight:700">${esc(l.license_key)}</td>
-    <td>${esc(l._user || '—')}</td>
+    <td><a href="#" data-open-user="${esc(l._uid)}" style="color:var(--text);text-decoration:none">${esc(l._user || '—')}</a></td>
     <td class="mono" style="font-size:10px;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis">${esc(l.udid || '—')}</td>
     <td>${esc(l.expires_at || '—')}</td>
     <td>${num(l.days_left || 0)}d</td>
@@ -281,13 +354,31 @@ function renderLicensesView() {
     <td style="text-align:right">
       <button class="btn btn-xs btn-ghost" onclick="showQR('${esc(l.license_key)}')">QR</button>
       <button class="btn btn-xs btn-warn" onclick="toggleLockKey('${esc(l.license_key)}', ${l.locked ? 0 : 1})">${l.locked ? 'Unlock' : 'Lock'}</button>
+      <button class="btn btn-xs btn-bad" onclick="unbindKey('${esc(l.license_key)}')">Unbind</button>
     </td>
   </tr>`).join('');
+
+  $$('#keysBody [data-open-user]').forEach(el => el.onclick = (e) => { e.preventDefault(); openUser(el.dataset.openUser); });
 }
 window.showQR = showQR;
 window.toggleLockKey = async function(k, locked) {
-  try { await api('/portal/api/admin/licenses/' + encodeURIComponent(k) + '/lock', { method: 'POST', body: JSON.stringify({ locked: !!locked }) }); toast('License ' + (locked ? 'locked' : 'unlocked'), 'success'); await loadAll(); }
-  catch (e) { toast(e.message, 'error'); }
+  try {
+    await api('/portal/api/admin/licenses/' + encodeURIComponent(k) + '/lock', { method: 'POST', body: JSON.stringify({ locked: !!locked }) });
+    toast('License ' + (locked ? 'locked' : 'unlocked'), 'success');
+    state.licensesLoadedAt = 0; // invalidate cache so next view fetch is fresh
+    await loadStats();
+    if (state.view === 'licenses') await loadLicensesView(true);
+  } catch (e) { toast(e.message, 'error'); }
+};
+window.unbindKey = async function(k) {
+  if (!confirm('Unbind ' + k + ' from device?')) return;
+  try {
+    await api('/portal/api/admin/licenses/' + encodeURIComponent(k) + '/unbind', { method: 'POST' });
+    toast('License unbound', 'success');
+    state.licensesLoadedAt = 0;
+    await loadStats();
+    if (state.view === 'licenses') await loadLicensesView(true);
+  } catch (e) { toast(e.message, 'error'); }
 };
 
 async function quickCredit(uid, amount) {
@@ -564,6 +655,8 @@ function bindEvents() {
   // Keys filters
   $('keySearch').addEventListener('input', e => { state.filters.key = e.target.value; renderLicensesView(); });
   $$('#vLicenses .chip').forEach(c => c.onclick = () => { $$('#vLicenses .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); state.filters.keyChip = c.dataset.kfilter; renderLicensesView(); });
+  const keysRefresh = $('keysRefresh');
+  if (keysRefresh) keysRefresh.onclick = () => loadLicensesView(true);
 
   // Audit
   $('auditSearch').addEventListener('input', e => { state.filters.audit = e.target.value; });

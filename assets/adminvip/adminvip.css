@@ -235,3 +235,5 @@ tr:hover .row-actions{opacity:1}
   .mobile-nav button svg{width:20px;height:20px}
 }
 @media(min-width:769px){.mobile-nav{display:none!important}}
+
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
