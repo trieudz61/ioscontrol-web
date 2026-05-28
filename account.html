@@ -254,13 +254,15 @@
     tr:last-child td { border-bottom: 0; }
     tbody tr:hover td { background: rgba(255,255,255,.025); }
 
-    /* Inventory table fits viewport without horizontal scroll */
-    .inv-wrap { overflow: hidden; }
-    .inv-wrap table { width: 100%; min-width: 0; table-layout: fixed; }
-    .inv-wrap th, .inv-wrap td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 13px 12px; }
-    .inv-wrap td.cell-key, .inv-wrap td.cell-udid { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; }
-    .inv-wrap td.cell-udid { color: var(--muted); font-size: 11.5px; }
-    .inv-wrap td.cell-actions { padding: 8px 6px; text-align: center; }
+    /* Inventory table: comfortable readable widths, scroll only when viewport is narrow */
+    .inv-wrap { overflow: auto; }
+    .inv-wrap table { width: 100%; min-width: 880px; table-layout: auto; }
+    .inv-wrap th, .inv-wrap td { padding: 12px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .inv-wrap td.cell-key { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; max-width: 0; }
+    .inv-wrap td.cell-udid { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11.5px; color: var(--muted); max-width: 0; }
+    .inv-wrap td.cell-label { max-width: 0; }
+    .inv-wrap td.cell-actions { padding: 8px 10px; text-align: right; white-space: nowrap; }
+    .inv-wrap td.cell-actions .btn + .btn { margin-left: 6px; }
     .status { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 9px; font-size: 11px; font-weight: 800; border: 1px solid var(--line); }
     .status.active { background: rgba(16,185,129,.1); color: var(--good); border-color: rgba(16,185,129,.25); }
     .status.unactivated { background: rgba(34,211,238,.1); color: #67e8f9; border-color: rgba(34,211,238,.25); }
@@ -491,28 +493,16 @@
         <!-- Desktop table -->
         <div class="tablewrap inv-wrap table-only">
           <table>
-            <colgroup>
-              <col style="width:38px">
-              <col style="width:170px">
-              <col>
-              <col style="width:18%">
-              <col style="width:108px">
-              <col style="width:84px">
-              <col style="width:118px">
-              <col style="width:48px">
-              <col style="width:48px">
-            </colgroup>
             <thead>
               <tr>
-                <th><input id="selectAll" class="check" type="checkbox"></th>
+                <th style="width:38px"><input id="selectAll" class="check" type="checkbox"></th>
                 <th class="sortth" data-sort="key">Key</th>
                 <th id="thLabel" class="sortth" data-sort="label">Nhãn</th>
                 <th class="sortth" data-sort="udid">UDID</th>
-                <th id="thExpires" class="sortth" data-sort="expires">Hết hạn</th>
-                <th id="thLeft" class="sortth" data-sort="days">Còn</th>
-                <th class="sortth" data-sort="status">Status</th>
-                <th>QR</th>
-                <th></th>
+                <th id="thExpires" class="sortth" data-sort="expires" style="width:108px">Hết hạn</th>
+                <th id="thLeft" class="sortth" data-sort="days" style="width:84px">Còn</th>
+                <th class="sortth" data-sort="status" style="width:120px">Status</th>
+                <th style="width:96px;text-align:right">Thao tác</th>
               </tr>
             </thead>
             <tbody id="keysBody"></tbody>
@@ -1139,13 +1129,15 @@ function buildKeyRow(k) {
   return `<tr data-key="${keyEsc}">
     <td><input class="rowcheck check" type="checkbox" value="${keyEsc}"></td>
     <td class="cell-key" title="${keyEsc}">${keyEsc}</td>
-    <td data-col="label" class="label-cell" title="${escapeHtml(labelText)} — ${escapeHtml(t('labelEdit'))}" onclick="openLabelModal('${keyEsc}', ${JSON.stringify(k.label || '')})">${escapeHtml(labelText)}</td>
+    <td data-col="label" class="cell-label label-cell" title="${escapeHtml(labelText)} — ${escapeHtml(t('labelEdit'))}" onclick="openLabelModal('${keyEsc}', ${JSON.stringify(k.label || '')})">${escapeHtml(labelText)}</td>
     <td class="cell-udid" data-col="udid" title="${escapeHtml(udidText)}">${escapeHtml(udidText)}</td>
     <td>${escapeHtml(k.expires_at || '-')}</td>
     <td data-col="days">${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</td>
     <td data-col="status"><span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span></td>
-    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="QR" onclick="showLicenseQR('${keyEsc}')"><i data-lucide="qr-code"></i></button></td>
-    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="Copy" onclick="navigator.clipboard.writeText('${keyEsc}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button></td>
+    <td class="cell-actions">
+      <button class="btn ghost icon sm" type="button" title="QR" onclick="showLicenseQR('${keyEsc}')"><i data-lucide="qr-code"></i></button>
+      <button class="btn ghost icon sm" type="button" title="Copy" onclick="navigator.clipboard.writeText('${keyEsc}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button>
+    </td>
   </tr>`;
 }
 
@@ -1176,7 +1168,7 @@ function renderKeys(keys) {
       <h3>${escapeHtml(t('noKeys'))}</h3>
       <p>${escapeHtml(t('noKeysDesc'))}</p>
     </div>`;
-    $('keysBody').innerHTML = `<tr><td colspan="9" style="padding:0">${empty}</td></tr>`;
+    $('keysBody').innerHTML = `<tr><td colspan="8" style="padding:0">${empty}</td></tr>`;
     $('keysCards').innerHTML = empty;
   } else {
     $('keysBody').innerHTML = keys.map(buildKeyRow).join('');
