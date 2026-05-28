@@ -68,6 +68,7 @@
       z-index: 0;
     }
     a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font-family: inherit; font-feature-settings: inherit; }
     .hide { display: none !important; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .muted { color: var(--muted); }
@@ -1126,35 +1127,38 @@ function buildKeyRow(k) {
   const labelText = k.label || '-';
   const udidText = k.udid || t('udidPending');
   const keyEsc = escapeHtml(k.license_key);
+  const labelAttr = escapeHtml(k.label || '');
   return `<tr data-key="${keyEsc}">
     <td><input class="rowcheck check" type="checkbox" value="${keyEsc}"></td>
     <td class="cell-key" title="${keyEsc}">${keyEsc}</td>
-    <td data-col="label" class="cell-label label-cell" title="${escapeHtml(labelText)} — ${escapeHtml(t('labelEdit'))}" onclick="openLabelModal('${keyEsc}', ${JSON.stringify(k.label || '')})">${escapeHtml(labelText)}</td>
+    <td data-col="label" class="cell-label label-cell label-edit" data-key="${keyEsc}" data-label="${labelAttr}" title="${escapeHtml(labelText)} — ${escapeHtml(t('labelEdit'))}">${escapeHtml(labelText)}</td>
     <td class="cell-udid" data-col="udid" title="${escapeHtml(udidText)}">${escapeHtml(udidText)}</td>
     <td>${escapeHtml(k.expires_at || '-')}</td>
     <td data-col="days">${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</td>
     <td data-col="status"><span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span></td>
-    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="QR" onclick="showLicenseQR('${keyEsc}')"><i data-lucide="qr-code"></i></button></td>
-    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="Copy" onclick="navigator.clipboard.writeText('${keyEsc}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button></td>
+    <td class="cell-actions"><button class="btn ghost icon sm key-qr" type="button" title="QR" data-key="${keyEsc}"><i data-lucide="qr-code"></i></button></td>
+    <td class="cell-actions"><button class="btn ghost icon sm key-copy" type="button" title="Copy" data-key="${keyEsc}"><i data-lucide="copy"></i></button></td>
   </tr>`;
 }
 
 function buildKeyCard(k) {
-  return `<div class="key-card" data-key="${escapeHtml(k.license_key)}">
+  const keyEsc = escapeHtml(k.license_key);
+  const labelAttr = escapeHtml(k.label || '');
+  return `<div class="key-card" data-key="${keyEsc}">
     <div class="top">
-      <input class="rowcheck check" type="checkbox" value="${escapeHtml(k.license_key)}">
-      <div class="key-text">${escapeHtml(k.license_key)}</div>
+      <input class="rowcheck check" type="checkbox" value="${keyEsc}">
+      <div class="key-text">${keyEsc}</div>
       <span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span>
     </div>
     <div class="meta">
-      <span>${escapeHtml(t('thLabel'))}</span><b data-col="label" onclick="openLabelModal('${escapeHtml(k.license_key)}', ${JSON.stringify(k.label || '')})" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${escapeHtml(k.label || '-')}</b>
+      <span>${escapeHtml(t('thLabel'))}</span><b data-col="label" class="label-edit" data-key="${keyEsc}" data-label="${labelAttr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${escapeHtml(k.label || '-')}</b>
       <span>UDID</span><b data-col="udid">${escapeHtml(k.udid || t('udidPending'))}</b>
       <span>${escapeHtml(t('thExpires'))}</span><b>${escapeHtml(k.expires_at || '-')}</b>
       <span>${escapeHtml(t('thLeft'))}</span><b>${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</b>
     </div>
     <div class="actions">
-      <button class="btn ghost sm" type="button" onclick="showLicenseQR('${escapeHtml(k.license_key)}')"><i data-lucide="qr-code"></i><span>QR</span></button>
-      <button class="btn ghost sm" type="button" onclick="navigator.clipboard.writeText('${escapeHtml(k.license_key)}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i><span>Copy</span></button>
+      <button class="btn ghost sm key-qr" type="button" data-key="${keyEsc}"><i data-lucide="qr-code"></i><span>QR</span></button>
+      <button class="btn ghost sm key-copy" type="button" data-key="${keyEsc}"><i data-lucide="copy"></i><span>Copy</span></button>
     </div>
   </div>`;
 }
@@ -1232,6 +1236,20 @@ $('createBtn').onclick = createKey;
 $('extendBtn').onclick = showExtendConfirm;
 $('refreshBtn').onclick = load;
 $('selectAll').onchange = e => document.querySelectorAll('.rowcheck').forEach(c => c.checked = e.target.checked);
+
+// Delegated handlers for dynamically rendered key rows/cards
+document.addEventListener('click', e => {
+  const labelTarget = e.target.closest('.label-edit');
+  if (labelTarget) { openLabelModal(labelTarget.dataset.key, labelTarget.dataset.label || ''); return; }
+  const qrTarget = e.target.closest('.key-qr');
+  if (qrTarget) { showLicenseQR(qrTarget.dataset.key); return; }
+  const copyTarget = e.target.closest('.key-copy');
+  if (copyTarget) {
+    const k = copyTarget.dataset.key;
+    navigator.clipboard.writeText(k).then(() => toast(t('copied'), 'ok')).catch(() => toast('Copy failed', 'err'));
+    return;
+  }
+});
 $('licenseSearch').addEventListener('input', () => { clearTimeout(window.__lsTimer); window.__lsTimer = setTimeout(load, 300); });
 $('historySearch').addEventListener('input', () => { historyPage = 1; clearTimeout(window.__hsTimer); window.__hsTimer = setTimeout(loadWalletHistory, 300); });
 
