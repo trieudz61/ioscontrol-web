@@ -172,7 +172,7 @@
        Top nav
        ───────────────────────────────────────── */
     .nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(20px); background: rgba(5,5,11,.74); border-bottom: 1px solid var(--line); }
-    .nav-in { max-width: 1280px; margin: auto; padding: 13px 22px; display: flex; align-items: center; gap: 14px; }
+    .nav-in { max-width: 1480px; margin: auto; padding: 13px 26px; display: flex; align-items: center; gap: 14px; }
     .nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -.02em; min-width: 0; }
     .nav .brand img { width: 34px; height: 34px; flex: 0 0 auto; }
     .nav .brand span { font-size: 16px; }
@@ -184,7 +184,7 @@
     /* ─────────────────────────────────────────
        Wrap
        ───────────────────────────────────────── */
-    .wrap { max-width: 1280px; margin: auto; padding: 28px 22px 70px; position: relative; z-index: 1; }
+    .wrap { max-width: 1480px; margin: auto; padding: 28px 26px 70px; position: relative; z-index: 1; }
 
     /* ─────────────────────────────────────────
        Landing (login / register)
@@ -230,7 +230,7 @@
     .stat-icon.good { background: rgba(16,185,129,.16); color: var(--good); }
     .stat-icon.warn { background: rgba(245,158,11,.16); color: var(--warn); }
 
-    .layout { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 18px; margin-top: 18px; }
+    .layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; margin-top: 18px; }
     .col-stack { display: grid; gap: 18px; align-content: start; }
 
     .amount-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 14px; }
@@ -254,15 +254,14 @@
     tr:last-child td { border-bottom: 0; }
     tbody tr:hover td { background: rgba(255,255,255,.025); }
 
-    /* Inventory table: comfortable readable widths, scroll only when viewport is narrow */
+    /* Inventory table: comfortable readable widths */
     .inv-wrap { overflow: auto; }
-    .inv-wrap table { width: 100%; min-width: 880px; table-layout: auto; }
+    .inv-wrap table { width: 100%; min-width: 1040px; table-layout: auto; }
     .inv-wrap th, .inv-wrap td { padding: 12px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .inv-wrap td.cell-key { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; max-width: 0; }
     .inv-wrap td.cell-udid { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11.5px; color: var(--muted); max-width: 0; }
     .inv-wrap td.cell-label { max-width: 0; }
-    .inv-wrap td.cell-actions { padding: 8px 10px; text-align: right; white-space: nowrap; }
-    .inv-wrap td.cell-actions .btn + .btn { margin-left: 6px; }
+    .inv-wrap td.cell-actions { padding: 8px 6px; text-align: center; }
     .status { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 9px; font-size: 11px; font-weight: 800; border: 1px solid var(--line); }
     .status.active { background: rgba(16,185,129,.1); color: var(--good); border-color: rgba(16,185,129,.25); }
     .status.unactivated { background: rgba(34,211,238,.1); color: #67e8f9; border-color: rgba(34,211,238,.25); }
@@ -502,7 +501,8 @@
                 <th id="thExpires" class="sortth" data-sort="expires" style="width:108px">Hết hạn</th>
                 <th id="thLeft" class="sortth" data-sort="days" style="width:84px">Còn</th>
                 <th class="sortth" data-sort="status" style="width:120px">Status</th>
-                <th style="width:96px;text-align:right">Thao tác</th>
+                <th style="width:54px">QR</th>
+                <th style="width:54px"></th>
               </tr>
             </thead>
             <tbody id="keysBody"></tbody>
@@ -1134,10 +1134,8 @@ function buildKeyRow(k) {
     <td>${escapeHtml(k.expires_at || '-')}</td>
     <td data-col="days">${k.days_left ?? 0} ${escapeHtml(t('daysUnit'))}</td>
     <td data-col="status"><span class="status ${escapeHtml(k.status)}">${escapeHtml(k.status)}</span></td>
-    <td class="cell-actions">
-      <button class="btn ghost icon sm" type="button" title="QR" onclick="showLicenseQR('${keyEsc}')"><i data-lucide="qr-code"></i></button>
-      <button class="btn ghost icon sm" type="button" title="Copy" onclick="navigator.clipboard.writeText('${keyEsc}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button>
-    </td>
+    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="QR" onclick="showLicenseQR('${keyEsc}')"><i data-lucide="qr-code"></i></button></td>
+    <td class="cell-actions"><button class="btn ghost icon sm" type="button" title="Copy" onclick="navigator.clipboard.writeText('${keyEsc}').then(()=>toast(t('copied'),'ok'))"><i data-lucide="copy"></i></button></td>
   </tr>`;
 }
 
@@ -1168,7 +1166,7 @@ function renderKeys(keys) {
       <h3>${escapeHtml(t('noKeys'))}</h3>
       <p>${escapeHtml(t('noKeysDesc'))}</p>
     </div>`;
-    $('keysBody').innerHTML = `<tr><td colspan="8" style="padding:0">${empty}</td></tr>`;
+    $('keysBody').innerHTML = `<tr><td colspan="9" style="padding:0">${empty}</td></tr>`;
     $('keysCards').innerHTML = empty;
   } else {
     $('keysBody').innerHTML = keys.map(buildKeyRow).join('');
