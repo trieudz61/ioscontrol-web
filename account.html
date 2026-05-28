@@ -979,7 +979,7 @@ async function createKey() {
 
 // ─── Extend selected ───
 function showExtendConfirm() {
-  const keys = [...document.querySelectorAll('.rowcheck:checked')].map(x => x.value);
+  const keys = [...new Set([...document.querySelectorAll('.rowcheck:checked')].map(x => x.value))];
   if (!keys.length) return toast(t('selectOne'), 'err');
 
   function rerender() {
