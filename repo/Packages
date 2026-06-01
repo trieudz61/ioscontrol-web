@@ -1,64 +1,15 @@
 Package: com.trieudz.ioscontrol
-Version: 1.7.1
-Architecture: iphoneos-arm64
-Maintainer: trieudz
-Installed-Size: 23912
-Depends: mobilesubstrate, firmware (>= 15.0)
-Filename: debs/com.trieudz.ioscontrol_1.7.1_iphoneos-arm64.deb
-Size: 15165104
-MD5sum: cac4af0db3431cb07a60873faaaf0794
-SHA1: 1f28786575bbdc68ef5112acc70dd707faec52c8
-SHA256: 91eeb1c38451ee5e2b4752f094d44908f3e6fb77b18138c2d19ce668a7b7cedc
-Section: Tweaks
-Description: AutoTouch-like automation tweak for iOS (touch, screenshot, OCR, Lua scripting)
-Author: trieudz
 Name: IOSControl
-
-Package: com.trieudz.ioscontrol
-Version: 1.7.2
-Architecture: iphoneos-arm64
-Maintainer: trieudz
-Installed-Size: 24460
-Depends: mobilesubstrate, firmware (>= 15.0)
-Filename: debs/com.trieudz.ioscontrol_1.7.2_iphoneos-arm64.deb
-Size: 15227650
-MD5sum: 68b21661bda6df1e61a64c6c446fd863
-SHA1: a52233d62df54938ba53147ce287ffef8d8b5b0f
-SHA256: f48f51eed35cd87e3ab213f95b723908ed8b233569532a8e209ada8412f91eb5
-Section: Tweaks
-Description: AutoTouch-like automation tweak for iOS (touch, screenshot, OCR, Lua scripting)
-Author: trieudz
-Name: IOSControl
-
-Package: com.trieudz.ioscontrol
-Version: 1.7.3
-Architecture: iphoneos-arm64
-Maintainer: trieudz
-Installed-Size: 24464
-Depends: mobilesubstrate, firmware (>= 15.0)
-Filename: debs/com.trieudz.ioscontrol_1.7.3_iphoneos-arm64.deb
-Size: 15234012
-MD5sum: 1dc4cb9465ac701093cfe298e9d89085
-SHA1: 4268f0f689842793d364b3a607c68917fcfdbdd6
-SHA256: 988329a7f221511c8d45471d25d64d3717ef41ab28aba21266749bf12f0887ee
-Section: Tweaks
-Description: AutoTouch-like automation tweak for iOS (touch, screenshot, OCR, Lua scripting)
-Author: trieudz
-Name: IOSControl
-
-Package: com.trieudz.ioscontrol
 Version: 1.7.4
 Architecture: iphoneos-arm64
-Maintainer: trieudz
-Installed-Size: 24748
-Depends: mobilesubstrate, firmware (>= 15.0)
-Filename: debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
-Size: 15279050
-MD5sum: a91f51295d090585ebda08c5b05f57e1
-SHA1: 2233b3de88fa57398bc50c5880500d5970e3cc59
-SHA256: f0b3440cb1394da318ca686c721c8128f57a3929bb5a2686ba1b53a3aab95278
-Section: Tweaks
-Description: AutoTouch-like automation tweak for iOS (touch, screenshot, OCR, Lua scripting)
+Description: iOS automation tweak — touch, OCR, Lua scripting, Web IDE, device identity management
+Depiction: https://ioscontrol.com/
+Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
-Name: IOSControl
-
+Section: Tweaks
+Depends: mobilesubstrate, firmware (>= 15.0)
+Icon: https://ioscontrol.com/repo/icon.png
+Filename: debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb
+Size: 15244350
+Installed-Size: 14700
+SHA256: af3d63ee3574e4e733655be54ec0f2a512dd7fc049d769cd143b5fc7f760bdd5
