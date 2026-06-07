@@ -1,11 +1,11 @@
 {
   "version": "1.7.4",
-  "build": 1780287226000,
+  "build": 1780868086000,
   "minimum_os": "14.0",
-  "release_date": "2026-06-01",
+  "release_date": "2026-06-08",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.7.4_iphoneos-arm64.deb",
   "changelog": {
-    "en": "Spoof engine update",
-    "vi": "Cập nhật spoof"
+    "en": "v1.7.4 release",
+    "vi": "Phiên bản v1.7.4"
   }
 }
