@@ -99,9 +99,28 @@ async function loadStats() {
 }
 
 async function loadUsers() {
-  const j = await api('/portal/api/admin/users?limit=100&q=' + encodeURIComponent(state.filters.user));
-  state.users = j.rows || [];
+  const q = state.filters.user;
+  const limit = 50; // Backend clamps max to 50; fetch every page client-side.
+  const first = await api('/portal/api/admin/users?' + new URLSearchParams({ limit, page: 1, q }));
+  const rows = [...(first.rows || [])];
+  const total = Number(first.total || rows.length);
+  const pages = Math.min(Number(first.pages || Math.ceil(total / limit) || 1), 200);
+
+  for (let page = 2; page <= pages; page++) {
+    const j = await api('/portal/api/admin/users?' + new URLSearchParams({ limit, page, q }));
+    rows.push(...(j.rows || []));
+  }
+
+  state.users = rows;
+  const loadedIds = new Set(rows.map(u => String(u.id)));
+  state.selectedUsers.forEach(id => { if (!loadedIds.has(String(id))) state.selectedUsers.delete(id); });
   renderUsers();
+  updateBulkBar();
+
+  const visible = filterUsersClient().length;
+  const label = total > rows.length ? `${num(visible)} shown · ${num(rows.length)}/${num(total)} loaded` : `${num(visible)} customer(s)`;
+  const sub = $('kUsersSub');
+  if (sub && state.view === 'users') sub.textContent = label;
 }
 
 async function loadTx() {
