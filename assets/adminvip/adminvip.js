@@ -703,13 +703,14 @@ function bindEvents() {
 
   // Global keyboard
   document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCmd(); return; }
-    if (e.key === 'Escape') { closeCmd(); closeQR(); closeSlideOver(); return; }
+    const key = typeof e.key === 'string' ? e.key : '';
+    if ((e.metaKey || e.ctrlKey) && key === 'k') { e.preventDefault(); openCmd(); return; }
+    if (key === 'Escape') { closeCmd(); closeQR(); closeSlideOver(); return; }
     // Skip view shortcuts when typing in input
     if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
     const map = { '1': 'overview', '2': 'users', '3': 'money', '4': 'licenses', '5': 'audit' };
-    if (map[e.key]) { e.preventDefault(); switchView(map[e.key]); }
-    if (e.key.toLowerCase() === 'r') { e.preventDefault(); loadAll(); }
+    if (map[key]) { e.preventDefault(); switchView(map[key]); }
+    if (key.toLowerCase() === 'r') { e.preventDefault(); loadAll(); }
   });
 }
 function updateCmdSelection() {
