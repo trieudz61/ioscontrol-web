@@ -380,6 +380,7 @@ tr:hover td { background:rgba(255,255,255,0.02); }
         <input type="text" class="search-box" placeholder="Search by key, UDID..." id="searchBox" oninput="filterKeys()">
         <div class="toolbar-actions">
           <button class="btn btn-ghost" onclick="loadKeys()"><i data-lucide="refresh-cw"></i> Refresh</button>
+          <button class="btn btn-danger" onclick="deleteExpiredKeys()"><i data-lucide="trash-2"></i> Delete Expired</button>
           <button class="btn btn-primary" onclick="showGenerateModal()"><i data-lucide="plus"></i> Generate</button>
         </div>
       </div>
@@ -940,6 +941,31 @@ async function confirmDelete() {
   } catch(e) { toast('Network error: ' + e.message, true); }
   closeModal('deleteModal');
   pendingDeleteKey = null;
+}
+
+async function deleteExpiredKeys() {
+  const expiredCount = allKeys.filter(k => k.status === 'expired').length;
+  if (expiredCount <= 0) {
+    toast('No expired keys to delete');
+    return;
+  }
+  const ok = confirm(`Delete ${expiredCount} expired license key(s)? This cannot be undone.`);
+  if (!ok) return;
+
+  try {
+    const d = await api('/admin/api/keys/expired', 'DELETE');
+    if (d.success) {
+      const deleted = Number(d.deleted || 0);
+      allKeys = allKeys.filter(k => k.status !== 'expired');
+      toast(`Deleted ${deleted} expired key(s)`);
+      await loadStats();
+      await loadKeys();
+    } else {
+      toast(d.error || 'Delete expired failed', true);
+    }
+  } catch(e) {
+    toast('Network error: ' + e.message, true);
+  }
 }
 
 // Generate
