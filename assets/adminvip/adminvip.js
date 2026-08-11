@@ -445,6 +445,7 @@ function renderSlideOver() {
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-sm ${u.status === 'active' ? 'btn-bad' : 'btn-good'}" onclick="toggleUserStatus()">${u.status === 'active' ? '<i data-lucide="ban"></i>Disable' : '<i data-lucide="check-circle"></i>Enable'}</button>
       <button class="btn btn-sm btn-ghost" onclick="document.querySelector('.so-tab[data-sotab=wallet]').click()"><i data-lucide="wallet"></i>Adjust Wallet</button>
+      <button class="btn btn-sm btn-warn" onclick="resetUserPassword()"><i data-lucide="key-round"></i>Reset Password</button>
     </div>
   `;
   // Wallet pane
@@ -528,6 +529,18 @@ window.toggleUserStatus = async function() {
     await api('/portal/api/admin/users/' + encodeURIComponent(u.id) + '/status', { method: 'POST', body: JSON.stringify({ status: next }) });
     toast('User ' + next, 'success');
     await openUser(u.id); await loadStats(); await loadUsers();
+  } catch (e) { toast(e.message, 'error'); }
+};
+window.resetUserPassword = async function() {
+  const u = state.currentUser; if (!u) return;
+  const label = u.username || u.email || u.id;
+  const password = prompt('New password for ' + label + ' (min 8 chars):');
+  if (password == null) return;
+  if (password.length < 8) { toast('Password must be at least 8 characters', 'error'); return; }
+  if (!confirm('Reset password for ' + label + '? Existing login sessions will be revoked.')) return;
+  try {
+    await api('/portal/api/admin/users/' + encodeURIComponent(u.id) + '/password-reset', { method: 'POST', body: JSON.stringify({ password }) });
+    toast('Password reset for ' + label, 'success');
   } catch (e) { toast(e.message, 'error'); }
 };
 window.soToggleLock = async function(k, locked) {
