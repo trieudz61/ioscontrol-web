@@ -1,8 +1,8 @@
 {
   "version": "1.7.5",
-  "build": 1788833407000,
+  "build": 1789319630000,
   "minimum_os": "14.0",
-  "release_date": "2026-09-08",
+  "release_date": "2026-09-14",
   "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.7.5_iphoneos-arm64.deb",
   "changelog": {
     "en": "v1.7.5 release",
