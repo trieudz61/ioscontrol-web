@@ -3,14 +3,14 @@ Label: IOSControl
 Suite: stable
 Version: 1.0
 Codename: ios
-Architectures: iphoneos-arm64 iphoneos-arm64e
+Architectures: iphoneos-arm64
 Components: main
-Description: IOSControl — native Rootless and Roothide packages
+Description: IOSControl - iOS Automation Tweak
 MD5Sum:
-  c1d9449625bf8288a3a31cea76a3086f 1393 Packages
-  e107d496683cfd299d639cfe81d18d5b 493 Packages.gz
-  8d561bb29102232cab16ece50d4aa99d 587 Packages.bz2
+ 8b0f336bab01dbbddcc1e98c059e1367 570 Packages
+ 985e73d343a0e076ae042acc525be19e 403 Packages.gz
+ 6e5ce7cfc5ca5c4cdf206b04e5e78f50 439 Packages.bz2
 SHA256:
-  f488667d9b4d7dd959b0cc356585961ba4b7af5e775c4f4533bff9f50d6972e2 1393 Packages
-  20ddc2a455ad5127032556c6983ac3bd4b50c9bdd785bbc136d3ef7cb627385e 493 Packages.gz
-  76237f7ab5cff67dd8d75ba09c0322cbf97f26326410713b227986cd669c1ae7 587 Packages.bz2
+ f7d4ead3014e3487b2717548a12d6ef86ae37ddee97f79b02b471429bbfe8efd 570 Packages
+ 6061ca1f52e86d37ba955bcd8d690856b5fc1d59fd288bbb138e53eb2bd59162 403 Packages.gz
+ 256039f8ad8396656eac6ec1b379f6521e1bb1326b0e6738860869a770344f23 439 Packages.bz2

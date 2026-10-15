@@ -1,35 +1,15 @@
-Package: com.trieudz.ioscontrol.rootless
-Name: IOSControlRootless
+Package: com.trieudz.ioscontrol
+Name: IOSControl
 Version: 1.7.5
 Architecture: iphoneos-arm64
-Description: IOSControl automation and spoofing — native IOSControlRootless build
+Description: iOS automation tweak — touch, OCR, Lua scripting, Web IDE, device identity management
 Depiction: https://ioscontrol.com/
 Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
-Depends: firmware (>= 15.0)
-Conflicts: com.trieudz.ioscontrol, com.trieudz.ioscontrol.roothide
-Replaces: com.trieudz.ioscontrol, com.trieudz.ioscontrol.roothide
+Depends: mobilesubstrate, firmware (>= 15.0)
 Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol.rootless_1.7.5_iphoneos-arm64.deb
-Size: 15325110
-Installed-Size: 24964
-SHA256: 6d2e9bb004b875c222cb5a681d011cf74ba41f50193a85350be39dfa8ec4a029
-
-Package: com.trieudz.ioscontrol.roothide
-Name: IOSControlRoothide
-Version: 1.7.5
-Architecture: iphoneos-arm64e
-Description: IOSControl automation and spoofing — native IOSControlRoothide build
-Depiction: https://ioscontrol.com/
-Maintainer: IOSControl <support@ioscontrol.com>
-Author: trieudz
-Section: Tweaks
-Depends: firmware (>= 15.0)
-Conflicts: com.trieudz.ioscontrol, com.trieudz.ioscontrol.rootless
-Replaces: com.trieudz.ioscontrol, com.trieudz.ioscontrol.rootless
-Icon: https://ioscontrol.com/repo/icon.png
-Filename: debs/com.trieudz.ioscontrol.roothide_1.7.5_iphoneos-arm64e.deb
-Size: 15324590
-Installed-Size: 24936
-SHA256: 2540c10ed83404c71bfdcfcfd52aa13b81792a5ac0ff2e9f5ecc65cf4780845a
+Filename: debs/com.trieudz.ioscontrol_1.7.5_iphoneos-arm64.deb
+Size: 15328296
+Installed-Size: 14700
+SHA256: 242dfba939c7fb26ed728452112a438f95c40bb7974603de2509febe96f70c6e

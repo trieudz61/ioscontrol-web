@@ -1,23 +1,11 @@
 {
   "version": "1.7.5",
-  "build": 1792040908000,
+  "build": 1792058250000,
   "minimum_os": "15.0",
   "release_date": "2026-10-15",
-  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol.rootless_1.7.5_iphoneos-arm64.deb",
-  "packages": [
-    {
-      "id": "com.trieudz.ioscontrol.rootless",
-      "name": "IOSControlRootless",
-      "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol.rootless_1.7.5_iphoneos-arm64.deb"
-    },
-    {
-      "id": "com.trieudz.ioscontrol.roothide",
-      "name": "IOSControlRoothide",
-      "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol.roothide_1.7.5_iphoneos-arm64e.deb"
-    }
-  ],
+  "download_url": "https://ioscontrol.com/repo/debs/com.trieudz.ioscontrol_1.7.5_iphoneos-arm64.deb",
   "changelog": {
-    "en": "v1.7.5 — Rootless and Roothide builds",
-    "vi": "Phiên bản 1.7.5 — bản Rootless và Roothide"
+    "en": "v1.7.5 rollback to Rootless stable baseline (2026-09-17)",
+    "vi": "Phiên bản v1.7.5 rollback về bản Rootless ổn định ngày 17-09-2026"
   }
 }
