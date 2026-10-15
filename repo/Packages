@@ -8,11 +8,13 @@ Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
 Depends: firmware (>= 15.0)
+Conflicts: com.trieudz.ioscontrol, com.trieudz.ioscontrol.roothide
+Replaces: com.trieudz.ioscontrol, com.trieudz.ioscontrol.roothide
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol.rootless_1.7.5_iphoneos-arm64.deb
-Size: 15324236
+Size: 15325110
 Installed-Size: 24964
-SHA256: bd78439143ca545f72283744889f9fe6741de757cab6c58a0f2630014ef22a90
+SHA256: 6d2e9bb004b875c222cb5a681d011cf74ba41f50193a85350be39dfa8ec4a029
 
 Package: com.trieudz.ioscontrol.roothide
 Name: IOSControlRoothide
@@ -24,8 +26,10 @@ Maintainer: IOSControl <support@ioscontrol.com>
 Author: trieudz
 Section: Tweaks
 Depends: firmware (>= 15.0)
+Conflicts: com.trieudz.ioscontrol, com.trieudz.ioscontrol.rootless
+Replaces: com.trieudz.ioscontrol, com.trieudz.ioscontrol.rootless
 Icon: https://ioscontrol.com/repo/icon.png
 Filename: debs/com.trieudz.ioscontrol.roothide_1.7.5_iphoneos-arm64e.deb
-Size: 15322698
+Size: 15324590
 Installed-Size: 24936
-SHA256: aba397167cea0a7354b20300472795e44c14d36e88a4eff2984d856d08e2e55b
+SHA256: 2540c10ed83404c71bfdcfcfd52aa13b81792a5ac0ff2e9f5ecc65cf4780845a
